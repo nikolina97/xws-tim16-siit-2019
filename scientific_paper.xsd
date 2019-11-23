@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019/scientific_paper"
+    xmlns:sw="https://github.com/nikolina97/xws-tim16-siit-2019/scientific_paper">
+
+    <xs:element name="scientific_paper" type="sw:scientific_paper_type">
+        <xs:key name="paperPK">
+            <xs:selector xpath="scientific_paper"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+        <xs:key name="chapterPK">
+            <xs:selector xpath="scientific_work/chapter"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+    </xs:element>
+    <xs:element name="authors">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="author" type="sw:person"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="references">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="reference" type="sw:reference_type"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="ref_num_unique">
+            <xs:selector xpath="reference"></xs:selector>
+            <xs:field xpath="ref_number"></xs:field>
+        </xs:unique>
+    </xs:element>
+    <xs:element name="chapters">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="chapter" type="sw:chapter_type">
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="university">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="city">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="country">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="person">
+        <xs:sequence>
+            <xs:element name="first_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="last_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element ref="sw:university"/>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="term_type">
+        <xs:sequence>
+            <xs:element name="term_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="chapter_type">
+        <xs:sequence>
+            <xs:element maxOccurs="1" name="subtitle">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="paragraph">
+                <xs:complexType mixed="true">
+                    <xs:choice maxOccurs="unbounded" minOccurs="0">
+                        <xs:element maxOccurs="unbounded" name="image" nillable="true" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="src" type="xs:string" use="required"/>
+                                <xs:attribute name="desc" type="xs:string" use="required"/>
+                                <xs:attribute name="id" type="xs:positiveInteger"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" name="table" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="th" type="sw:table_row"/>
+                                    <xs:element maxOccurs="unbounded" name="tr" type="sw:table_row"
+                                    />
+                                </xs:sequence>
+                                <xs:attribute name="id" type="xs:positiveInteger"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="ref_number">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="\[\d\]"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="id" type="xs:positiveInteger"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:positiveInteger"/>
+        <xs:attribute name="indentation_level">
+            <xs:simpleType>
+                <xs:restriction base="xs:positiveInteger">
+                    <xs:maxInclusive value="5"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="paragraph_type"> </xs:complexType>
+    <xs:complexType name="reference_type">
+        <xs:sequence>
+            <xs:element name="ref_number">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d\."/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="ref_author" type="xs:string"/>
+            <xs:element name="article" type="sw:article_type"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:positiveInteger"/>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="article_type">
+        <xs:sequence>
+            <xs:element name="link" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="href" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="year" type="xs:int" use="required"/>
+        <xs:attribute name="pages" type="sw:pages_type"/>
+        <xs:attribute name="volume" type="xs:int"/>
+        <xs:attribute name="number" type="xs:int"/>
+    </xs:complexType>
+    <xs:simpleType name="pages_type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{1,5}-\d{1,5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="table_row">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="td" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="scientific_paper_type">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element ref="sw:authors"/>
+            <xs:element name="abstract" type="xs:string"> </xs:element>
+            <xs:element ref="sw:chapters"> </xs:element>
+            <xs:element ref="sw:references"> </xs:element>
+        </xs:sequence>
+        <xs:attribute name="received" type="xs:date"/>
+        <xs:attribute name="revised" type="xs:date"/>
+        <xs:attribute name="accepted" type="xs:date"/>
+        <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+</xs:schema>

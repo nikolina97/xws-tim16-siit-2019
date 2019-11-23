@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019/revision"
+    xmlns:sw="https://github.com/nikolina97/xws-tim16-siit-2019/scientific_paper"
+    xmlns:rvs="https://github.com/nikolina97/xws-tim16-siit-2019/revision">
+    <xs:import namespace="https://github.com/nikolina97/xws-tim16-siit-2019/scientific_paper"
+        schemaLocation="scientific_paper.xsd"/>
+    <xs:element name="revision" type="rvs:revision_type"/>
+    <xs:complexType name="revision_type">
+        <xs:complexContent>
+            <xs:extension base="sw:scientific_paper_type">
+                <xs:attribute name="date" type="xs:date"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
