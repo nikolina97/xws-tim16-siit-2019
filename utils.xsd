@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    <xs:complexType name="TPerson">
+        <xs:sequence>
+            <xs:element name="first_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="last_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="university">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="city">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="country">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

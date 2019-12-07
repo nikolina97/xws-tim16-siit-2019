@@ -1,176 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019/cover_letter"
-    xmlns:cl="https://github.com/nikolina97/xws-tim16-siit-2019/cover_letter">
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
 
+    <xs:include schemaLocation="utils.xsd"/>
+    <xs:include schemaLocation="review.xsd"/>
     <xs:element name="cover_letter">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="author">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="name">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="2"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name="degree">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="2"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name="university">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="name">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                  <xs:minLength value="2"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="department">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                  <xs:minLength value="2"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="city">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                  <xs:minLength value="2"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="country">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                  <xs:minLength value="2"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="phone_number" type="xs:string"/>
-                            <xs:element name="email">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="editor">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="name">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="2"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name="title">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="2"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name="journal_name">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="2"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="author" type="TCoverLetterAuthor"> </xs:element>
+                <xs:element name="editor" type="TEditor"> </xs:element>
                 <xs:element name="date" type="xs:date"/>
                 <xs:element name="content" type="xs:string"/>
-                <xs:element minOccurs="0" ref="cl:reviewers"> </xs:element>
+                <xs:element minOccurs="0" name="reviewers">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="reviewer"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="signature">
                     <xs:complexType mixed="true">
                         <xs:sequence>
-                            <xs:element name="name"/>
-                            <xs:element name="degree"/>
-                            <xs:element name="department"/>
-                            <xs:element name="university_name"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="degree" type="xs:string"/>
+                            <xs:element name="department" type="xs:string"/>
+                            <xs:element name="university_name" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
-        <xs:key name="authorNamePK">
-            <xs:selector xpath="cl:cover_letter/author"/>
-            <xs:field xpath="cl:name"/>
-        </xs:key>
-        <xs:key name="authorDegreePK">
-            <xs:selector xpath="cl:cover_letter/author"/>
-            <xs:field xpath="cl:degree"/>
-        </xs:key>
-        <xs:key name="universityDepartmentPK">
-            <xs:selector xpath="cl:cover_letter/author/university"/>
-            <xs:field xpath="cl:department"/>
-        </xs:key>
-        <xs:key name="universityNamePK">
-            <xs:selector xpath="cl:cover_letter/author/university"/>
-            <xs:field xpath="cl:name"/>
-        </xs:key>
-
-        <xs:keyref refer="cl:authorNamePK" name="authorNameRef">
-            <xs:selector xpath="cl:cover_letter/signature"/>
-            <xs:field xpath="cl:name"/>
-        </xs:keyref>
-        <xs:keyref refer="cl:authorDegreePK" name="authorDegreeRef">
-            <xs:selector xpath="cl:cover_letter/signature"/>
-            <xs:field xpath="cl:degree"/>
-        </xs:keyref>
-        <xs:keyref refer="cl:universityDepartmentPK" name="universityDepartmentRef">
-            <xs:selector xpath="cl:cover_letter/signature"/>
-            <xs:field xpath="cl:department"/>
-        </xs:keyref>
-        <xs:keyref refer="cl:universityNamePK" name="universityNameRef">
-            <xs:selector xpath="cl:cover_letter/signature"/>
-            <xs:field xpath="cl:university_name"/>
-        </xs:keyref>
     </xs:element>
-    <xs:element name="reviewers">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="reviewer" type="cl:person"> </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:complexType name="person">
+    <xs:complexType name="TCoverLetterAuthor">
         <xs:sequence>
-            <xs:element name="first_name">
+            <xs:element name="name">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:minLength value="2"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="last_name">
+            <xs:element name="degree">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:minLength value="2"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="university">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="department">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="city">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="country">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="phone_number" type="xs:string"/>
             <xs:element name="email">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TEditor">
+        <xs:sequence>
+            <xs:element name="name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="title">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="journal_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
