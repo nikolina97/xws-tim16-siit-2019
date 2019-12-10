@@ -39,6 +39,7 @@ public class DOMParser implements ErrorHandler {
 	 *
 	 * @param filePath XML document file path
 	 */
+	// TODO Promeniti na File umesto String filePath ?
 	public Document buildDocument(String filePath) {
 
 		try {

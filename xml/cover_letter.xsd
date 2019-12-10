@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
-    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019" vc:maxVersion="1.1"
+    vc:minVersion="1.0" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
 
     <xs:include schemaLocation="utils.xsd"/>
     <xs:include schemaLocation="review.xsd"/>
@@ -15,7 +16,7 @@
                 <xs:element minOccurs="0" name="reviewers">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="reviewer"/>
+                            <xs:element ref="reviewer" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -30,6 +31,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="TCoverLetterAuthor">

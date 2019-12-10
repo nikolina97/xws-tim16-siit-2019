@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
-    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019" vc:maxVersion="1.1"
+    vc:minVersion="1.0" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
     <xs:include schemaLocation="utils.xsd"/>
     <xs:include schemaLocation="scientific_paper.xsd"/>
     <xs:element name="review">
@@ -25,19 +26,20 @@
                 <xs:element name="questions">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="question" type="TQuestion"/>
+                            <xs:element name="question" type="TQuestion" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="comments">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="comment" type="TParagraph"/>
+                            <xs:element name="comment" type="TParagraph" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="paper_id" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="paper_id" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="reviewer" type="TPerson"/>
