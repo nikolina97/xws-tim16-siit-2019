@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.0" vc:maxVersion="1.1"
     targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
-    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019" vc:maxVersion="1.1"
+    vc:minVersion="1.0" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
 
     <xs:include schemaLocation="utils.xsd"/>
     <xs:element name="scientific_paper">
@@ -50,10 +50,21 @@
                     </xs:unique>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="received" type="xs:date"/>
             <xs:attribute name="revised" type="xs:date"/>
             <xs:attribute name="accepted" type="xs:date"/>
-            <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="category" type="xs:string" use="required"/>
+            <xs:attribute name="status" type="xs:string" use="required"/>
+            <xs:attribute name="version" type="xs:string" use="required"/>
+            <xs:attribute name="edition" type="xs:string" use="required"/>
+            <xs:attribute name="doi">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="/^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     <xs:element name="author" type="TPerson"/>
@@ -180,6 +191,15 @@
             </xs:element>
             <xs:element name="image_name" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="table_name" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="quote">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="paper" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
         </xs:choice>
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -200,7 +220,7 @@
                             <xs:complexType>
                                 <xs:simpleContent>
                                     <xs:extension base="xs:string">
-                                        <xs:attribute name="href" type="xs:string"/>
+                                        <xs:attribute name="paper" type="xs:string" use="required"/>
                                     </xs:extension>
                                 </xs:simpleContent>
                             </xs:complexType>
