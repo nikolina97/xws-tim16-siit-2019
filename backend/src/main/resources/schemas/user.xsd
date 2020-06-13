@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    <xs:include schemaLocation="utils.xsd"/>
+    <xs:simpleType name="TRole">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ROLE_AUTHOR"/>
+            <xs:enumeration value="ROLE_REVIEWER"/>
+            <xs:enumeration value="ROLE_EDITOR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="users">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="user">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="userInfo" type="TPerson"/>
+                            <xs:element name="role" type="TRole"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

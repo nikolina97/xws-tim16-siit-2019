@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    <xs:include schemaLocation="review.xsd"/>
+    <xs:element name="businessProcess">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="scientificPaperId" type="xs:string"/>
+                <xs:element name="scientificPaperTitle" type="xs:string"/>
+                <xs:element name="version" type="xs:positiveInteger"/>
+                <xs:element name="state" type="TState"/>
+                <xs:element name="reviewAssignments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="reviewAssignment"
+                                type="TReviewAssignment"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TState">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="accepted"/>
+            <xs:enumeration value="rejected"/>
+            <xs:enumeration value="revised"/>
+            <xs:enumeration value="revoked"/>
+            <xs:enumeration value="onReview"/>
+            <xs:enumeration value="published"/>
+            <xs:enumeration value="onRevise"/>
+            <xs:enumeration value="submitted"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="TReviewAssignment">
+        <xs:sequence>
+            <xs:element ref="reviewer"/>
+            <xs:element name="status" type="TReviewAssignementState"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TReviewAssignementState">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="accepted"/>
+            <xs:enumeration value="rejected"/>
+            <xs:enumeration value="reviewed"/>
+            <xs:enumeration value="assigned"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
