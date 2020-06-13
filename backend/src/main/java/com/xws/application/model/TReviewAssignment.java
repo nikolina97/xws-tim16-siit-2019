@@ -11,21 +11,22 @@ package com.xws.application.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for TQuestion complex type.
+ * <p>Java class for TReviewAssignment complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="TQuestion">
+ * &lt;complexType name="TReviewAssignment">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="question" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="answer" type="{https://github.com/nikolina97/xws-tim16-siit-2019}TParagraph"/>
+ *         &lt;element ref="{https://github.com/nikolina97/xws-tim16-siit-2019}reviewer"/>
+ *         &lt;element name="status" type="{https://github.com/nikolina97/xws-tim16-siit-2019}TReviewAssignementState"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,63 +36,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TQuestion", propOrder = {
-    "question",
-    "answer"
+@XmlType(name = "TReviewAssignment", propOrder = {
+    "reviewer",
+    "status"
 })
-public class TQuestion {
+public class TReviewAssignment {
 
     @XmlElement(required = true)
-    protected String question;
+    protected TPerson reviewer;
     @XmlElement(required = true)
-    protected TParagraph answer;
+    @XmlSchemaType(name = "string")
+    protected TReviewAssignementState status;
 
     /**
-     * Gets the value of the question property.
+     * Gets the value of the reviewer property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link TPerson }
      *     
      */
-    public String getQuestion() {
-        return question;
+    public TPerson getReviewer() {
+        return reviewer;
     }
 
     /**
-     * Sets the value of the question property.
+     * Sets the value of the reviewer property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link TPerson }
      *     
      */
-    public void setQuestion(String value) {
-        this.question = value;
+    public void setReviewer(TPerson value) {
+        this.reviewer = value;
     }
 
     /**
-     * Gets the value of the answer property.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
-     *     {@link TParagraph }
+     *     {@link TReviewAssignementState }
      *     
      */
-    public TParagraph getAnswer() {
-        return answer;
+    public TReviewAssignementState getStatus() {
+        return status;
     }
 
     /**
-     * Sets the value of the answer property.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
-     *     {@link TParagraph }
+     *     {@link TReviewAssignementState }
      *     
      */
-    public void setAnswer(TParagraph value) {
-        this.answer = value;
+    public void setStatus(TReviewAssignementState value) {
+        this.status = value;
     }
 
 }

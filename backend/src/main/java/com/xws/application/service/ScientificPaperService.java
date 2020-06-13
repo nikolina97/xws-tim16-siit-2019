@@ -1,6 +1,5 @@
 package com.xws.application.service;
 
-import com.xws.application.model.DocType;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.parser.JAXB;
 import com.xws.application.repository.ScientificPaperRepository;
@@ -15,7 +14,7 @@ public class ScientificPaperService {
 
 	public boolean save(String xml) {
 		try {
-			ScientificPaper paper = (ScientificPaper) JAXB.unmarshal(xml, DocType.SCIENTIFIC_PAPER);
+			ScientificPaper paper = (ScientificPaper) JAXB.unmarshal(xml);
 			repository.store(paper, "scientific_paper.xml");
 
 			//XMLDBManager.store(paper, "scientific_paper.xml");
