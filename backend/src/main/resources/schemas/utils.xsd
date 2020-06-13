@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
-    vc:minVersion="1.0" vc:maxVersion="1.1"
-    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    vc:minVersion="1.0" targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
     xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
     <xs:complexType name="TPerson">
         <xs:sequence>
@@ -50,10 +49,14 @@
             <xs:element name="email">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                        <xs:pattern
+                            value="([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"
+                        />
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="expertise" type="xs:string"/>
         </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
 </xs:schema>

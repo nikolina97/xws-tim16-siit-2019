@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019">
+    <xs:element name="notification">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="scientificPaperId" type="xs:string"/>
+                <xs:element name="from">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="fromId" type="xs:string"/>
+                            <xs:element name="fromEmail" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="to">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="toId" type="xs:string"/>
+                            <xs:element name="toEmail" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="text" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="date" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

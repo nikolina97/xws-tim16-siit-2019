@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+    xmlns="https://github.com/nikolina97/xws-tim16-siit-2019" vc:maxVersion="1.1"
+    vc:minVersion="1.0" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+    <xs:include schemaLocation="utils.xsd"/>
+    <xs:element name="scientific_paper">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="id" type="xs:string"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                    <xs:key name="PK_TITLE">
+                        <xs:selector xpath="sp:title"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" ref="author"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="abstract">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="keywords">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="keyword"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="paragraph" type="TParagraph" maxOccurs="unbounded"
+                                minOccurs="1">
+                                <xs:key name="PK_PARAGRAPH">
+                                    <xs:selector xpath="sp:paragraph"/>
+                                    <xs:field xpath="@id"/>
+                                </xs:key>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="PK_ABSTRACT">
+                        <xs:selector xpath="sp:abstract"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="chapters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="chapter" type="TChapter" maxOccurs="unbounded"
+                                minOccurs="1"> </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="PK_CHAPTER">
+                        <xs:selector xpath="sp:chapter"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                </xs:element>
+                <xs:element name="references">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="reference" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:extension base="TReference">
+                                            <xs:attribute name="id" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="PK_REFERENCE">
+                        <xs:selector xpath="sp:reference"/>
+                        <xs:field xpath="@id"/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="comments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="comments"
+                                type="TParagraph"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="received" type="xs:date"/>
+            <xs:attribute name="revised" type="xs:date"/>
+            <xs:attribute name="accepted" type="xs:date"/>
+            <xs:attribute name="category" type="xs:string" use="required"/>
+            <xs:attribute name="status" type="xs:string" use="required"/>
+            <xs:attribute name="version" type="xs:string" use="required"/>
+            <xs:attribute name="edition" type="xs:string" use="required"/>
+            <xs:attribute name="doi">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="/^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:key name="PK_SP">
+            <xs:selector xpath="sp:scientific_paper"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+    </xs:element>
+    <xs:complexType name="TChapter">
+        <xs:sequence>
+            <xs:element maxOccurs="1" name="subtitle">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="paragraph" type="TParagraph" maxOccurs="unbounded" minOccurs="1">
+                    <xs:key name="PK_FIGURE">
+                        <xs:selector xpath="sp:figure"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                    <xs:key name="PK_QUOTE">
+                        <xs:selector xpath="sp:quote"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                    <xs:key name="PK_TABLE">
+                        <xs:selector xpath="sp:table"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                    <xs:key name="PK_FORMULA">
+                        <xs:selector xpath="sp:formula"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                    <xs:key name="PK_LIST">
+                        <xs:selector xpath="sp:list"/>
+                        <xs:field xpath="@id"/>
+                    </xs:key>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="subchapter" type="TChapter"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="indentation_level">
+            <xs:simpleType>
+                <xs:restriction base="xs:positiveInteger">
+                    <xs:maxInclusive value="5"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TParagraph" mixed="true">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="text" type="TDecorator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="table" type="TTable"/>
+            <xs:element name="ref" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="refId" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="quote">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="TDecorator">
+                            <xs:attribute name="id" type="xs:string"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="figure" type="TImage"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="formula">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="TFormula"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="list" type="TList"/>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TReference">
+        <xs:sequence>
+            <xs:element name="ref_number">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\[\d\]"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="ref_author" type="xs:string"/>
+            <xs:element name="article">
+                <xs:complexType mixed="true">
+                    <xs:sequence>
+                        <xs:element name="link" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attribute name="paper" type="xs:string" use="required"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="year" use="required">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:int">
+                                <xs:maxInclusive value="2020"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="pages">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="\d{1,5}-\d{1,5}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="volume" type="xs:int"/>
+                    <xs:attribute name="number" type="xs:int"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TTableRow">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="td" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TImage">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="image" type="xs:base64Binary"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="TTable">
+        <xs:sequence>
+            <xs:element name="th" type="TTableRow"/>
+            <xs:element maxOccurs="unbounded" name="tr" type="TTableRow"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TFormula">
+        <xs:choice>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="var1" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="var2" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="add" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subtract" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="multiply" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="divide" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="equal" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subformula" type="TFormula"/>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TList">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="decorator" type="TDecorator"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TDecorator">
+        <xs:choice maxOccurs="unbounded" minOccurs="1">
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="bold" type="TDecorator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="italic" type="TDecorator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="underline" type="TDecorator"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="author" type="TPerson"/>
+</xs:schema>

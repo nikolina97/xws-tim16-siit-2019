@@ -19,7 +19,7 @@
                 <xs:element name="authors">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element maxOccurs="unbounded" ref="author"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" ref="author"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -37,6 +37,16 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="grades">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="introduction" type="TGrade"/>
+                            <xs:element name="consclusion" type="TGrade"/>
+                            <xs:element name="experimentResults" type="TGrade"/>
+                            <xs:element name="finalGrade" type="TGrade"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="paper_id" type="xs:string" use="required"/>
@@ -46,33 +56,13 @@
     <xs:complexType name="TQuestion">
         <xs:sequence>
             <xs:element name="question" type="xs:string"/>
-            <xs:element name="answer">
-                <xs:complexType>
-                    <xs:choice maxOccurs="unbounded">
-                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="paragraph"/>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="image">
-                            <xs:complexType>
-                                <xs:simpleContent>
-                                    <xs:extension base="xs:base64Binary">
-                                        <xs:attribute name="id" type="xs:ID" use="required"/>
-                                        <xs:attribute name="name" type="xs:string"/>
-                                    </xs:extension>
-                                </xs:simpleContent>
-                            </xs:complexType>
-                        </xs:element>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="table">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element minOccurs="0" name="th" type="TTableRow"/>
-                                    <xs:element maxOccurs="unbounded" name="tr" type="TTableRow"/>
-                                </xs:sequence>
-                                <xs:attribute name="id" type="xs:ID" use="required"/>
-                                <xs:attribute name="name" type="xs:string"/>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:choice>
-                </xs:complexType>
-            </xs:element>
+            <xs:element name="answer" type="TParagraph"> </xs:element>
         </xs:sequence>
     </xs:complexType>
+    <xs:simpleType name="TGrade">
+        <xs:restriction base="xs:int">
+            <xs:maxInclusive value="5"/>
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
