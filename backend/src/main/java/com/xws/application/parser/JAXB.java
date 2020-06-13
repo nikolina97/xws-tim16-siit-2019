@@ -1,9 +1,5 @@
 package com.xws.application.parser;
 
-import com.xws.application.model.CoverLetter;
-import com.xws.application.model.DocType;
-import com.xws.application.model.Review;
-import com.xws.application.model.ScientificPaper;
 import com.xws.application.util.MyValidationEventHandler;
 import org.xml.sax.SAXException;
 
@@ -17,7 +13,7 @@ import java.io.StringReader;
 
 public class JAXB {
 
-	public static Object unmarshal(String xml, DocType type) throws JAXBException, SAXException {
+	public static Object unmarshal(String xml) throws JAXBException, SAXException {
 		System.out.println("[INFO] JAXB unmarshalling.\n");
 
 		// Definiše se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
@@ -27,16 +23,16 @@ public class JAXB {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 
 		String schemaFile = null;
-		if(type == DocType.SCIENTIFIC_PAPER)
-			schemaFile = "scientific_paper.xsd";
-		else if(type == DocType.REVIEW)
-			schemaFile = "review.xsd";
-		else if(type == DocType.COVER_LETTER)
-			schemaFile = "cover_letter.xsd";
+//		if(type == DocType.SCIENTIFIC_PAPER)
+//			schemaFile = "scientific_paper.xsd";
+//		else if(type == DocType.REVIEW)
+//			schemaFile = "review.xsd";
+//		else if(type == DocType.COVER_LETTER)
+//			schemaFile = "cover_letter.xsd";
 
 		// XML schema validacija
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = schemaFactory.newSchema(new File("../xml/" + schemaFile));
+		Schema schema = schemaFactory.newSchema(new File("shemas/" + schemaFile));
 
 		// Podešavanje unmarshaller-a za XML schema validaciju
 		unmarshaller.setSchema(schema);
@@ -62,12 +58,12 @@ public class JAXB {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 		String schemaFile = null;
-		if(article instanceof ScientificPaper)
-			schemaFile = "scientific_paper.xsd";
-		else if(article instanceof Review)
-			schemaFile = "review.xsd";
-		else if(article instanceof CoverLetter)
-			schemaFile = "cover_letter.xsd";
+//		if(article instanceof ScientificPaper)
+//			schemaFile = "scientific_paper.xsd";
+//		else if(article instanceof Review)
+//			schemaFile = "review.xsd";
+//		else if(article instanceof CoverLetter)
+//			schemaFile = "cover_letter.xsd";
 
 		// XML schema validacija
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
