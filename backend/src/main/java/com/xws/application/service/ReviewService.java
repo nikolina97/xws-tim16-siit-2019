@@ -1,5 +1,6 @@
 package com.xws.application.service;
 
+import com.xws.application.model.DocType;
 import com.xws.application.model.Review;
 import com.xws.application.parser.JAXB;
 import com.xws.application.repository.ReviewRepository;
@@ -14,7 +15,7 @@ public class ReviewService {
 
 	public boolean save(String xml) {
 		try {
-			Review review = (Review) JAXB.unmarshal(xml);
+			Review review = (Review) JAXB.unmarshal(xml, DocType.REVIEW);
 			repository.store(review, "review.xml");
 
 			//XMLDBManager.store(paper, "scientific_paper.xml");
