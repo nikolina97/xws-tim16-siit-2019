@@ -28,7 +28,15 @@
                 <xs:element name="comments">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="comment" type="TParagraph" maxOccurs="unbounded"/>
+                            <xs:element name="comment" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:extension base="TParagraph">
+                                            <xs:attribute name="elementId" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
