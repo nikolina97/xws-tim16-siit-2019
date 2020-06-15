@@ -1,4 +1,4 @@
-package com.xws.application.util;
+package com.xws.application.util.rdf;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,16 +22,16 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 public class MetadataExtractor {
 
 	@Autowired
-	private  TransformerFactory transformerFactory;
+	private  TransformerFactoryImpl transformerFactory;
 	
-	private static final String XSLT_FILE = "src/resources/xslt/grddl.xsl";
+	private static final String XSLT_FILE = "src/main/resources/xslt/grddl.xsl";
 	
-	@SuppressWarnings("restriction")
-	public MetadataExtractor() throws SAXException, IOException {
-		
-		// Setup the XSLT transformer factory
-		transformerFactory = new TransformerFactoryImpl();
-	}
+//	@SuppressWarnings("restriction")
+//	public MetadataExtractor() throws SAXException, IOException {
+//		
+//		// Setup the XSLT transformer factory
+//		transformerFactory = new TransformerFactoryImpl();
+//	}
 
 	/**
 	 * Generates RDF/XML based on RDFa metadata from an XML containing 
