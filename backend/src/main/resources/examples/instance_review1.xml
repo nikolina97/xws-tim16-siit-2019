@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xslt/review.xsl"?>
 <sp:review xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
  xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
