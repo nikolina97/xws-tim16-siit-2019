@@ -14,49 +14,37 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for TState.
+ * <p>Java class for TSPState.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="TState">
+ * &lt;simpleType name="TSPState">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *     &lt;enumeration value="in_procedure"/>
  *     &lt;enumeration value="accepted"/>
  *     &lt;enumeration value="rejected"/>
- *     &lt;enumeration value="revised"/>
  *     &lt;enumeration value="revoked"/>
- *     &lt;enumeration value="onReview"/>
- *     &lt;enumeration value="published"/>
- *     &lt;enumeration value="onRevise"/>
- *     &lt;enumeration value="submitted"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "TState")
+@XmlType(name = "TSPState")
 @XmlEnum
-public enum TState {
+public enum TSPState {
 
+    @XmlEnumValue("in_procedure")
+    IN_PROCEDURE("in_procedure"),
     @XmlEnumValue("accepted")
     ACCEPTED("accepted"),
     @XmlEnumValue("rejected")
     REJECTED("rejected"),
-    @XmlEnumValue("revised")
-    REVISED("revised"),
     @XmlEnumValue("revoked")
-    REVOKED("revoked"),
-    @XmlEnumValue("onReview")
-    ON_REVIEW("onReview"),
-    @XmlEnumValue("published")
-    PUBLISHED("published"),
-    @XmlEnumValue("onRevise")
-    ON_REVISE("onRevise"),
-    @XmlEnumValue("submitted")
-    SUBMITTED("submitted");
+    REVOKED("revoked");
     private final String value;
 
-    TState(String v) {
+    TSPState(String v) {
         value = v;
     }
 
@@ -64,8 +52,8 @@ public enum TState {
         return value;
     }
 
-    public static TState fromValue(String v) {
-        for (TState c: TState.values()) {
+    public static TSPState fromValue(String v) {
+        for (TSPState c: TSPState.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

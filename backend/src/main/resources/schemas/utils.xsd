@@ -56,7 +56,8 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="expertise" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:string"/>
+        <xs:anyAttribute namespace="##local"/>
     </xs:complexType>
 </xs:schema>
