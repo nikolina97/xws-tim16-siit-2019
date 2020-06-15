@@ -8,21 +8,16 @@
     <xs:element name="review">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="title" type="xs:string"/>
-                <xs:element name="reviewers">
+                <xs:element name="title">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element maxOccurs="unbounded" ref="reviewer"/>
-                        </xs:sequence>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:anyAttribute namespace="##local"/>
+                            </xs:extension>
+                        </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="authors">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element maxOccurs="unbounded" minOccurs="1" ref="author"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs="1" ref="reviewer"/>
                 <xs:element name="questions">
                     <xs:complexType>
                         <xs:sequence>
@@ -47,9 +42,10 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="paper_version" type="xs:positiveInteger"/>
+                <xs:element minOccurs="0" name="date" type="xs:date"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
-            <xs:attribute name="paper_id" type="xs:string" use="required"/>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="reviewer" type="TPerson"/>

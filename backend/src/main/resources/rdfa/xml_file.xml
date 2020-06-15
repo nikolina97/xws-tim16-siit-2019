@@ -3,7 +3,7 @@
 	 RDFa Visualization: 	https://rdfa.info/play/ --><addr:address_book xmlns:addr="http://www.ftn.uns.ac.rs/rdf/example" xmlns="http://www.w3.org/ns/rdfa#" xmlns:pred="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" xmlns:xs="http://www.w3.org/2001/XMLSchema#">
     <addr:title>Address book sample</addr:title>
     <addr:contacts>
-        <addr:contact about="http://www.ftn.uns.ac.rs/rdf/examples/person/John_Smith" href="http://www.ftn.uns.ac.rs/rdf/examples/person/Jane_Smith" rel="pred:parentTo" typeof="pred:Person" vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/">
+        <addr:contact about="http://www.ftn.uns.ac.rs/rdf/examples/person/2@a.com" href="http://www.ftn.uns.ac.rs/rdf/examples/person/Jane_Smith" rel="pred:parentTo" typeof="pred:Person" vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/">
         	<addr:name>
         		<addr:first_name>John</addr:first_name>
         		<addr:last_name>Smith</addr:last_name>

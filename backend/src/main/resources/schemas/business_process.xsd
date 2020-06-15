@@ -13,7 +13,7 @@
                 <xs:element name="reviewAssignments">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element maxOccurs="unbounded" minOccurs="1" name="reviewAssignment"
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="reviewAssignment"
                                 type="TReviewAssignment"/>
                         </xs:sequence>
                     </xs:complexType>
