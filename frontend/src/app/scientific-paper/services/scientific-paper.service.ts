@@ -7,7 +7,7 @@ import { PaperLetterDTO } from '../models/paper-letter-dto';
 })
 export class ScientificPaperService {
 
-  private baseUrl = 'http://localhost:8081/api/';
+  private baseUrl = 'http://localhost:8081/api/paper';
 
   constructor(private http: HttpClient) { }
 

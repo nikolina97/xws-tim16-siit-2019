@@ -1,5 +1,6 @@
 package com.xws.application.controller;
 
+import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.service.ScientificPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/paper")
 public class ScientificPaperController {
 
 	@Autowired
 	private ScientificPaperService service;
 
-	@PostMapping(value = "/paper/save", consumes = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> save(@RequestBody String xml) {
-		return service.save(xml) ? new ResponseEntity<>("Paper successfully saved", HttpStatus.OK) : new ResponseEntity<>("Something is wrong with your paper, check it.", HttpStatus.BAD_REQUEST);
+	@PostMapping
+	public ResponseEntity<String> save(@RequestBody PaperLetterDTO dto) {
+		return service.save(dto) ? new ResponseEntity<>("Paper and cover letter successfully saved", HttpStatus.OK) : new ResponseEntity<>("Something is wrong with your paper or letter, check them.", HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping(value = "/paper/{paperID}", produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity get(@PathVariable String paperID) {
-		ScientificPaper paper = service.get(paperID);
+	@GetMapping("/{id}")
+	public ResponseEntity get(@PathVariable String id) {
+		ScientificPaper paper = service.get(id);
 		return paper != null ? new ResponseEntity<>(paper, HttpStatus.OK) : new ResponseEntity<>("Paper doesn't exist.", HttpStatus.NOT_FOUND);
 	}
 

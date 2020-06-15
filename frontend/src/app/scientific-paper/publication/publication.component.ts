@@ -1,7 +1,9 @@
-import { Component, OnInit, ɵɵstylePropInterpolate1 } from '@angular/core';
-import { PaperLetterDTO } from "../models/paper-letter-dto";
+import { Component, OnInit } from '@angular/core';
+import { ScientificPaperDTO } from "../models/scientific-paper-dto";
 import { ScientificPaperService } from '../services/scientific-paper.service';
+import { CoverLetterService } from 'src/app/cover-letter/services/cover-letter.service';
 import { Router } from '@angular/router';
+import { PaperLetterDTO } from '../models/paper-letter-dto';
 
 declare const Xonomy: any;
 
@@ -18,7 +20,7 @@ export class PublicationComponent implements OnInit {
   paperSpec = {};
   letterSpec = {};
 
-  constructor(private paperService: ScientificPaperService, private router: Router) { }
+  constructor(private paperService: ScientificPaperService, private letterService: CoverLetterService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -54,7 +56,6 @@ export class PublicationComponent implements OnInit {
       letter: this.letter
     };
 
-    // TODO submit documents
     this.paperService.publish(dto).subscribe(
       result => {
         this.router.navigate(['/']);

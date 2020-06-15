@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScientificPaperModule } from './scientific-paper/scientific-paper.module';
 import { SharedModule } from './shared/shared.module';
+import { CoverLetterModule } from './cover-letter/cover-letter.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     ScientificPaperModule,
-    SharedModule
+    SharedModule,
+    CoverLetterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

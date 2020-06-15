@@ -1,5 +1,6 @@
 package com.xws.application.service;
 
+import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.model.DocType;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.parser.DOMParser;
@@ -34,7 +35,7 @@ public class ScientificPaperService {
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
 
-	public boolean save(String xml) {
+	public boolean save(PaperLetterDTO dto) {
 		try {
 			ScientificPaper paper = (ScientificPaper) JAXB.unmarshal(xml, DocType.SCIENTIFIC_PAPER);
 //			System.out.println(paper);
