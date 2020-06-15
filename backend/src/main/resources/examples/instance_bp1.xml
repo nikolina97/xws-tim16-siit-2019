@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:author xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+ xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv2/xws-tim16-siit-2019/backend/src/main/resources/schemas/business_process.xsd" id="id0">
+    <sp:first_name>first_name0</sp:first_name>
+    <sp:last_name>last_name0</sp:last_name>
+    <sp:university>
+        <sp:name>name0</sp:name>
+        <sp:city>city0</sp:city>
+        <sp:country>country0</sp:country>
+    </sp:university>
+    <sp:email>0@00.AA</sp:email>
+    <sp:expertise>expertise0</sp:expertise>
+    <sp:expertise>expertise1</sp:expertise>
+</sp:author>
