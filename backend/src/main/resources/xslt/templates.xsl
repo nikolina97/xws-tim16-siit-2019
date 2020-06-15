@@ -63,7 +63,7 @@
    	
    	 <xsl:template match="sp:table">
    	 <div align="center">
-            <table border="1" style="width: 100;align:center">
+            <table border="1" style="width: 100%;align:center">
                 <xsl:for-each select="./sp:tr">
                     <tr>
                     	<xsl:for-each select="./sp:th">
@@ -108,17 +108,10 @@
     
     <xsl:template name="ChapterTemplate">
      	<xsl:param name="chapter"/>
-	   	<xsl:choose>
-	       	<xsl:when test="@indentation_level=1">
-	       		<h2 align="center"><xsl:value-of select="$chapter/sp:subtitle"/></h2>
-	     	</xsl:when>
-	     	<xsl:when test="@indentation_level=2">
-	       		<h3 align="center"><xsl:value-of select="$chapter/sp:subtitle"/></h3>
-	     	</xsl:when>
-	     	<xsl:when test="@indentation_level=3">
-	       		<h4 align="center"><xsl:value-of select="$chapter/sp:subtitle"/></h4>
-	     	</xsl:when>
-	     </xsl:choose>
+	       	<h2 align="left"><xsl:value-of select="$chapter/sp:subtitle"/></h2>
+	       	<xsl:for-each select="$chapter/sp:paragraph">
+	     	<xsl:apply-templates></xsl:apply-templates>
+	     </xsl:for-each>
 	     <xsl:for-each select="$chapter/sp:subchapter">
                <xsl:call-template name="SubchapterTemplate">
                        <xsl:with-param name="subchapter" select = "." />
@@ -130,18 +123,39 @@
      	<xsl:param name="subchapter"/>
 	   	<xsl:choose>
 	       	<xsl:when test="@indentation_level=1">
-	       		<h2 align="center"><xsl:value-of select="$subchapter/sp:subtitle"/></h2>
+	       		<h2 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h2>
 	     	</xsl:when>
 	     	<xsl:when test="@indentation_level=2">
-	       		<h3 align="center"><xsl:value-of select="$subchapter/sp:subtitle"/></h3>
+	       		<h3 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h3>
 	     	</xsl:when>
 	     	<xsl:when test="@indentation_level=3">
-	       		<h4 align="center"><xsl:value-of select="$subchapter/sp:subtitle"/></h4>
+	       		<h4 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h4>
 	     	</xsl:when>
 	     </xsl:choose>
-	     	     <xsl:for-each select="$subchapter/sp:paragraph">
+	     <xsl:for-each select="$subchapter/sp:paragraph">
 	     	<xsl:apply-templates></xsl:apply-templates>
 	     </xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template name="ReferenceTemplate">
+     	<xsl:param name="reference"/>
+	   	<div align="left">
+	   	<xsl:value-of select="$reference/sp:ref_number"></xsl:value-of>&#160;
+	   	<xsl:for-each select="$reference/sp:ref_author">
+	   		<xsl:value-of select="."></xsl:value-of>,&#160;
+	   	</xsl:for-each>
+	   	<xsl:for-each select="$reference/sp:article/sp:link">
+	   		<a>
+	   		<xsl:attribute name="href">
+	   			<xsl:value-of select="."/>
+	   		</xsl:attribute>
+	   		<xsl:value-of select="@paper"></xsl:value-of>
+	   		</a>
+	   		<xsl:if test="position()!=last()">
+	   		,&#160;
+	   		</xsl:if>
+	   	</xsl:for-each>
+	   	</div>
 	</xsl:template>
     
     

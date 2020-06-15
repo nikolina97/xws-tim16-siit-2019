@@ -13,7 +13,7 @@
                 <xs:element name="author" type="TPerson"> </xs:element>
                 <xs:element name="editor" type="TEditor"> </xs:element>
                 <xs:element name="date" type="xs:date"/>
-                <xs:element name="content" type="TParagraph"/>
+                <xs:element name="content" type="TDecorator" maxOccurs="unbounded" minOccurs="1"/>
                 <xs:element name="signature">
                     <xs:complexType mixed="true">
                         <xs:sequence>
@@ -25,7 +25,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="TEditor">

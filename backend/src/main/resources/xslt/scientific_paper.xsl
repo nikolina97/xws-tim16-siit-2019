@@ -15,27 +15,26 @@
                 	 <xsl:value-of select="sp:scientific_paper/sp:title"/>
                  </h1>
                  <div align="center">
-                  <table width = "100%">
+                  <p>
                  <xsl:for-each select="sp:scientific_paper/sp:authors/sp:author">
-                 <tr>
-                 	<td>
+
                  	<xsl:call-template name="AuthorTemplate">
             							<xsl:with-param name="author" select = "." />
             		</xsl:call-template>
-            		</td>
-                 </tr>
+            		<br></br>
                  </xsl:for-each>
-                 </table>
+                 </p>
                  </div>
                  
-                  <b><i>Abstract - </i></b>
+                  <b>Abstract</b><br></br>
                     <div>
                         <xsl:for-each select="sp:scientific_paper/sp:abstract/sp:paragraph">
                            <xsl:apply-templates></xsl:apply-templates>
                        </xsl:for-each>
                     </div><br/>
                
-               <i><b>Keywords</b> - 
+               <b>Keywords</b>:
+               <i>
                     <xsl:for-each select="sp:scientific_paper/sp:abstract/sp:keywords/sp:keyword">
                         <xsl:value-of select="."/><xsl:if test="position()!=last()">, </xsl:if>
                     </xsl:for-each>	
@@ -44,6 +43,12 @@
                 	<xsl:for-each select="sp:scientific_paper/sp:chapters/sp:chapter">
                         <xsl:call-template name="ChapterTemplate">
                         <xsl:with-param name="chapter" select = "." />
+                   	 	</xsl:call-template>
+                    </xsl:for-each>
+                    <h3>References</h3>
+                    <xsl:for-each select="sp:scientific_paper/sp:references/sp:reference">
+                        <xsl:call-template name="ReferenceTemplate">
+                        <xsl:with-param name="reference" select = "." />
                    	 	</xsl:call-template>
                     </xsl:for-each>
              </body>

@@ -242,38 +242,6 @@
                    paraparaparagraf dkbsajejneja
                     <sp:quote id="id27">
                     </sp:quote>
-                    <sp:table name="name0" id="id28">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        <sp:td>t15555555
-                        	</sp:td>
-                        	<sp:td>t2
-                        	</sp:td>
-                        	 <sp:td>t1
-                        	</sp:td>
-                        	<sp:td>t2
-                        	</sp:td>
-                        </sp:tr>
-                        <sp:tr>
-                        <sp:td>t15
-                        	</sp:td>
-                        	<sp:td>t2
-                        	</sp:td>
-                        	 <sp:td>t1
-                        	</sp:td>
-                        	<sp:td>t2
-                        	</sp:td>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name1" id="id29">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
                 </sp:paragraph>
             </sp:subchapter>
             <sp:subchapter id="id30" indentation_level="3">
@@ -309,22 +277,6 @@
                     </sp:quote>
                 </sp:paragraph>
                 <sp:paragraph id="id44">
-                    <sp:table name="name2" id="id45">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name3" id="id46">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
                     <sp:ref refId="refId8">ref8</sp:ref>
                     <sp:ref refId="refId9">ref9</sp:ref>
                 </sp:paragraph>
@@ -405,20 +357,9 @@
                     </sp:list>
                 </sp:paragraph>
                 <sp:paragraph id="id74">
-                    <sp:table name="name4" id="id75">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
                     <sp:table name="name5" id="id76">
-                        <sp:th>
-                        </sp:th>
                         <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
+                        	<sp:td>cell</sp:td>
                         </sp:tr>
                     </sp:table>
                     <sp:list id="id77">
@@ -455,22 +396,6 @@
                     </sp:text>
                 </sp:paragraph>
                 <sp:paragraph id="id84">
-                    <sp:table name="name6" id="id85">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name7" id="id86">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
                     <sp:figure id="id87">
                         <sp:description>description4</sp:description>
                         <sp:image>ZGVmYXVsdA==</sp:image>
@@ -526,38 +451,6 @@
                     </sp:quote>
                 </sp:paragraph>
                 <sp:paragraph id="id105">
-                    <sp:table name="name8" id="id106">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name9" id="id107">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name10" id="id108">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
-                    <sp:table name="name11" id="id109">
-                        <sp:th>
-                        </sp:th>
-                        <sp:tr>
-                        </sp:tr>
-                        <sp:tr>
-                        </sp:tr>
-                    </sp:table>
                 </sp:paragraph>
                 <sp:subchapter id="id110" indentation_level="3">
                     <sp:subtitle>subtitle14</sp:subtitle>
@@ -603,22 +496,6 @@
                     <sp:italic>
                     </sp:italic>
                 </sp:text>
-                <sp:table name="name12" id="id121">
-                    <sp:th>
-                    </sp:th>
-                    <sp:tr>
-                    </sp:tr>
-                    <sp:tr>
-                    </sp:tr>
-                </sp:table>
-                <sp:table name="name13" id="id122">
-                    <sp:th>
-                    </sp:th>
-                    <sp:tr>
-                    </sp:tr>
-                    <sp:tr>
-                    </sp:tr>
-                </sp:table>
             </sp:paragraph>
             <sp:paragraph id="id123">
                 <sp:ref refId="refId16">ref16</sp:ref>
@@ -669,10 +546,6 @@
     <sp:comments>
         <sp:comments id="id128">
             <sp:table name="name14" id="id129">
-                <sp:th>
-                    <sp:td>td0</sp:td>
-                    <sp:td>td1</sp:td>
-                </sp:th>
                 <sp:tr>
                     <sp:td>td2</sp:td>
                     <sp:td>td3</sp:td>
@@ -683,10 +556,6 @@
                 </sp:tr>
             </sp:table>
             <sp:table name="name15" id="id130">
-                <sp:th>
-                    <sp:td>td6</sp:td>
-                    <sp:td>td7</sp:td>
-                </sp:th>
                 <sp:tr>
                     <sp:td>td8</sp:td>
                     <sp:td>td9</sp:td>
