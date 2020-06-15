@@ -1,21 +1,47 @@
 package com.xws.application.service;
 
-import com.xws.application.model.DocType;
-import com.xws.application.model.Review;
-import com.xws.application.parser.JAXB;
-import com.xws.application.repository.ReviewRepository;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.xws.application.model.DocType;
+import com.xws.application.model.Review;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.parser.JAXB;
+import com.xws.application.repository.ReviewRepository;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RDFFileToString;
+import com.xws.application.util.rdf.StringToXMLFile;
 
 @Service
 public class ReviewService {
 
 	@Autowired
 	private ReviewRepository repository;
+	
+	@Autowired
+	private MetadataExtractor metadataExtractor;
+	
+	@Autowired
+	private DOMParser domParser;
+	
+	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
+	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
 
 	public boolean save(String xml) {
 		try {
 			Review review = (Review) JAXB.unmarshal(xml, DocType.REVIEW);
+//			System.out.println(paper);
+//			Document document = domParser.buildDocument(xml);
+			
+			StringToXMLFile.stringToDom(xml, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			String metadata = RDFFileToString.toString(rdfFilePath);
+			repository.storeMetadata(metadata, "/review/" + review.getId());
+			
 			repository.store(review, "review.xml");
 
 			//XMLDBManager.store(paper, "scientific_paper.xml");
