@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ScientificPaperDTO } from "../models/scientific-paper-dto";
 import { ScientificPaperService } from '../services/scientific-paper.service';
-import { CoverLetterService } from 'src/app/cover-letter/services/cover-letter.service';
-import { Router } from '@angular/router';
 import { PaperLetterDTO } from '../models/paper-letter-dto';
+import { Router } from '@angular/router';
 
 declare const Xonomy: any;
 
 @Component({
-  selector: 'app-publication',
-  templateUrl: './publication.component.html',
-  styleUrls: ['./publication.component.css']
+  selector: 'app-publishing',
+  templateUrl: './publishing.component.html',
+  styleUrls: ['./publishing.component.css']
 })
-export class PublicationComponent implements OnInit {
+export class PublishingComponent implements OnInit {
 
   paper: string = '';
   letter: string = '';
@@ -20,10 +18,9 @@ export class PublicationComponent implements OnInit {
   paperSpec = {};
   letterSpec = {};
 
-  constructor(private paperService: ScientificPaperService, private letterService: CoverLetterService, private router: Router) { }
+  constructor(private paperService: ScientificPaperService, private router: Router) { }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
   }
 
   public onFileLoad(input: any) {

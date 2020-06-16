@@ -12,12 +12,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import com.xws.application.model.*;
 import org.xml.sax.SAXException;
 
-import com.xws.application.model.CoverLetter;
-import com.xws.application.model.DocType;
-import com.xws.application.model.Review;
-import com.xws.application.model.ScientificPaper;
 import com.xws.application.util.MyValidationEventHandler;
 
 public class JAXB {
@@ -79,6 +76,8 @@ public class JAXB {
 			schemaFile = "review.xsd";
 		else if(article instanceof CoverLetter)
 			schemaFile = "cover_letter.xsd";
+		else if(article instanceof BusinessProcess)
+			schemaFile = "business_process.xsd";
 
 		// XML schema validacija
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

@@ -3,19 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { MatMenuModule } from "@angular/material/menu";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatButtonModule } from "@angular/material/button";
 
 import { SharedRoutingModule } from './shared-routing.module';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent],
+  declarations: [HeaderComponent, PageNotFoundComponent],
   imports: [
-    SharedRoutingModule,
     CommonModule,
+    SharedRoutingModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule
   ],
   exports: [
     HeaderComponent

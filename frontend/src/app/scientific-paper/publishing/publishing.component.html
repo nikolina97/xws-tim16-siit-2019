@@ -2,19 +2,20 @@
 	<div class="row">
 		<div class="col" style="max-height: 93vh; overflow: auto;">
 			<input type="file" accept="text/xml" #paper_file name="paper" hidden (change)="onFileLoad($event)" required>
-			<button mat-button (click)="paper_file.click()">Attach paper</button>
+			<button mat-flat-button color="primary" (click)="paper_file.click()">Attach paper</button>
 			<div id="paper_editor"></div>
 		</div>
 		<div class="col" style="max-height: 93vh; overflow: auto;">
 			<input type="file" accept="text/xml" #letter_file name="letter" hidden (change)="onFileLoad($event)"
 				required>
-			<button mat-button (click)="letter_file.click()">Attach cover letter</button>
+			<button mat-flat-button color="primary" (click)="letter_file.click()">Attach cover letter</button>
 			<div id="letter_editor"></div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col">
-			<button mat-button (click)="submit()">Publish</button>
+			<button mat-raised-button color="primary" (click)="submit()"
+				[disabled]="paper == '' || letter == ''">Publish</button>
 		</div>
 	</div>
 </div>

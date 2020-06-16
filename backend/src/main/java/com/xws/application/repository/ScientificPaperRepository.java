@@ -10,7 +10,6 @@ import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.xws.application.util.rdf.RdfConnectionProperties;
@@ -19,13 +18,16 @@ import com.xws.application.util.rdf.SparqlUtil;
 @Repository
 public class ScientificPaperRepository {
 
-
 	public void store(Object model, String documentId) throws Exception {
-		XMLDBManager.store(model, "/db/library/papers", documentId);
+		XMLDBManager.store(model, "/db/papers", documentId);
 	}
 
 	public Object retrieve(String documentId) throws Exception {
-		return XMLDBManager.retrieve("/db/library/papers", documentId);
+		return XMLDBManager.retrieve("/db/papers", documentId);
+	}
+
+	public int getDocumentCount() throws Exception {
+		return XMLDBManager.getDocumentCount("/db/papers");
 	}
 
 	public void storeMetadata(String metadata, String graphName) throws IOException {

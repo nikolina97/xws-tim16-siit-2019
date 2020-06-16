@@ -87,7 +87,7 @@ Xonomy.js2xml = function (js) {
 				var child = js.children[i];
 				if (child.type == "text") hasText = true;
 			}
-			if (hasText) xml += " xml:space='preserve'";
+			// if (hasText) xml += " xml:space='preserve'";
 			xml += ">";
 			for (var i = 0; i < js.children.length; i++) {
 				var child = js.children[i];
@@ -416,7 +416,6 @@ Xonomy.harvestCache = {};
 Xonomy.harvest = function (editor) { //harvests the contents of an editor
 	//Returns xml-as-string.
 	var rootElement = $("#" + editor + " .element").first().toArray()[0];
-	console.log('root element je: ', rootElement);
 	var js = Xonomy.harvestElement(rootElement);
 	for (var key in Xonomy.namespaces) {
 		if (!js.hasAttribute(key)) js.attributes.push({

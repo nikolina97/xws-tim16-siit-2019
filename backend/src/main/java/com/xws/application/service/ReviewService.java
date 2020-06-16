@@ -4,17 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import com.xws.application.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xws.application.model.DocType;
-import com.xws.application.model.Review;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.parser.JAXB;
 import com.xws.application.repository.ReviewRepository;
 import com.xws.application.util.rdf.MetadataExtractor;
 import com.xws.application.util.rdf.RDFFileToString;
-import com.xws.application.util.rdf.StringToXMLFile;
 
 @Service
 public class ReviewService {
@@ -37,7 +36,7 @@ public class ReviewService {
 //			System.out.println(paper);
 //			Document document = domParser.buildDocument(xml);
 			
-			StringToXMLFile.stringToDom(xml, xmlFilePath);
+			// StringToXMLFile.stringToDom(xml);
 			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
 			String metadata = RDFFileToString.toString(rdfFilePath);
 			repository.storeMetadata(metadata, "/review/" + review.getId());
@@ -54,9 +53,9 @@ public class ReviewService {
 		}
 	}
 
-	public Review get(String paperID) {
+	public Review get(String reviewID) {
 		try {
-			return (Review) repository.retrieve("review.xml");
+			return (Review) repository.retrieve(reviewID);
 		} catch (Exception e) {
 			e.printStackTrace();
 

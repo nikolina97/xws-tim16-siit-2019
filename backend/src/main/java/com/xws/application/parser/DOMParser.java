@@ -1,18 +1,15 @@
 package com.xws.application.parser;
 
-import static org.apache.xerces.jaxp.JAXPConstants.JAXP_SCHEMA_LANGUAGE;
-import static org.apache.xerces.jaxp.JAXPConstants.W3C_XML_SCHEMA;
-
-import java.io.File;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 
 @Component
 public class DOMParser implements ErrorHandler {
@@ -26,24 +23,22 @@ public class DOMParser implements ErrorHandler {
 		factory = DocumentBuilderFactory.newInstance();
 
 		/* Uključuje validaciju. */
-		factory.setValidating(true);
+		// factory.setValidating(true);
 
 		factory.setNamespaceAware(true);
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
 
 		/* Validacija u odnosu na XML šemu. */
-		factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+		// factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
 	}
 
 	/**
-	 * Generates document object model for a given XML file.
-	 * XML schema has to be in same directory as given XML file for successful validation.
+	 * Generates document object model for a given string.
 	 *
-	 * @param filePath XML document file path
+	 * @param xml XML document
 	 */
-	// TODO Promeniti na File umesto String filePath ?
-	public Document buildDocument(String filePath) {
+	public Document buildDocument(String xml) {
 
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -51,7 +46,7 @@ public class DOMParser implements ErrorHandler {
 			/* Postavlja error handler. */
 			builder.setErrorHandler(this);
 
-			Document document = builder.parse(new File(filePath));
+			Document document = builder.parse(new InputSource(new StringReader(xml)));
 
 			/* Detektuju eventualne greske */
 			if (document != null)

@@ -19,11 +19,15 @@ import com.xws.application.util.rdf.SparqlUtil;
 public class ReviewRepository {
 
 	public void store(Object model, String documentId) throws Exception {
-		XMLDBManager.store(model, "/db/library/reviews", documentId);
+		XMLDBManager.store(model, "/db/reviews", documentId);
 	}
 
 	public Object retrieve(String documentId) throws Exception {
-		return XMLDBManager.retrieve("/db/library/reviews", documentId);
+		return XMLDBManager.retrieve("/db/reviews", documentId);
+	}
+
+	public int getDocumentCount() throws Exception {
+		return XMLDBManager.getDocumentCount("/db/reviews");
 	}
 	
 	public void storeMetadata(String metadata, String graphName) throws IOException {

@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ScientificPaperModule } from './scientific-paper/scientific-paper.module';
 import { SharedModule } from './shared/shared.module';
-import { CoverLetterModule } from './cover-letter/cover-letter.module';
+import { ScientificPaperModule } from './scientific-paper/scientific-paper.module';
+import { ReviewModule } from './review/review.module';
 
 @NgModule({
   declarations: [
@@ -18,9 +18,10 @@ import { CoverLetterModule } from './cover-letter/cover-letter.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ScientificPaperModule,
     SharedModule,
-    CoverLetterModule
+    ScientificPaperModule,
+    ReviewModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

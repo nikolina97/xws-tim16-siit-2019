@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PublicationComponent } from './publication/publication.component';
+import { PublishingComponent } from './publishing/publishing.component';
 
 
 const routes: Routes = [
-  { path: 'paper/new', component: PublicationComponent }
+  { path: 'paper/new', component: PublishingComponent }
 ];
 
 @NgModule({
