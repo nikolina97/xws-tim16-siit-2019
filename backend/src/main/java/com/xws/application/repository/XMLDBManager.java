@@ -1,13 +1,9 @@
 package com.xws.application.repository;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.OutputKeys;
-
+import com.xws.application.parser.JAXB;
+import com.xws.application.util.AuthenticationUtilities;
 import org.exist.xmldb.EXistResource;
+import org.w3c.dom.Document;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -17,8 +13,14 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
-import com.xws.application.parser.JAXB;
-import com.xws.application.util.AuthenticationUtilities;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
 
 public class XMLDBManager {
 
@@ -49,10 +51,21 @@ public class XMLDBManager {
 			System.out.println("[INFO] Inserting the document: " + documentId);
 			res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
 
-			OutputStream out = new ByteArrayOutputStream();
-			JAXB.marshal(model, out);
+			if(model instanceof Document) {
+				DOMSource domSource = new DOMSource((Document) model);
+				StringWriter writer = new StringWriter();
+				StreamResult result = new StreamResult(writer);
+				TransformerFactory tf = TransformerFactory.newInstance();
+				Transformer transformer = tf.newTransformer();
+				transformer.transform(domSource, result);
 
-			res.setContent(out);
+				res.setContent(writer.toString());
+			} else {
+				OutputStream out = new ByteArrayOutputStream();
+				JAXB.marshal(model, out);
+
+				res.setContent(out);
+			}
 			System.out.println("[INFO] Storing the document: " + res.getId());
 
 			col.storeResource(res);
@@ -129,7 +142,7 @@ public class XMLDBManager {
 		}
 	}
 
-	public static Object retrieve(String collectionId, String documentId) throws Exception {
+	public static String retrieve(String collectionId, String documentId) throws Exception {
 		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
 		// initialize collection and document identifiers
@@ -148,12 +161,13 @@ public class XMLDBManager {
 		Collection col = null;
 		XMLResource res = null;
 
-		Object model = null;
+		String model;
 
 		try {
 			// get the collection
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
-			col = DatabaseManager.getCollection(conn.uri + collectionId);
+			// col = DatabaseManager.getCollection(conn.uri + collectionId);
+			col = getOrCreateCollection(collectionId, conn);
 			col.setProperty(OutputKeys.INDENT, "yes");
 
 			System.out.println("[INFO] Retrieving the document: " + documentId);
@@ -161,15 +175,10 @@ public class XMLDBManager {
 
 			if(res == null) {
 				System.out.println("[WARNING] Document '" + documentId + "' can not be found!");
-			} else {
-
-				System.out.println("[INFO] Binding XML resouce to an JAXB instance: ");
-				JAXBContext context = JAXBContext.newInstance("com.xws.application.model");
-
-				Unmarshaller unmarshaller = context.createUnmarshaller();
-
-				model = unmarshaller.unmarshal(res.getContentAsDOM());
+				return null;
 			}
+
+			model = res.toString();
 		} finally {
 			//don't forget to clean up!
 
@@ -299,5 +308,45 @@ public class XMLDBManager {
 		return result;
 	}
 
+
+	public static int getDocumentCount(String collectionId) throws Exception {
+		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+		// initialize collection and document identifiers
+		System.out.println("\t- collection ID: " + collectionId);
+
+		// initialize database driver
+		System.out.println("[INFO] Loading driver class: " + conn.driver);
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		Collection col = null;
+		int count = 0;
+
+		try {
+			// get the collection
+			System.out.println("[INFO] Retrieving the collection: " + collectionId);
+			// col = DatabaseManager.getCollection(conn.uri + collectionId);
+			col = getOrCreateCollection(collectionId, conn);
+			col.setProperty(OutputKeys.INDENT, "yes");
+
+			count = col.getResourceCount();
+		} finally {
+			//don't forget to clean up!
+			if(col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+
+		return count;
+	}
 
 }

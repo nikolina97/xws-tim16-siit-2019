@@ -4,6 +4,7 @@ package com.xws.application.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xws.application.model.Users;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.xws.application.model.Users;
 import com.xws.application.repository.UserRepository;
 
 @Service

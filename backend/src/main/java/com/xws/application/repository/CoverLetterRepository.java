@@ -19,11 +19,15 @@ import com.xws.application.util.rdf.SparqlUtil;
 public class CoverLetterRepository {
 
 	public void store(Object model, String documentId) throws Exception {
-		XMLDBManager.store(model, "/db/library/letters", documentId);
+		XMLDBManager.store(model, "/db/letters", documentId);
 	}
 
 	public Object retrieve(String documentId) throws Exception {
-		return XMLDBManager.retrieve("/db/library/letters", documentId);
+		return XMLDBManager.retrieve("/db/letters", documentId);
+	}
+
+	public int getDocumentCount() throws Exception {
+		return XMLDBManager.getDocumentCount("/db/letters");
 	}
 	
 	public void storeMetadata(String metadata, String graphName) throws IOException {

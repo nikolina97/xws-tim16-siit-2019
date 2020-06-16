@@ -15,11 +15,6 @@ public class CoverLetterController {
 	@Autowired
 	private CoverLetterService service;
 
-	@PostMapping(value = "/letter/save", consumes = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> save(@RequestBody String xml) {
-		return service.save(xml) ? new ResponseEntity<>("Letter successfully saved", HttpStatus.OK) : new ResponseEntity<>("Something is wrong with your letter, check it.", HttpStatus.BAD_REQUEST);
-	}
-
 	@GetMapping(value = "/letter/{letterID}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity get(@PathVariable String letterID) {
 		CoverLetter letter = service.get(letterID);

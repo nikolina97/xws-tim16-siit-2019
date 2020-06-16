@@ -56,8 +56,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="expertise" type="xs:string"/>
-            <xs:element name="username" type="xs:string"/>
         </xs:sequence>
-        <xs:anyAttribute namespace="##local"/>
+        <xs:anyAttribute namespace="##local" processContents="skip"/>
     </xs:complexType>
 </xs:schema>

@@ -3,15 +3,13 @@ package com.xws.application.repository;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import com.xws.application.model.Users;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
-
-import com.xws.application.model.TPerson;
-import com.xws.application.model.Users;
 
 @Repository
 public class UserRepository {

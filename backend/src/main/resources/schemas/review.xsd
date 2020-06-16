@@ -12,7 +12,7 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:anyAttribute namespace="##local"/>
+                                <xs:anyAttribute namespace="##local" processContents="skip"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>

@@ -14,11 +14,8 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import com.xws.application.model.CoverLetter;
-import com.xws.application.model.DocType;
-import com.xws.application.model.Review;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.Users;
+import com.xws.application.model.*;
+
 import com.xws.application.util.MyValidationEventHandler;
 
 public class JAXB {
@@ -80,6 +77,8 @@ public class JAXB {
 			schemaFile = "review.xsd";
 		else if(article instanceof CoverLetter)
 			schemaFile = "cover_letter.xsd";
+		else if(article instanceof BusinessProcess)
+			schemaFile = "business_process.xsd";
 		else if(article instanceof Users)
 			schemaFile = "user.xsd";
 

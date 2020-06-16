@@ -1,10 +1,10 @@
 package com.xws.application.service;
 
+import com.xws.application.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xws.application.model.DocType;
-import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.parser.JAXB;
 import com.xws.application.repository.UserRepository;
