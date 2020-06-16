@@ -12,8 +12,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import com.xws.application.model.*;
 import org.xml.sax.SAXException;
+
+import com.xws.application.model.*;
 
 import com.xws.application.util.MyValidationEventHandler;
 
@@ -78,6 +79,8 @@ public class JAXB {
 			schemaFile = "cover_letter.xsd";
 		else if(article instanceof BusinessProcess)
 			schemaFile = "business_process.xsd";
+		else if(article instanceof Users)
+			schemaFile = "user.xsd";
 
 		// XML schema validacija
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
