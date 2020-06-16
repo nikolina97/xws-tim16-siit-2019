@@ -18,6 +18,7 @@
                         <xs:sequence>
                             <xs:element name="userInfo" type="TPerson"/>
                             <xs:element name="role" type="TRole"/>
+                            <xs:element name="password" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
