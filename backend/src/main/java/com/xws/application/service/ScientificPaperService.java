@@ -273,6 +273,31 @@ public class ScientificPaperService {
 		if (metadataSearch.getCategory() != null) {
 			advancedQuery += "\n?subject <https://schema.org/category> \"" + metadataSearch.getCategory() + "\" .";
 		}
+		if (metadataSearch.getDateRecieved() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateReceived> ?dateReceived\n \tfilter contains(?dateReceived,\"" + metadataSearch.getDateRecieved() + "\") .";
+		}
+		if (metadataSearch.getDateAccepted() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateAccepted> ?dateAccepted\n \tfilter contains(?dateAccepted,\"" + metadataSearch.getDateAccepted() + "\") .";
+		}
+		if (metadataSearch.getDateRevised() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateRevised> ?dateRevised\n \tfilter contains(?dateRevised,\"" + metadataSearch.getDateRevised() + "\") .";
+		}
+		if (metadataSearch.getAuthorFirstName() != null) {
+			advancedQuery += "\n?subject <https://schema.org/author> ?author\n\t?author <https://schema.org/firstName> \"" + metadataSearch.getAuthorFirstName() + "\" .";
+		}
+		if (metadataSearch.getAuthorLastName() != null) {
+			advancedQuery += "\n?subject <https://schema.org/author> ?author .\n\t?author <https://schema.org/lastName> \"" + metadataSearch.getAuthorLastName() + "\" .";
+		}
+		if (metadataSearch.getTitle() != null) {
+			advancedQuery += "\n?subject <https://schema.org/title> \"" + metadataSearch.getTitle() + "\" .";
+		}
+		if (metadataSearch.getVersion() != null) {
+			advancedQuery += "\n?subject <https://schema.org/version> \"" + metadataSearch.getVersion() + "\" .";
+		}
+		if (metadataSearch.getKeywords() != null) {
+			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
+		}
+		
 		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, email, advancedQuery);
 		return papers;
 	}
