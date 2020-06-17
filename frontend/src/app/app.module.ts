@@ -9,10 +9,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { ScientificPaperModule } from './scientific-paper/scientific-paper.module';
 import { ReviewModule } from './review/review.module';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,7 +22,8 @@ import { ReviewModule } from './review/review.module';
     SharedModule,
     ScientificPaperModule,
     ReviewModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
