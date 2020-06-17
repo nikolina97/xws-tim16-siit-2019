@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
 				//console.log(jwt.decodeToken(result));
 				let info = jwt.decodeToken(result)
 				console.log(info);
+				console.log(this.authService.getRole())
+				this.router.navigate(["/"]);
 			},
 			error => {
 				console.log(error);

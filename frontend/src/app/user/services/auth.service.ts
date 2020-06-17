@@ -35,7 +35,7 @@ export class AuthService {
 		const token = localStorage.getItem('user');
 		const jwt: JwtHelperService = new JwtHelperService();
 		const info = jwt.decodeToken(token);
-		return info.role[0];
+		return info.role[0].authority;
   }
 
   register(dto: UserRegistrationDTO): Observable<any> {
