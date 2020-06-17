@@ -292,6 +292,7 @@ public class XMLDBManager {
             // doc(\"1.xml\")//book[@category=\"WEB\" and price>35]/title): ");
             // execute xpath expression
             System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+            System.out.println(xpathExp);
             result = xpathService.query(xpathExp);
             // handle the results
             System.out.println("[INFO] Handling the results... ");
