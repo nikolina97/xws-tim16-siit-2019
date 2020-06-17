@@ -88,8 +88,12 @@ public class UserService {
 		user.setRole(dto.getRole());
 		user.setUserInfo(new TPerson());
 		user.getUserInfo().setEmail(dto.getEmail());
-		user.getUserInfo().setFirstName(dto.getFirstName());
-		user.getUserInfo().setLastName(dto.getLastName());
+		TPerson.FirstName fName = new TPerson.FirstName();
+		fName.setValue(dto.getFirstName());
+		TPerson.LastName lName = new TPerson.LastName();
+		fName.setValue(dto.getLastName());
+		user.getUserInfo().setFirstName(fName);
+		user.getUserInfo().setLastName(lName);
 		user.getUserInfo().setUniversity(new University());
 		user.getUserInfo().getUniversity().setName(dto.getUniversityName());
 		user.getUserInfo().getUniversity().setCountry(dto.getUniversityCountry());

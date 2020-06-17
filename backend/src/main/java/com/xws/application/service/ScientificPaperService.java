@@ -1,29 +1,37 @@
 package com.xws.application.service;
 
-import com.xws.application.dto.PaperLetterDTO;
-import com.xws.application.model.BusinessProcess;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.TState;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.repository.ScientificPaperRepository;
-import com.xws.application.util.XPathExpressionHandlerNS;
-import com.xws.application.util.rdf.MetadataExtractor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.StringReader;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.File;
-import java.io.StringReader;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import com.xws.application.dto.PaperLetterDTO;
+import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
+import com.xws.application.model.BusinessProcess;
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.model.TState;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.rdf.DOMToXMLFile;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RDFFileToString;
 
 @Service
 public class ScientificPaperService {
@@ -70,21 +78,24 @@ public class ScientificPaperService {
 			Element version = paperDOM.createElement("sp:version");
 			version.setTextContent("1");
 			version.setAttribute("property", "pred:version");
-
+			version.setAttribute("datatype", "xs:string");
+			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			String date = sdf.format(new Date());
 			Element dateReceived = paperDOM.createElement("sp:dateReceived");
 			dateReceived.setTextContent(date);
 			dateReceived.setAttribute("property", "pred:dateReceived");
-
-			Element status = paperDOM.createElement("sp:status");
+			dateReceived.setAttribute("datatype", "xs:string");
+			
+			Element status = paperDOM.createElement("sp:state");
 			status.setTextContent("in_procedure");
-			status.setAttribute("property", "pred:status");
-
+			status.setAttribute("property", "pred:state");
+			status.setAttribute("datatype", "xs:string");
+			
 			paperDOM.getDocumentElement().appendChild(version);
 			paperDOM.getDocumentElement().appendChild(dateReceived);
 			paperDOM.getDocumentElement().appendChild(status);
-
+			
 			XPathExpressionHandlerNS handler = new XPathExpressionHandlerNS();
 			handler.addNamespaceMapping("sp", "https://github.com/nikolina97/xws-tim16-siit-2019");
 
@@ -100,10 +111,11 @@ public class ScientificPaperService {
 			transformer.transform(domSource, result);
 
 			System.out.println(writer.toString());*/
-
-			/*metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			
+			DOMToXMLFile.toXML(paperDOM, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
 			String metadata = RDFFileToString.toString(rdfFilePath);
-			repository.storeMetadata(metadata, "/scientific_paper");*/
+			repository.storeMetadata(metadata, "/scientific_paper");
 
 			repository.store(paperDOM, paperId + ".xml");
 
@@ -245,6 +257,24 @@ public class ScientificPaperService {
 
 			return null;
 		}
+	}
+	
+	public List<ScientificPaper> getPapersFromUser() throws Exception {
+		String email = "/person/john.doe@uns.ac.rs"; //hard coded
+		String graphName = "scientific_paper/";
+		List<ScientificPaper> papers = repository.getQuerySP(graphName, email);
+		return papers;
+	}
+	
+	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {
+		String email = "/person/john.doe@uns.ac.rs"; //hard coded
+		String graphName = "scientific_paper";
+		String advancedQuery = "";
+		if (metadataSearch.getCategory() != null) {
+			advancedQuery += "\n?subject <https://schema.org/category> \"" + metadataSearch.getCategory() + "\" .";
+		}
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, email, advancedQuery);
+		return papers;
 	}
 
 }

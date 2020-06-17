@@ -3,7 +3,7 @@
 <sp:cover_letter xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
  xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/semestar 7/XML/xws-tim16-siit-2019/backend/src/main/resources/schemas/cover_letter.xsd" id="id0">
+ xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv3/xws-tim16-siit-2019/backend/src/main/resources/schemas/cover_letter.xsd" id="id0">
     <sp:author id="id1">
         <sp:first_name>first_name0</sp:first_name>
         <sp:last_name>last_name0</sp:last_name>
@@ -22,7 +22,7 @@
         <sp:journal_name>journal_name0</sp:journal_name>
     </sp:editor>
     <sp:date>2006-05-04</sp:date>
-    <sp:content id="id2">
+    <sp:content>
     	jeioj jeirjiejmafekirjmakrj eirjeakrjeijfkaeih erijea eijfieikjaijme jirejrieajr jeij ieajjireaikfjekajilflekjfklajilejfikjeialjfaflajieij
         <sp:list id="id3">
             <sp:decorator>

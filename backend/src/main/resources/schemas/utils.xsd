@@ -6,18 +6,22 @@
     <xs:complexType name="TPerson">
         <xs:sequence>
             <xs:element name="first_name">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="TName">
+                            <xs:anyAttribute namespace="##local" processContents="lax"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
             </xs:element>
             <xs:element name="last_name">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="TName">
+                            <xs:anyAttribute namespace="##local" processContents="lax"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
             </xs:element>
             <xs:element name="university">
                 <xs:complexType>
@@ -59,4 +63,9 @@
         </xs:sequence>
         <xs:anyAttribute namespace="##local" processContents="skip"/>
     </xs:complexType>
+    <xs:simpleType name="TName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

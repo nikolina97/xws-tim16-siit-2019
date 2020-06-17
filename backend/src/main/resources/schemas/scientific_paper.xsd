@@ -36,7 +36,8 @@
                                             <xs:complexType>
                                                 <xs:simpleContent>
                                                   <xs:extension base="xs:string">
-                                                  <xs:anyAttribute namespace="##local" processContents="skip"/>
+                                                  <xs:anyAttribute namespace="##local"
+                                                  processContents="skip"/>
                                                   </xs:extension>
                                                 </xs:simpleContent>
                                             </xs:complexType>
@@ -64,7 +65,8 @@
                                     <xs:complexContent>
                                         <xs:extension base="TReference">
                                             <xs:attribute name="id" type="xs:string" use="optional"/>
-                                            <xs:anyAttribute namespace="##local" processContents="skip"/>
+                                            <xs:anyAttribute namespace="##local"
+                                                processContents="skip"/>
                                         </xs:extension>
                                     </xs:complexContent>
                                 </xs:complexType>
@@ -129,7 +131,15 @@
                         </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
-                <xs:element minOccurs="0" name="state" type="TSPState"/>
+                <xs:element minOccurs="0" name="state">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="TSPState">
+                                <xs:anyAttribute namespace="##local" processContents="lax"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:string"/>
             <xs:anyAttribute namespace="##local" processContents="skip"/>
