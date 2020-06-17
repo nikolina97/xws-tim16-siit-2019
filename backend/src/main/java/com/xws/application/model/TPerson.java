@@ -238,6 +238,10 @@ public class TPerson {
         }
         return this.expertise;
     }
+    
+    public void setExpertise(List<String> expertise) {
+        this.expertise = expertise;
+    }
 
     /**
      * Gets a map that contains attributes that aren't bound to any typed property on this class.

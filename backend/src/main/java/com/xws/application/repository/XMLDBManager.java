@@ -12,6 +12,7 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
+import org.xmldb.api.modules.XUpdateQueryService;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -19,6 +20,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 
@@ -290,7 +292,7 @@ public class XMLDBManager {
             // doc(\"1.xml\")//book[@category=\"WEB\" and price>35]/title): ");
             // execute xpath expression
             System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
-            result = xpathService.query("collection(\"/db/library/users\")/users/user[userInfo/email=\"0@00.AA\"]");
+            result = xpathService.query(xpathExp);
             // handle the results
             System.out.println("[INFO] Handling the results... ");
 		} finally {
@@ -347,6 +349,38 @@ public class XMLDBManager {
 		}
 
 		return count;
+	}
+	
+	public static void update( String documentId, String collectionId, String contextXPath, String xmlFragment, String template) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+		Class<?> cl = Class.forName(conn.driver);
+        
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        try { 
+		 col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+         col.setProperty("indent", "yes");
+         XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+         xupdateService.setProperty("indent", "yes");
+         
+         System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
+         long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
+         System.out.println("[INFO] " + mods + " modifications processed.");
+		} finally {
+		        	
+		            // don't forget to cleanup
+		            if(col != null) {
+		                try { 
+		                	col.close();
+		                } catch (XMLDBException xe) {
+		                	xe.printStackTrace();
+		                }
+		            }
+		        }
 	}
 
 }

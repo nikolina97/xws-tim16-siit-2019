@@ -115,6 +115,7 @@ public class Users {
         "role",
         "password"
     })
+    @XmlRootElement(name = "user")
     public static class User {
 
         @XmlElement(required = true)

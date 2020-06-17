@@ -1,6 +1,8 @@
 package com.xws.application.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xws.application.dto.UserRegistrationDTO;
+import com.xws.application.model.TRole;
 import com.xws.application.security.JwtAuthenticationRequest;
 import com.xws.application.security.TokenUtils;
 import com.xws.application.service.CustomUserDetailsService;
+import com.xws.application.service.UserService;
 
 //Kontroler zaduzen za autentifikaciju korisnika
 @RestController
@@ -38,6 +43,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -61,5 +69,18 @@ public class AuthenticationController {
 
 		String jwt = tokenUtils.generateToken(user);
 		return new ResponseEntity<String>(jwt, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public ResponseEntity<?> register(@RequestBody UserRegistrationDTO dto){
+		System.out.println(dto);
+		try {
+			userService.registerAuthor(dto);
+			return new ResponseEntity<String>("Registration successfull!", HttpStatus.CREATED);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<String>("Registration error!", HttpStatus.BAD_REQUEST);
+		}
 	}
 }
