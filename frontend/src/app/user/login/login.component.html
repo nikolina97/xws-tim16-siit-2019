@@ -11,15 +11,17 @@
           </div>
           <div class="form-group row">
             <div class="col-md-4"></div>
-            <label for="username" class="control-label col-md-3">Username</label>
+            <label for="username" class="control-label col-md-3">E-mail</label>
           </div>
           <div class="form-group row">
             <div class="col-md-4"></div>  
             <div class="col-md-4">
-              <input type="text" class="form-control" id="username" name="username" placeholder="username" [formControl]="form.controls['username']">
+              <input type="text" class="form-control" id="username" name="username" placeholder="E-mail" [formControl]="form.controls['username']">
               <br>
               <small id="username-empty" class="text-danger"  *ngIf="form.controls.username.touched && form.controls.username.errors?.required">
                 This field can't be empty!</small>
+              <small id="username-empty" class="text-danger"  *ngIf="form.controls.username.touched && form.controls.username.errors?.pattern">
+                E-mail form incorrect!</small>
             </div>
           </div>
 
@@ -40,7 +42,7 @@
           <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-              <button type="submit" class="btn btn-round btn-block"  [disabled]="!form.valid">Log in</button>
+              <button type="submit" class="btn btn-info btn-block"  [disabled]="!form.valid">Log in</button>
             </div>
           </div>
         </fieldset>

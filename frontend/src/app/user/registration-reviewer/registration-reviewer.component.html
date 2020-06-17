@@ -46,7 +46,7 @@
               <br>
               <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.email.touched && formReg.controls.email.errors?.required">
                 This field can't be empty!</small>
-              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.email.touched && formReg.controls.email.errors?.email">
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.email.touched && formReg.controls.email.errors?.pattern">
                 Email form incorrect!</small>
             </div>
           </div>
@@ -145,7 +145,7 @@
           <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-              <button class="btn btn-round btn-block"  [disabled]="!formReg.valid || expertises.size == 0" (click)="register()">Register</button>
+              <button class="btn btn-info btn-block" [disabled]="!formReg.valid || expertises.size == 0" (click)="register()">Register</button>
             </div>
           </div>
         </fieldset>

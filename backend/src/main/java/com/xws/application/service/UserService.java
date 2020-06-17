@@ -1,22 +1,18 @@
 package com.xws.application.service;
 
-import com.xws.application.model.Users;
-import com.xws.application.model.TPerson.University;
-
-import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import javax.xml.bind.JAXBException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.XMLDBException;
 
 import com.xws.application.dto.UserRegistrationDTO;
 import com.xws.application.model.DocType;
 import com.xws.application.model.TPerson;
+import com.xws.application.model.TPerson.University;
 import com.xws.application.model.TRole;
+import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.parser.JAXB;
 import com.xws.application.repository.UserRepository;
@@ -32,6 +28,9 @@ public class UserService {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
@@ -84,12 +83,16 @@ public class UserService {
 		}
 		
 		Users.User user = new Users.User();
-		user.setPassword(dto.getPassword());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole(dto.getRole());
 		user.setUserInfo(new TPerson());
 		user.getUserInfo().setEmail(dto.getEmail());
-		user.getUserInfo().setFirstName(dto.getFirstName());
-		user.getUserInfo().setLastName(dto.getLastName());
+		TPerson.FirstName fName = new TPerson.FirstName();
+		fName.setValue(dto.getFirstName());
+		TPerson.LastName lName = new TPerson.LastName();
+		fName.setValue(dto.getLastName());
+		user.getUserInfo().setFirstName(fName);
+		user.getUserInfo().setLastName(lName);
 		user.getUserInfo().setUniversity(new University());
 		user.getUserInfo().getUniversity().setName(dto.getUniversityName());
 		user.getUserInfo().getUniversity().setCountry(dto.getUniversityCountry());

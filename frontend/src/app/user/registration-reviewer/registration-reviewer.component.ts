@@ -20,7 +20,7 @@ export class RegistrationReviewerComponent implements OnInit {
 		this.formReg = this.fb.group({
 			firstName: [null, Validators.required],
 			lastName: [null, Validators.required],
-			email: [null, [Validators.required, Validators.email]],
+			email: [null, [Validators.required, Validators.pattern("[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9}")]],
       password: [null, Validators.required],
 			repeatedPassword: [null, Validators.required],
       universityName: [null, Validators.required],
@@ -64,7 +64,7 @@ export class RegistrationReviewerComponent implements OnInit {
   }
 
   addExpertise(){
-    this.expertises.add(this.formReg.value.expertise);
+    this.expertises.add(this.formReg.value.expertise.toLowerCase());
     console.log(this.expertises);
   }
 

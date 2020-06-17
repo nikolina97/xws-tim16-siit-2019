@@ -51,6 +51,7 @@ public class AuthenticationController {
 	public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) throws AuthenticationException, IOException {
 
+		System.out.println(authenticationRequest.getUsername());
 		UserDetails user = null;
 		final Authentication authentication;
 		try {

@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 		private authService: AuthService,
 	) {
 		this.form = this.fb.group({
-			username: [null, Validators.required],
+			username: [null, [Validators.required, Validators.pattern("[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9}")]],
 			password: [null, Validators.required]
 		});
 	}
@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
 		const auth: any = {};
 		const jwt: JwtHelperService = new JwtHelperService();
 		auth.username = this.form.value.username;
-    auth.password = this.form.value.password;
-    console.log(auth);
+    	auth.password = this.form.value.password;
+    	console.log(auth);
 		this.authService.login(auth).subscribe(
 			result => {
 				alert('Login successfull!');

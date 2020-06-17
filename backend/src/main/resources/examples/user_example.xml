@@ -2,7 +2,7 @@
 <xw:users xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
  xmlns:xw="https://github.com/nikolina97/xws-tim16-siit-2019"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv2/xws-tim16-siit-2019/backend/src/main/resources/schemas/user.xsd">
+ xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv3/xws-tim16-siit-2019/backend/src/main/resources/schemas/user.xsd">
     <xw:user>
         <xw:userInfo>
             <xw:first_name>first_name0</xw:first_name>
@@ -15,7 +15,6 @@
             <xw:email>0@00.AA</xw:email>
             <xw:expertise>expertise0</xw:expertise>
             <xw:expertise>expertise1</xw:expertise>
-            <xw:username>username0</xw:username>
         </xw:userInfo>
         <xw:role>ROLE_AUTHOR</xw:role>
         <xw:password>$2a$10$GrvKfLLPYSciOuxSc/bEGeXBuFTyhTUsPTxqGWNTOx80M2wekc4Cu</xw:password>
@@ -32,7 +31,6 @@
             <xw:email>0@00.BB</xw:email>
             <xw:expertise>expertise2</xw:expertise>
             <xw:expertise>expertise3</xw:expertise>
-            <xw:username>username1</xw:username>
         </xw:userInfo>
         <xw:role>ROLE_AUTHOR</xw:role>
         <xw:password>$2a$10$GMARnzzwULFDz5yIxBJSeuY5Cn8XKL9RUqyMJ66r7VzX5fueuE.Xa</xw:password>
