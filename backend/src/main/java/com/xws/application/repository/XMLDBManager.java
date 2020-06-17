@@ -287,7 +287,7 @@ public class XMLDBManager {
             xpathService.setProperty("indent", "yes");
 
             // make the service aware of namespaces, using the default one
-            xpathService.setNamespace("", TARGET_NAMESPACE);
+            xpathService.setNamespace("sp", TARGET_NAMESPACE);
             // System.out.println("\n[INPUT] Enter an XPath expression (e.g.
             // doc(\"1.xml\")//book[@category=\"WEB\" and price>35]/title): ");
             // execute xpath expression

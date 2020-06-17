@@ -22,6 +22,8 @@ public class SparqlUtil {
 	/* Simple SPARQL query on a named graph */
 	private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 	
+	private static final String SELECT_DISTINCT_UNION_META =  "SELECT DISTINCT * FROM <%1$s> WHERE { {%2$s} UNION {%3$s} . %4$s}";
+	
 	
 	/* Plain text RDF serialization format */
 	public static final String NTRIPLES = "N-TRIPLES";
@@ -48,6 +50,10 @@ public class SparqlUtil {
 	
 	public static String selectData(String graphURI, String sparqlCondition) {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+	}
+	
+	public static String selectDistinctUnionMeta(String graphUri,String sparqlCondition1,  String sparqlCondition2, String sparqlCondition3) {
+		return String.format(SELECT_DISTINCT_UNION_META, graphUri, sparqlCondition1, sparqlCondition2, sparqlCondition3);
 	}
 	
 }

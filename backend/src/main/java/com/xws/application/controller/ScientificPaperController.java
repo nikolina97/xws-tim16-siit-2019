@@ -1,6 +1,7 @@
 package com.xws.application.controller;
 
 import com.xws.application.dto.PaperLetterDTO;
+import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.service.ScientificPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,23 @@ public class ScientificPaperController {
 		return paper != null ? new ResponseEntity<>(paper, HttpStatus.OK) : new ResponseEntity<>("Paper doesn't exist.", HttpStatus.NOT_FOUND);
 	}
 
+	@GetMapping(value = "/getByUser")
+	public ResponseEntity<?> getPapersFromUser() {
+		try {
+			return new ResponseEntity<>(service.getPapersFromUser(), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@PostMapping(value = "/advancedSearch")
+	public ResponseEntity<?> getAllPapersByUser(@RequestBody ScientificPaperMetadataSearchDTO metadataSearch) {
+		try {
+			return new ResponseEntity<>(service.getAllPapersByUser(metadataSearch), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 }
