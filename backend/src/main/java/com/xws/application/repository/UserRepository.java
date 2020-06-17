@@ -1,9 +1,17 @@
 package com.xws.application.repository;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import com.xws.application.model.Users;
+import com.xws.application.util.XUpdateTemplate;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceIterator;
@@ -22,6 +30,12 @@ public class UserRepository {
 
 	public Object retrieve(String documentId) throws Exception {
 		return XMLDBManager.retrieve("/db/library/users", documentId);
+	}
+	
+	public void save(Users.User user) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, IOException {
+		String userXml = marshallUser(user);
+//		System.out.println(userXml);
+		XMLDBManager.update("users.xml", "/db/library/users", "/users", userXml, XUpdateTemplate.APPEND);
 	}
 	
 	public Users.User findByEmail(String email) throws Exception {
@@ -57,5 +71,18 @@ public class UserRepository {
     	Unmarshaller unmarshaller = context.createUnmarshaller();
     	Users.User person = (Users.User) unmarshaller.unmarshal(res.getContentAsDOM());
     	return person;
+    }
+    
+    public String marshallUser(Users.User user) throws JAXBException {
+    	JAXBContext context = JAXBContext.newInstance("com.xws.application.model");
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        OutputStream os = new ByteArrayOutputStream();
+        marshaller.marshal(user, os);
+        String xml = os.toString();
+        xml = xml.substring(xml.indexOf("<user"));
+		xml = xml.replace(" xmlns=\"https://github.com/nikolina97/xws-tim16-siit-2019\"","");
+        System.out.println(xml);
+        return xml;
     }
 }
