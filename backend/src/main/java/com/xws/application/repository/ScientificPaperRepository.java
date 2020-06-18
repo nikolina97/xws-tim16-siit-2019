@@ -47,11 +47,15 @@ public class ScientificPaperRepository {
 		return XMLDBManager.retrieve("/db/papers", documentId);
 	}
 
+	public ScientificPaper retrieveJAXB(String documentId) throws Exception {
+		return (ScientificPaper) XMLDBManager.retrieveJAXB("/db/papers", documentId);
+	}
+
 	public int getDocumentCount() throws Exception {
 		return XMLDBManager.getDocumentCount("/db/papers");
 	}
 
-public void storeMetadata(String metadata, String graphName) throws IOException {
+	public void storeMetadata(String metadata, String graphName) throws IOException {
 		
 		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
 		Model model = ModelFactory.createDefaultModel();
@@ -99,7 +103,7 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		
 		String xpathExp = null;
 		for (String s : ids) {
-			xpathExp = String.format("/sp:scientific_paper[@sp:id=\"%s\"]", s);
+			xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
 			ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
 			
 			if (result == null) {
@@ -173,7 +177,7 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		
 		String xpathExp = null;
 		for (String s : ids) {
-			xpathExp = String.format("/sp:scientific_paper[@sp:id=\"%s\"]", s);
+			xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
 			ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
 			
 			if (result == null) {
@@ -248,10 +252,10 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		String xpathExp = null;
 		for (String s : ids) {
 			if (searchText == "") {
-				xpathExp = String.format("/sp:scientific_paper[@sp:id=\"%s\"]", s);
+				xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
 			}
 			else {
-				xpathExp = String.format("//*[@sp:id=\"%1$s\" and contains(.,\"%2$s\")]", s, searchText);
+				xpathExp = String.format("//*[@id=\"%1$s\" and contains(.,\"%2$s\")]", s, searchText);
 			}
 			ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
 			

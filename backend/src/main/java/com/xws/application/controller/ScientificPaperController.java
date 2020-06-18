@@ -23,7 +23,16 @@ public class ScientificPaperController {
 
 	@PostMapping
 	public ResponseEntity<String> save(@RequestBody PaperLetterDTO dto) {
-		return service.save(dto) ? new ResponseEntity<>("Paper and cover letter successfully saved", HttpStatus.OK) : new ResponseEntity<>("Something is wrong with your paper or letter, check them.", HttpStatus.BAD_REQUEST);
+		service.save(dto);
+
+		return new ResponseEntity<>("Paper and cover letter successfully saved", HttpStatus.OK);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<String> revise(@RequestBody String revision, @PathVariable String id) {
+		service.revise(revision, id);
+
+		return new ResponseEntity<>("Paper successfully saved.", HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")

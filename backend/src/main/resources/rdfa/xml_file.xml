@@ -1,56 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?><sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019" xmlns:pred="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="http://ftn.uns.ac.rs/paper/paper2" id="paper2" typeof="pred:ScholarlyArticle">
-    <sp:title property="pred:headline">Color Preferences for Nesting Material in the Zebra Finch (Poephila guttata)</sp:title>
+    <sp:title datatype="xs:string" property="pred:headline">aAA</sp:title>
     <sp:authors>
-        <sp:author href="http://ftn.uns.ac.rs/person/jack.doe@uns.ac.rs" rel="pred:author" typeof="pred:Person">
-            <sp:first_name>Jack</sp:first_name>
-            <sp:last_name>Doe</sp:last_name>
+        <sp:author href="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+            <sp:first_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:first_name">John</sp:first_name>
+            <sp:last_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:last_name">Doe</sp:last_name>
             <sp:university>
                 <sp:name>University of Novi Sad</sp:name>
                 <sp:city>Novi Sad</sp:city>
                 <sp:country>Serbia</sp:country>
             </sp:university>
-            <sp:email>jack.doe@uns.ac.rs</sp:email>
+            <sp:email>milos@uns.ac.rs</sp:email>
         </sp:author>
     </sp:authors>
     <sp:abstract id="paper2/abstract">
         <sp:paragraph id="paper2/abstract/paragraph1">
-            The zebra finch (Poephila guttata) is a sexually dimorphic, social estrildid native to the grasslands of Australia.
-            They are opportunistic, year-round breeders which nest in colonies of variable size.
-            Zebra finches form permanent pair bonds and both sexes share the responsibilities of nest building, incubation and rearing of young (Walter, 1973).
-            Morris (1954), however, reported that although both sexes pick up and nibble on fragments of material, males collect most of the nesting material.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </sp:paragraph>
         <sp:keywords>
-            <sp:keyword property="pred:keyword">zebra</sp:keyword>
-            <sp:keyword property="pred:keyword">animal</sp:keyword>
+            <sp:keyword datatype="xs:string" property="pred:keyword">programming</sp:keyword>
+            <sp:keyword datatype="xs:string" property="pred:keyword">Lorem Ipsum</sp:keyword>
         </sp:keywords>
     </sp:abstract>
     <sp:chapters>
         <sp:chapter id="paper2/chapter1">
-            <sp:subtitle>Methods</sp:subtitle>
-            <sp:paragraph id="paper2/chapter2/paragraph1">
-                The zebra finches used in this study were in three colonies in the lab of Dr. J.R. Baylis at the University of Wisconsin, Madison.
-                Each colony contained between thirty and forty individual birds of both sexes, a variety of ages and several plumage types.
-                All animals wore colored leg bands for individual identification and all had been exposed to grass, green embroidery floss and white dog fur as nesting material previous to this study.
-                The colonies were housed in separate rooms, each approximately 17m3 and each contained eight artificial nest boxes.
-                All behavioral observations were made from outside the colony rooms through one-way mirrors.
+            <sp:subtitle>Why do we use it?</sp:subtitle>
+            <sp:paragraph id="paper2/chapter1/paragraph1">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </sp:paragraph>
-        </sp:chapter>
-        <sp:chapter id="paper2/chapter2">
-            <sp:subtitle>Results</sp:subtitle>
-            <sp:paragraph id="paper2/chapter2/paragraph2">
-                The results from these experiments suggest that zebra finches do in fact have color preferences with regard to nesting material.
-                Contrary to the predictions made by generalizing Burley’s studies (1981, 1982), however, the zebra finches used in this study preferred green, red or black nesting material to orange.
-                These results are similar to those of Collias and Collias (1981) who showed that weaver birds preferred green nesting material. [0]
+            <sp:subchapter id="paper2/chapter1/subchapter1">
+                <sp:subtitle>Where does it come from?</sp:subtitle>
+                <sp:paragraph id="paper2/chapter1/subchapter1/paragraph1">
+                    Contrary to popular belief, Lorem Ipsum is not simply random text.
+                    It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+                    Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+                    Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+                    This book is a treatise on the theory of ethics, very popular during the Renaissance.
+                    The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                </sp:paragraph>
+                <sp:paragraph id="paper2/chapter1/subchapter1/paragraph2">
+                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+                    If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                    All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
+                    It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
+                    The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                </sp:paragraph>
+            </sp:subchapter>
+            <sp:paragraph id="paper2/chapter1/paragraph2">
+                <sp:list id="paper2/chapter1/paragraph2/list1">
+                    <sp:decorator>
+                        <sp:bold>Lorem Ipsum</sp:bold>
+                        <sp:italic>Lorem Ipsum</sp:italic>
+                        <sp:underline>Lorem Ipsum</sp:underline>
+                    </sp:decorator>
+                </sp:list>
             </sp:paragraph>
         </sp:chapter>
     </sp:chapters>
-    <sp:references>
-        <sp:reference href="http://ftn.uns.ac.rs/paper/paper1" id="paper2/reference1" rel="pred:reference">
-            <sp:ref_number>[0]</sp:ref_number>
-            <sp:ref_author>John Doe</sp:ref_author>
-            <sp:article_name>Lorem Ipsum</sp:article_name>
-            <sp:year>2020</sp:year>
-        </sp:reference>
-    </sp:references>
-    <sp:category property="pred:category">original research</sp:category>
-<sp:version datatype="xs:string" property="pred:version">1</sp:version><sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-18T18:25:38</sp:dateReceived><sp:state datatype="xs:string" property="pred:state">in_procedure</sp:state></sp:scientific_paper>
+    <sp:category datatype="xs:string" property="pred:category">original research</sp:category>
+<sp:version datatype="xs:string" property="pred:version">1</sp:version><sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-18T21:17:19</sp:dateReceived><sp:state datatype="xs:string" property="pred:state">in_procedure</sp:state></sp:scientific_paper>

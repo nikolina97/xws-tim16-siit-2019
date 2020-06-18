@@ -5,7 +5,9 @@ import java.io.*;
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
+import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +33,10 @@ import javax.xml.validation.Validator;
 public class ReviewService {
 
 	@Autowired
-	private ReviewRepository repository;
+	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private ScientificPaperRepository paperRepository;
 
 	@Autowired
 	private BusinessProcessService processService;
@@ -48,6 +53,19 @@ public class ReviewService {
 	public void save(ReviewDTO dto) {
 		dto.setReview("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + dto.getReview());
 		try {
+			ScientificPaper original = paperRepository.retrieveJAXB(dto.getPaperId() + ".xml");
+			if(original == null)
+				throw new NotFoundException("Paper not found.");
+
+			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
+			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())))
+				throw new BadRequestException("Your don't have permission to write review of this paper.");
+
+			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
+				throw new BadRequestException("Your don't have permission to write review of this paper.");
+
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/review.xsd"));
 
@@ -60,7 +78,7 @@ public class ReviewService {
 			handler.addNamespaceMapping("sp", "https://github.com/nikolina97/xws-tim16-siit-2019");
 
 			// Generate IDs
-			String reviewId = "review" + (repository.getDocumentCount() + 1);
+			String reviewId = "review" + (reviewRepository.getDocumentCount() + 1);
 			reviewDOM = generateIDs(reviewDOM, reviewId, handler);
 
 			/*DOMToXMLFile.toXML(reviewDOM, xmlFilePath);
@@ -68,13 +86,9 @@ public class ReviewService {
 			String metadata = RDFFileToString.toString(rdfFilePath);
 			repository.storeMetadata(metadata, "/scientific_paper");*/
 
-			repository.store(reviewDOM, reviewId + ".xml");
-
-			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+			reviewRepository.store(reviewDOM, reviewId + ".xml");
 
 			// Update the business process for this paper
-			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
-
 			process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())).forEach(assignment -> assignment.setStatus(TReviewAssignementState.REVIEWED));
 
 			/*for(TReviewAssignment assignment : process.getReviewAssignments().getReviewAssignment()) {
@@ -186,7 +200,7 @@ public class ReviewService {
 
 	public Review get(String reviewID) {
 		try {
-			return (Review) repository.retrieve(reviewID);
+			return (Review) reviewRepository.retrieve(reviewID);
 		} catch (Exception e) {
 			e.printStackTrace();
 
