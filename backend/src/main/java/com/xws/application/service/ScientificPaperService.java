@@ -262,7 +262,7 @@ public class ScientificPaperService {
 	}
 	
 	public List<ScientificPaper> getPapersFromUser() throws Exception {
-		String email = "/person/john.doe@uns.ac.rs"; //hard coded
+		String email = "/person/john.doe@uns.ac.rs";
 		String graphName = "scientific_paper/";
 		List<ScientificPaper> papers = repository.getQuerySP(graphName, email);
 		return papers;
@@ -300,9 +300,34 @@ public class ScientificPaperService {
 		if (metadataSearch.getKeywords() != null) {
 			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
 		}
-		
-		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery);
+		Boolean loggedIn = false;
+		if (email == "anonymousUser") {
+			loggedIn = false;
+		}
+		else {
+			loggedIn = true;
+		}
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery, loggedIn);
 		System.out.println(papers.size());
+		return papers;
+	}
+
+	public List<ScientificPaper> basicSearch(String searchText) throws Exception {
+		String graphName = "scientific_paper";
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+		System.out.println(email);
+		Boolean loggedIn = false;
+		if (email == "anonymousUser") {
+			loggedIn = false;
+		}
+		else {
+			loggedIn = true;
+		}
+		if (searchText == null || searchText == "") {
+			List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, "", loggedIn);
+			return papers;
+		}
+		List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, searchText, loggedIn);
 		return papers;
 	}
 

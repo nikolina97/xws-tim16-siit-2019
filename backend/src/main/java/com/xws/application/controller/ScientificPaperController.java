@@ -39,9 +39,19 @@ public class ScientificPaperController {
 	}
 	
 	@PostMapping(value = "/advancedSearch")
-	public ResponseEntity<?> getAllPapersByUser(@RequestBody ScientificPaperMetadataSearchDTO metadataSearch) {
+	public ResponseEntity<?> advancedSearch(@RequestBody ScientificPaperMetadataSearchDTO metadataSearch) {
 		try {
 			return new ResponseEntity<>(service.getAllPapersByUser(metadataSearch), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@PostMapping(value = "/basicSearch")
+	public ResponseEntity<?> basicSearch(@RequestBody String searchText) {
+		try {
+			return new ResponseEntity<>(service.basicSearch(searchText), HttpStatus.OK);	
 		}catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

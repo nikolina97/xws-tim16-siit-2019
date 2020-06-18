@@ -6,3 +6,6 @@ form{
     text-align: center;
 }
   
+mat-form-field.search {
+  width: 50%;
+}

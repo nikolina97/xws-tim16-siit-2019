@@ -16,8 +16,6 @@
       <mat-form-field appearance="standard">
         <input matInput placeholder="Date received" type="text" onfocus="(this.type='date')" [formControl]="form.controls['dateReceived']">
       </mat-form-field>
-    </p>
-    <p>
     
     <mat-form-field appearance="standard">
       <input matInput placeholder="Date published" type="text" onfocus="(this.type='date')" [formControl]="form.controls['dateAccepted']">
@@ -29,6 +27,14 @@
       <button type = "submit" mat-raised-button color="primary">Search</button>
     </p>
 
+</form>
+<form [formGroup] = "formBasic" (ngSubmit)="searchBasic()">
+  <p>
+    <mat-form-field class = "search" appearance="standard">
+      <input matInput placeholder="Search by text" [formControl]="formBasic.controls['searchText']">
+    </mat-form-field>
+    <button type = "submit" mat-raised-button color="primary">Search</button>
+  </p>
 </form>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
