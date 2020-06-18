@@ -42,11 +42,18 @@
         </u>
     </xsl:template>
     
-    <xsl:template match="sp:quote">
-        <blockquote>
+    <xsl:template match="sp:formula">
+        <code>
             <xsl:for-each select="./* | text()">    
                 <xsl:apply-templates select="."></xsl:apply-templates>
             </xsl:for-each>
+        </code>
+    </xsl:template>
+    
+    <xsl:template match="sp:quote">
+        <blockquote text-align="center">   
+             <i><xsl:apply-templates select="./sp:content"></xsl:apply-templates> </i>&#160; - &#160;
+             <xsl:apply-templates select="./sp:from"/>
         </blockquote>
    	</xsl:template>
    	
@@ -63,16 +70,16 @@
    	
    	 <xsl:template match="sp:table">
    	 <div align="center">
-            <table border="1" style="width: 100%;align:center">
+            <table style="border: 1px solid black; text-align:center">
+            	<xsl:for-each select="./sp:th">
+                    <th style="border: 1px solid black">
+                        <xsl:apply-templates select="."></xsl:apply-templates>
+                    </th>
+                </xsl:for-each>
                 <xsl:for-each select="./sp:tr">
-                    <tr>
-                    	<xsl:for-each select="./sp:th">
-                            <th>
-                                <xsl:apply-templates select="."></xsl:apply-templates>
-                            </th>
-                        </xsl:for-each>
+                    <tr style="border: 1px solid black">
                         <xsl:for-each select="./sp:td">
-                            <td>
+                            <td style="border: 1px solid black">
                                 <xsl:apply-templates select="."></xsl:apply-templates>
                             </td>
                         </xsl:for-each>
@@ -86,7 +93,7 @@
     <xsl:template match="sp:figure">
 		 <div style="text-align:center">
 		 <figure>
-			  <img>
+			  <img style= 'max-width: 400px; max-height:400px '>
 			  	<xsl:attribute name="src">
 			  		<xsl:value-of select="./sp:image"/>
 			  	</xsl:attribute>
@@ -99,10 +106,8 @@
 	
 	<xsl:template match="sp:ref">
 		(<a>
-        <xsl:attribute name="href">
-			  		"#"<xsl:value-of select="."/>
-		</xsl:attribute>
-		see
+        <xsl:attribute name="href">#[<xsl:value-of select="."/>]</xsl:attribute>
+		<xsl:value-of select="."/>
 		</a>)
     </xsl:template>
     
@@ -113,6 +118,7 @@
 	     	<xsl:apply-templates></xsl:apply-templates>
 	     </xsl:for-each>
 	     <xsl:for-each select="$chapter/sp:subchapter">
+	     		
                <xsl:call-template name="SubchapterTemplate">
                        <xsl:with-param name="subchapter" select = "." />
                 </xsl:call-template>
@@ -122,39 +128,36 @@
 	<xsl:template name="SubchapterTemplate">
      	<xsl:param name="subchapter"/>
 	   	<xsl:choose>
-	       	<xsl:when test="@indentation_level=1">
-	       		<h2 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h2>
-	     	</xsl:when>
-	     	<xsl:when test="@indentation_level=2">
+	       	<xsl:when test="name(..)='sp:chapter'">
 	       		<h3 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h3>
 	     	</xsl:when>
-	     	<xsl:when test="@indentation_level=3">
+	     	<xsl:when test="name(..)='sp:subchapter'">
 	       		<h4 align="left"><xsl:value-of select="$subchapter/sp:subtitle"/></h4>
 	     	</xsl:when>
 	     </xsl:choose>
 	     <xsl:for-each select="$subchapter/sp:paragraph">
 	     	<xsl:apply-templates></xsl:apply-templates>
 	     </xsl:for-each>
+	     <xsl:for-each select="$subchapter/sp:subchapter">
+               <xsl:call-template name="SubchapterTemplate">
+                       <xsl:with-param name="subchapter" select = "." />
+                </xsl:call-template>
+         </xsl:for-each>
 	</xsl:template>
 	
 	<xsl:template name="ReferenceTemplate">
      	<xsl:param name="reference"/>
 	   	<div align="left">
+	   	<xsl:attribute name="id"><xsl:value-of select="$reference/sp:ref_number"/>
+		</xsl:attribute>
 	   	<xsl:value-of select="$reference/sp:ref_number"></xsl:value-of>&#160;
-	   	<xsl:for-each select="$reference/sp:ref_author">
-	   		<xsl:value-of select="."></xsl:value-of>,&#160;
-	   	</xsl:for-each>
-	   	<xsl:for-each select="$reference/sp:article/sp:link">
-	   		<a>
-	   		<xsl:attribute name="href">
-	   			<xsl:value-of select="."/>
-	   		</xsl:attribute>
-	   		<xsl:value-of select="@paper"></xsl:value-of>
-	   		</a>
-	   		<xsl:if test="position()!=last()">
-	   		,&#160;
-	   		</xsl:if>
-	   	</xsl:for-each>
+	   	<xsl:value-of select="$reference/sp:ref_author"></xsl:value-of>,&#160;
+	   	<a>
+	   	<xsl:attribute name="href">http://localhost:8081/api/paper/getPDFById/<xsl:value-of select="substring-after($reference/@href, '.rs/paper/')"/>
+		</xsl:attribute>
+	   	<xsl:value-of select="$reference/sp:article_name"></xsl:value-of>,&#160;</a>
+	   	<xsl:value-of select="$reference/sp:year"></xsl:value-of>&#160;
+		
 	   	</div>
 	</xsl:template>
     

@@ -1,210 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="../xslt/cover_letter.xsl"?>
-<sp:cover_letter xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+<?xml-stylesheet type="text/xsl" href="../xslt/scientific_paper.xsl"?>
+<sp:scientific_paper xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns="http://www.w3.org/ns/rdfa#"
+ xmlns:pred="https://schema.org/"
  xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv3/xws-tim16-siit-2019/backend/src/main/resources/schemas/cover_letter.xsd" id="id0">
-    <sp:author id="id1">
-        <sp:first_name>first_name0</sp:first_name>
-        <sp:last_name>last_name0</sp:last_name>
-        <sp:university>
-            <sp:name>name0</sp:name>
-            <sp:city>city0</sp:city>
-            <sp:country>country0</sp:country>
-        </sp:university>
-        <sp:email>0@00.AA</sp:email>
-        <sp:expertise>expertise0</sp:expertise>
-        <sp:expertise>expertise1</sp:expertise>
-    </sp:author>
-    <sp:editor>
-        <sp:name>name1</sp:name>
-        <sp:title>title0</sp:title>
-        <sp:journal_name>journal_name0</sp:journal_name>
-    </sp:editor>
-    <sp:date>2006-05-04</sp:date>
-    <sp:content>
-    	jeioj jeirjiejmafekirjmakrj eirjeakrjeijfkaeih erijea eijfieikjaijme jirejrieajr jeij ieajjireaikfjekajilflekjfklajilejfikjeialjfaflajieij
-        <sp:list id="id3">
-            <sp:decorator>
-                <sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:italic>
-                <sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                </sp:italic>
-                <sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                </sp:underline>
-                <sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                </sp:underline>
-            </sp:decorator>
-            <sp:decorator>
-                <sp:underline>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                </sp:underline>
-                <sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                </sp:underline>
-                <sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:italic>
-                <sp:italic>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:italic>
-            </sp:decorator>
-        </sp:list>
-        <sp:list id="id4">
-            <sp:decorator>
-                <sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                </sp:underline>
-                <sp:underline>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:italic>
-                    </sp:italic>
-                </sp:underline>
-                <sp:italic>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                </sp:italic>
-                <sp:italic>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                    <sp:bold>
-                    </sp:bold>
-                </sp:italic>
-            </sp:decorator>
-            <sp:decorator>
-                <sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:italic>
-                <sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:italic>
-                <sp:bold>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:bold>
-                <sp:bold>
-                    <sp:italic>
-                    jerpjaejra jdapjeajerij pirjjvjroaprjcolkarokcr
-                    </sp:italic>
-                    ndianen rajmrakkcmapokpooe vjip roeaj pin ejri 
-                    <sp:italic>
-                    </sp:italic>
-                    <sp:underline>
-                    </sp:underline>
-                    <sp:underline>
-                    </sp:underline>
-                </sp:bold>
-            </sp:decorator>
-        </sp:list>
-        <sp:ref refId="refId0">ref0</sp:ref>
-        <sp:ref refId="refId1">ref1</sp:ref>
-    </sp:content>
-    <sp:signature>
-        <sp:name>name2</sp:name>
-        <sp:degree>degree0</sp:degree>
-        <sp:department>department0</sp:department>
-        <sp:university_name>university_name0</sp:university_name>
-    </sp:signature>
-</sp:cover_letter>
+ typeof="pred:ScholarlyArticle">
+    <sp:title property="pred:headline">Color Preferences for Nesting Material in the Zebra Finch (Poephila guttata)</sp:title>
+    <sp:authors>
+        <sp:author href="http://ftn.uns.ac.rs/person/jack.doe@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+            <sp:first_name>Jack</sp:first_name>
+            <sp:last_name>Doe</sp:last_name>
+            <sp:university>
+                <sp:name>University of Novi Sad</sp:name>
+                <sp:city>Novi Sad</sp:city>
+                <sp:country>Serbia</sp:country>
+            </sp:university>
+            <sp:email>jack.doe@uns.ac.rs</sp:email>
+        </sp:author>
+    </sp:authors>
+    <sp:abstract>
+        <sp:paragraph>
+            The zebra finch (Poephila guttata) is a sexually dimorphic, social estrildid native to the grasslands of Australia.
+            They are opportunistic, year-round breeders which nest in colonies of variable size.
+            Zebra finches form permanent pair bonds and both sexes share the responsibilities of nest building, incubation and rearing of young (Walter, 1973).
+            Morris (1954), however, reported that although both sexes pick up and nibble on fragments of material, males collect most of the nesting material.
+        </sp:paragraph>
+        <sp:keywords>
+            <sp:keyword property="pred:keyword">zebra</sp:keyword>
+            <sp:keyword property="pred:keyword">animal</sp:keyword>
+        </sp:keywords>
+    </sp:abstract>
+    <sp:chapters>
+        <sp:chapter>
+            <sp:subtitle>Methods</sp:subtitle>
+            <sp:paragraph>
+                The zebra finches used in this study were in three colonies in the lab of Dr. J.R. Baylis at the University of Wisconsin, Madison.
+                Each colony contained between thirty and forty individual birds of both sexes, a variety of ages and several plumage types.
+                All animals wore colored leg bands for individual identification and all had been exposed to grass, green embroidery floss and white dog fur as nesting material previous to this study.
+                The colonies were housed in separate rooms, each approximately 17m3 and each contained eight artificial nest boxes.
+                All behavioral observations were made from outside the colony rooms through one-way mirrors.
+            </sp:paragraph>
+        </sp:chapter>
+        <sp:chapter>
+            <sp:subtitle>Results</sp:subtitle>
+            <sp:paragraph>
+                The results from these experiments suggest that zebra finches do in fact have color preferences with regard to nesting material.
+                Contrary to the predictions made by generalizing Burley’s studies (1981, 1982), however, the zebra finches used in this study preferred green, red or black nesting material to orange.
+                These results are similar to those of Collias and Collias (1981) who showed that weaver birds preferred green nesting material. [0]
+            </sp:paragraph>
+        </sp:chapter>
+    </sp:chapters>
+    <sp:references>
+        <sp:reference rel="pred:reference" href="http://ftn.uns.ac.rs/paper/paper1">
+            <sp:ref_number>[0]</sp:ref_number>
+            <sp:ref_author>John Doe</sp:ref_author>
+            <sp:article_name>Lorem Ipsum</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+    </sp:references>
+    <sp:category property="pred:category">original research</sp:category>
+</sp:scientific_paper>

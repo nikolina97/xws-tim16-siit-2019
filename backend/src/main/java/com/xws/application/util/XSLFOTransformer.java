@@ -50,7 +50,7 @@ public class XSLFOTransformer {
 		transformerFactory = new TransformerFactoryImpl();
 	}
 
-	private ByteArrayOutputStream generatePDF(String xmlString, String xslFilePath) throws Exception {
+	public ByteArrayOutputStream generatePDF(String xmlString, String xslFilePath) throws Exception {
 
 		System.out.println("[INFO] " + XSLFOTransformer.class.getSimpleName());
 		
@@ -61,7 +61,7 @@ public class XSLFOTransformer {
 		StreamSource transformSource = new StreamSource(xslFile);
 		
 		// Initialize the transformation subject
-		StreamSource source = new StreamSource(new File(xmlString));
+		StreamSource source = new StreamSource(new StringReader(xmlString));
 
 		// Initialize user agent needed for the transformation
 		FOUserAgent userAgent = fopFactory.newFOUserAgent();

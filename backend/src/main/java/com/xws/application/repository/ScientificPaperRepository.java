@@ -37,6 +37,8 @@ import com.xws.application.util.rdf.SparqlUtil;
 @Repository
 public class ScientificPaperRepository {
 
+	public static final String TARGET_NAMESPACE = "https://github.com/nikolina97/xws-tim16-siit-2019";
+
 	public void store(Object model, String documentId) throws Exception {
 		XMLDBManager.store(model, "/db/papers", documentId);
 	}
@@ -287,6 +289,34 @@ public class ScientificPaperRepository {
 		}
 		return papers;
 	}
+	
+	public String getPaperById(String id) throws Exception {
+		String xml = null;
+		String xpathExp = "//scientificPublication[@id=\"" + id + "\"]";
+		String xpath = String.format("//sp:scientific_paper[@sp:id=\"%s\"]", id);
+//        String xpath = "//sp:scientific_paper[@sp:id=\"paper5\"]";
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers", xpath, TARGET_NAMESPACE);
+        if (result == null) {
+			return xml;
+		}
+        ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			System.out.println("HEJ!");
+			try {
+				res = (XMLResource) i.nextResource();
+				xml = res.getContent().toString();
+				return xml;
+			} finally {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		return null;
+    }
 	
 	 public ScientificPaper unmarshalling(XMLResource res) throws Exception {
 	        JAXBContext context = JAXBContext.newInstance("com.xws.application.model");     

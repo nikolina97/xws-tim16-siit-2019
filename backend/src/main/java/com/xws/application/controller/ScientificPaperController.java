@@ -4,8 +4,12 @@ import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.service.ScientificPaperService;
+
+import java.io.ByteArrayOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +67,41 @@ public class ScientificPaperController {
 			return new ResponseEntity<>(service.basicSearch(searchText), HttpStatus.OK);	
 		}catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@GetMapping(value = "/getHtmlById/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<?> getHtmlById(@PathVariable("id") String id) {
+		try {
+			return new ResponseEntity<>(service.getPaperHTML(id), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@GetMapping(value = "/getPDFById/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> getPDFById(@PathVariable("id") String id) {
+		try {
+			ByteArrayOutputStream bs = service.getPaperPDF(id);	
+			return new ResponseEntity<>(bs.toByteArray(), HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@GetMapping(value = "/getXMLById/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<byte[]> getXMLById(@PathVariable("id") String id) {
+		try {
+			String bs = service.getPaperXML(id);	
+			return new ResponseEntity<>(bs.getBytes(), HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 	}

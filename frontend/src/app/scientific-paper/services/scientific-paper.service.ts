@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, } from "@angular/common/http";
 import { PaperLetterDTO } from '../models/paper-letter-dto';
 import { SearchMetadataDTO } from '../models/search-dto';
 
@@ -22,6 +22,9 @@ export class ScientificPaperService {
 
   public basicSearch(searchText : string) {
     return this.http.post<any[]>(this.baseUrl + "/basicSearch", searchText);
+  }
+  public getXML(id: string) {
+    return this.http.get(this.baseUrl + "/getXMLById/"+id, {responseType: 'text' });
   }
 
 }
