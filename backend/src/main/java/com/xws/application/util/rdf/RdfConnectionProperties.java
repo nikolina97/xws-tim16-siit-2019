@@ -37,6 +37,10 @@ public class RdfConnectionProperties {
 	 * @return the configuration object
 	 */
 	public static RdfConnectionProperties loadProperties() throws IOException {
+		
+		
+		
+		
 		String propsName = "fuseki.properties";
 
 		InputStream propsStream = openStream(propsName);

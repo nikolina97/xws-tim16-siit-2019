@@ -18,12 +18,14 @@ public class ScientificPaperMetadataSearchDTO {
 	
 	private Integer version;
 	
+	private String keywords;
+	
 	public ScientificPaperMetadataSearchDTO() {
 		super();
 	}
 	
 	public ScientificPaperMetadataSearchDTO(String category, String title, String dateRecieved, String dateRevised,
-			String dateAccepted, String authorFirstName, String authorLastName, Integer version) {
+			String dateAccepted, String authorFirstName, String authorLastName, Integer version, String keywords) {
 		super();
 		this.category = category;
 		this.title = title;
@@ -33,6 +35,7 @@ public class ScientificPaperMetadataSearchDTO {
 		this.authorFirstName = authorFirstName;
 		this.authorLastName = authorLastName;
 		this.version = version;
+		this.keywords = keywords;
 	}
 
 	public String getCategory() {
@@ -98,5 +101,13 @@ public class ScientificPaperMetadataSearchDTO {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
 }

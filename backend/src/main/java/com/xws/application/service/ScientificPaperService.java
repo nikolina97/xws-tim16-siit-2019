@@ -16,6 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,6 +27,7 @@ import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.BusinessProcess;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.model.TState;
+import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
@@ -267,13 +269,40 @@ public class ScientificPaperService {
 	}
 	
 	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {
-		String email = "/person/john.doe@uns.ac.rs"; //hard coded
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); //hard coded
+		System.out.println(email);
 		String graphName = "scientific_paper";
 		String advancedQuery = "";
 		if (metadataSearch.getCategory() != null) {
 			advancedQuery += "\n?subject <https://schema.org/category> \"" + metadataSearch.getCategory() + "\" .";
 		}
-		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, email, advancedQuery);
+		if (metadataSearch.getDateRecieved() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateReceived> ?dateReceived\n \tfilter contains(?dateReceived,\"" + metadataSearch.getDateRecieved() + "\") .";
+		}
+		if (metadataSearch.getDateAccepted() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateAccepted> ?dateAccepted\n \tfilter contains(?dateAccepted,\"" + metadataSearch.getDateAccepted() + "\") .";
+		}
+		if (metadataSearch.getDateRevised() != null) {
+			advancedQuery += "\n?subject <https://schema.org/dateRevised> ?dateRevised\n \tfilter contains(?dateRevised,\"" + metadataSearch.getDateRevised() + "\") .";
+		}
+		if (metadataSearch.getAuthorFirstName() != null) {
+			advancedQuery += "\n?subject <https://schema.org/author> ?author . \n\t?author <https://schema.org/first_name> \"" + metadataSearch.getAuthorFirstName() + "\" .";
+		}
+		if (metadataSearch.getAuthorLastName() != null) {
+			advancedQuery += "\n?subject <https://schema.org/author> ?author . \n\t?author <https://schema.org/last_name> \"" + metadataSearch.getAuthorLastName() + "\" .";
+		}
+		if (metadataSearch.getTitle() != null) {
+			advancedQuery += "\n?subject <https://schema.org/headline> \"" + metadataSearch.getTitle() + "\" .";
+		}
+		if (metadataSearch.getVersion() != null) {
+			advancedQuery += "\n?subject <https://schema.org/version> \"" + metadataSearch.getVersion() + "\" .";
+		}
+		if (metadataSearch.getKeywords() != null) {
+			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
+		}
+		
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery);
+		System.out.println(papers.size());
 		return papers;
 	}
 
