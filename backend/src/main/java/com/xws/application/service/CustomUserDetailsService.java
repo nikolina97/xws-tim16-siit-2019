@@ -40,7 +40,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 			user = userRepository.findByEmail(username);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new UsernameNotFoundException(String.format("User with username '%s' not found", username));
+			throw new UsernameNotFoundException(String.format("User with e-mail '%s' not found", username));
+		}
+		if(user == null) {
+			throw new UsernameNotFoundException(String.format("User with e-mail '%s' not found", username));
 		}
 		System.out.println(user);
 		List<GrantedAuthority> authorities = new ArrayList<>();

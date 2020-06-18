@@ -41,7 +41,7 @@ public class UserRepository {
 	public Users.User findByEmail(String email) throws Exception {
         Users.User user = null;
         System.out.println(email);
-        String xpath = String.format("collection(\"/db/library/users\")/users/user[userInfo/email=\"%s\"]", email);
+        String xpath = String.format("collection(\"/db/library/users\")/sp:users/sp:user[sp:userInfo/sp:email=\"%s\"]", email);
         ResourceSet result = XMLDBManager.retrieveWithXPath(usersCollectionId, xpath, TARGET_NAMESPACE);
         if (result == null) {
 			return user;

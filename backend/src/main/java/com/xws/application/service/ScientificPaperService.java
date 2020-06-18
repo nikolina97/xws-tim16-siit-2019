@@ -16,6 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,6 +27,7 @@ import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.BusinessProcess;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.model.TState;
+import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
@@ -267,7 +269,8 @@ public class ScientificPaperService {
 	}
 	
 	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {
-		String email = "/person/john.doe@uns.ac.rs"; //hard coded
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); //hard coded
+		System.out.println(email);
 		String graphName = "scientific_paper";
 		String advancedQuery = "";
 		if (metadataSearch.getCategory() != null) {
@@ -283,13 +286,13 @@ public class ScientificPaperService {
 			advancedQuery += "\n?subject <https://schema.org/dateRevised> ?dateRevised\n \tfilter contains(?dateRevised,\"" + metadataSearch.getDateRevised() + "\") .";
 		}
 		if (metadataSearch.getAuthorFirstName() != null) {
-			advancedQuery += "\n?subject <https://schema.org/author> ?author\n\t?author <https://schema.org/firstName> \"" + metadataSearch.getAuthorFirstName() + "\" .";
+			advancedQuery += "\n?subject <https://schema.org/author> ?author . \n\t?author <https://schema.org/first_name> \"" + metadataSearch.getAuthorFirstName() + "\" .";
 		}
 		if (metadataSearch.getAuthorLastName() != null) {
-			advancedQuery += "\n?subject <https://schema.org/author> ?author .\n\t?author <https://schema.org/lastName> \"" + metadataSearch.getAuthorLastName() + "\" .";
+			advancedQuery += "\n?subject <https://schema.org/author> ?author . \n\t?author <https://schema.org/last_name> \"" + metadataSearch.getAuthorLastName() + "\" .";
 		}
 		if (metadataSearch.getTitle() != null) {
-			advancedQuery += "\n?subject <https://schema.org/title> \"" + metadataSearch.getTitle() + "\" .";
+			advancedQuery += "\n?subject <https://schema.org/headline> \"" + metadataSearch.getTitle() + "\" .";
 		}
 		if (metadataSearch.getVersion() != null) {
 			advancedQuery += "\n?subject <https://schema.org/version> \"" + metadataSearch.getVersion() + "\" .";
@@ -298,7 +301,8 @@ public class ScientificPaperService {
 			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
 		}
 		
-		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, email, advancedQuery);
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery);
+		System.out.println(papers.size());
 		return papers;
 	}
 

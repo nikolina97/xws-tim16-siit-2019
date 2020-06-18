@@ -1,0 +1,52 @@
+<div class="wrapper fadeInDown" [ngStyle]="{'margin-top': '10%'}">
+    <div class="card-body">      
+    <div class="row flex">
+      <form class="col-md-12 box" [formGroup]="form" (ngSubmit)="submit()">
+        <fieldset>
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+              <div class="col-md-8">
+                <legend>Login</legend>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+            <label for="username" class="control-label col-md-3">E-mail</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4"></div>  
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="username" name="username" placeholder="E-mail" [formControl]="form.controls['username']">
+              <br>
+              <small id="username-empty" class="text-danger"  *ngIf="form.controls.username.touched && form.controls.username.errors?.required">
+                This field can't be empty!</small>
+              <small id="username-empty" class="text-danger"  *ngIf="form.controls.username.touched && form.controls.username.errors?.pattern">
+                E-mail form incorrect!</small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+            <label for="username" class="control-label col-md-3">Password</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4"></div>  
+            <div class="col-md-4">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" [formControl]="form.controls.password">
+              <br>
+              <small id="password-empty" class="text-danger"  *ngIf="form.controls.password.touched && form.controls.password.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-info btn-block"  [disabled]="!form.valid">Log in</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div> 

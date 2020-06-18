@@ -1,0 +1,128 @@
+<div class="wrapper fadeInDown">
+    <div class="card-body">      
+    <div class="row flex">
+      <form class="col-md-12 box" [formGroup]="formReg">
+        <fieldset>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <legend>Author Registration</legend>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">First Name</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" formControlName="firstName">
+              <br>
+              <small id="firstName-empty" class="text-danger"  *ngIf="formReg.controls.firstName.touched && formReg.controls.firstName.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">Last Name</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" formControlName="lastName">
+              <br>
+              <small id="lastName-empty" class="text-danger"  *ngIf="formReg.controls.lastName.touched && formReg.controls.lastName.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">E-mail</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" formControlName="email">
+              <br>
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.email.touched && formReg.controls.email.errors?.required">
+                This field can't be empty!</small>
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.email.touched && formReg.controls.email.errors?.pattern">
+                Email form incorrect!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-6">Password</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" formControlName="password">
+              <br>
+              <small id="password-empty" class="text-danger"  *ngIf="formReg.controls.password.touched && formReg.controls.password.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-6">Repeat Password</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="password" class="form-control" id="repeatedPassword" name="repeatedPassword" placeholder="Repeat Password" formControlName="repeatedPassword">
+              <br>
+              <small id="repeatedPassword-empty" class="text-danger"  *ngIf="formReg.controls.repeatedPassword.touched && formReg.controls.repeatedPassword.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">University Name</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="universityName" name="universityName" placeholder="University Name" formControlName="universityName">
+              <br>
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.universityName.touched && formReg.controls.universityName.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">University City</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="universityCity" name="universityCity" placeholder="University City" formControlName="universityCity">
+              <br>
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.universityCity.touched && formReg.controls.universityCity.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>
+            <label for="username" class="control-label col-md-3">University Country</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3"></div>  
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="universityCountry" name="universityCountry" placeholder="University Country" formControlName="universityCountry">
+              <br>
+              <small id="email-empty" class="text-danger"  *ngIf="formReg.controls.universityCountry.touched && formReg.controls.universityCountry.errors?.required">
+                This field can't be empty!</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <button class="btn btn-info btn-block"  [disabled]="!formReg.valid" (click)="register()">Register</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

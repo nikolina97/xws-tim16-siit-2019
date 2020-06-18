@@ -23,6 +23,7 @@ import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
@@ -61,7 +62,6 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		UpdateRequest request = UpdateFactory.create(sparqlUpdate);
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.getUpdateEndpoint());
         processor.execute();
-        
 		
 	}
 	
@@ -88,7 +88,6 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		    	varName = variableBindings.next();
 		    	varValue = querySolution.get(varName);
 		    	
-		    	System.out.println(varName + ": " + varValue);
 		    	String[] idList = varValue.toString().split("/");
 		    	ids.add(idList[idList.length - 1]);
 		    }
@@ -108,7 +107,6 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 			XMLResource res = null;
 			ScientificPaper sp = null;
 			while (i.hasMoreResources()) {
-				System.out.println("HEJ!");
 				try {
 					res = (XMLResource) i.nextResource();
 					// pretvori ga u TPerson
@@ -138,31 +136,33 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 		condition = "?subject <https://schema.org/author> <http://ftn.uns.ac.rs" + condition + ">";
 		String sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition, advancedQuery);
 //		String sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
-		System.out.println("endpoint " + conn.getDataEndpoint() + graphName + "  ----  "+ sparqlQuery);
-		QueryExecution query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
-		ResultSet results = query.execSelect();
+		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
+		QueryExecution query = null;
+		query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
+		ResultSet results = null;
+		results = query.execSelect();
 		String varName;
 		RDFNode varValue;
-		
 		List<String> ids = new ArrayList<String>();
 		while(results.hasNext()) {
-		    
 			// A single answer from a SELECT query
 			QuerySolution querySolution = results.next() ;
 			Iterator<String> variableBindings = querySolution.varNames();
 			
 			// Retrieve variable bindings
-		    while (variableBindings.hasNext()) {
-		   
-		    	varName = variableBindings.next();
-		    	varValue = querySolution.get(varName);
-		    	
-		    	System.out.println(varName + ": " + varValue);
-		    	String[] idList = varValue.toString().split("/");
-		    	ids.add(idList[idList.length - 1]);
-		    }
-		    System.out.println();
-		}
+				while (variableBindings.hasNext()) {
+					   
+			    	varName = variableBindings.next();
+			    	varValue = querySolution.get(varName);
+			    	
+			    	System.out.println(varName + ": " + varValue);
+			    	String[] idList = varValue.toString().split("/");
+			    	ids.add(idList[idList.length - 1]);
+			    }
+		    
+			}
+		query.close();
+		
 		List<ScientificPaper> papers = new ArrayList<>();
 		
 		String xpathExp = null;
@@ -177,11 +177,11 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 			XMLResource res = null;
 			ScientificPaper sp = null;
 			while (i.hasMoreResources()) {
-				System.out.println("HEJ!");
 				try {
 					res = (XMLResource) i.nextResource();
 					// pretvori ga u TPerson
 					sp = unmarshalling(res);
+					sp.setId(s);
 					papers.add(sp);
 				} finally {
 					// don't forget to cleanup resources
@@ -204,7 +204,8 @@ public void storeMetadata(String metadata, String graphName) throws IOException 
 	 public ScientificPaper unmarshalling(XMLResource res) throws Exception {
 	        JAXBContext context = JAXBContext.newInstance("com.xws.application.model");     
 	    	Unmarshaller unmarshaller = context.createUnmarshaller();
-	    	ScientificPaper sPaper = (ScientificPaper) unmarshaller.unmarshal(res.getContentAsDOM());
+	    	Node node = res.getContentAsDOM();
+	    	ScientificPaper sPaper = (ScientificPaper) unmarshaller.unmarshal(node);
 	    	return sPaper;
     }
 	

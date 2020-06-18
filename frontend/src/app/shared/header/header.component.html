@@ -1,6 +1,16 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" >
 	<button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
 	<mat-menu #paper_menu="matMenu">
 		<button mat-menu-item routerLink="/paper/new">Publish</button>
 	</mat-menu>
+	<div style= "flex: 1 1 auto;">
+	</div>
+	<span *ngIf="!auth.isLoggedIn()">
+	<button  mat-button [routerLink]="['/login']">Sign in</button>
+	<button  mat-button [routerLink]="['/registration-author']">Register as author</button>
+	<button  mat-button [routerLink]="['/registration-reviewer']">Register as reviewer</button>
+	</span>	
+	<span *ngIf="auth.isLoggedIn()">
+		<button  mat-button (click)="logout()">Log out</button>
+	</span>
 </mat-toolbar>

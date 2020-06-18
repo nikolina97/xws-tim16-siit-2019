@@ -1,8 +1,6 @@
 package com.xws.application.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,13 +16,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xws.application.dto.UserRegistrationDTO;
-import com.xws.application.model.TRole;
 import com.xws.application.security.JwtAuthenticationRequest;
 import com.xws.application.security.TokenUtils;
 import com.xws.application.service.CustomUserDetailsService;
@@ -51,6 +49,7 @@ public class AuthenticationController {
 	public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) throws AuthenticationException, IOException {
 
+		System.out.println(authenticationRequest.getUsername());
 		UserDetails user = null;
 		final Authentication authentication;
 		try {
@@ -83,4 +82,11 @@ public class AuthenticationController {
 			return new ResponseEntity<String>("Registration error!", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping( value = "/logout")
+    public ResponseEntity<String> logoutUser() {
+        	SecurityContextHolder.clearContext();
+
+            return new ResponseEntity<>("Loggin out successfull!", HttpStatus.OK);
+    }
 }
