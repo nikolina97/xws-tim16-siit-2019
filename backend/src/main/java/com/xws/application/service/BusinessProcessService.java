@@ -15,4 +15,8 @@ public class BusinessProcessService {
 		repository.store(process, documentId);
 	}
 
+	public BusinessProcess get(String documentId) throws Exception {
+		return repository.retrieve(documentId);
+	}
+
 }
