@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019" xmlns:pred="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="http://ftn.uns.ac.rs/paper/paper1" sp:id="paper1" typeof="pred:ScholarlyArticle">
+<?xml version="1.0" encoding="UTF-8"?><sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019" xmlns:pred="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="http://ftn.uns.ac.rs/paper/paper2" id="paper2" typeof="pred:ScholarlyArticle">
     <sp:title datatype="xs:string" property="pred:headline">aAA</sp:title>
     <sp:authors>
-        <sp:author href="http://ftn.uns.ac.rs/person/john.doe@uns.ac.rs" rel="pred:author" typeof="pred:Person">
-            <sp:first_name about="http://ftn.uns.ac.rs/person/john.doe@uns.ac.rs" datatype="xs:string" property="pred:first_name">John</sp:first_name>
-            <sp:last_name about="http://ftn.uns.ac.rs/person/john.doe@uns.ac.rs" datatype="xs:string" property="pred:last_name">Doe</sp:last_name>
+        <sp:author href="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+            <sp:first_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:first_name">John</sp:first_name>
+            <sp:last_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:last_name">Doe</sp:last_name>
             <sp:university>
                 <sp:name>University of Novi Sad</sp:name>
                 <sp:city>Novi Sad</sp:city>
                 <sp:country>Serbia</sp:country>
             </sp:university>
-            <sp:email>john.doe@uns.ac.rs</sp:email>
+            <sp:email>milos@uns.ac.rs</sp:email>
         </sp:author>
     </sp:authors>
-    <sp:abstract sp:id="paper1/abstract">
-        <sp:paragraph sp:id="paper1/abstract/paragraph1">
+    <sp:abstract id="paper2/abstract">
+        <sp:paragraph id="paper2/abstract/paragraph1">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
@@ -25,17 +25,17 @@
         </sp:keywords>
     </sp:abstract>
     <sp:chapters>
-        <sp:chapter sp:id="paper1/chapter1">
+        <sp:chapter id="paper2/chapter1">
             <sp:subtitle>Why do we use it?</sp:subtitle>
-            <sp:paragraph sp:id="paper1/chapter1/paragraph1">
+            <sp:paragraph id="paper2/chapter1/paragraph1">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </sp:paragraph>
-            <sp:subchapter sp:id="paper1/chapter1/subchapter1">
+            <sp:subchapter id="paper2/chapter1/subchapter1">
                 <sp:subtitle>Where does it come from?</sp:subtitle>
-                <sp:paragraph sp:id="paper1/chapter1/subchapter1/paragraph1">
+                <sp:paragraph id="paper2/chapter1/subchapter1/paragraph1">
                     Contrary to popular belief, Lorem Ipsum is not simply random text.
                     It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
                     Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
@@ -43,7 +43,7 @@
                     This book is a treatise on the theory of ethics, very popular during the Renaissance.
                     The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
                 </sp:paragraph>
-                <sp:paragraph sp:id="paper1/chapter1/subchapter1/paragraph2">
+                <sp:paragraph id="paper2/chapter1/subchapter1/paragraph2">
                     There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
                     If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
                     All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
@@ -51,8 +51,8 @@
                     The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
                 </sp:paragraph>
             </sp:subchapter>
-            <sp:paragraph sp:id="paper1/chapter1/paragraph2">
-                <sp:list sp:id="paper1/chapter1/paragraph2/list1">
+            <sp:paragraph id="paper2/chapter1/paragraph2">
+                <sp:list id="paper2/chapter1/paragraph2/list1">
                     <sp:decorator>
                         <sp:bold>Lorem Ipsum</sp:bold>
                         <sp:italic>Lorem Ipsum</sp:italic>
@@ -63,4 +63,4 @@
         </sp:chapter>
     </sp:chapters>
     <sp:category datatype="xs:string" property="pred:category">original research</sp:category>
-<sp:version datatype="xs:string" property="pred:version">1</sp:version><sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-18T13:40:03</sp:dateReceived><sp:state datatype="xs:string" property="pred:state">in_procedure</sp:state></sp:scientific_paper>
+<sp:version datatype="xs:string" property="pred:version">1</sp:version><sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-18T21:17:19</sp:dateReceived><sp:state datatype="xs:string" property="pred:state">in_procedure</sp:state></sp:scientific_paper>
