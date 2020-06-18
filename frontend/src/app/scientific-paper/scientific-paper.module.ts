@@ -9,10 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScientificPaperRoutingModule } from './scientific-paper-routing.module';
 import { PublishingComponent } from './publishing/publishing.component';
 import { SearchPapersComponent } from './search-papers/search-papers.component';
+import { PapersFromAuthorComponent } from './papers-from-author/papers-from-author.component';
 
 
 @NgModule({
-  declarations: [PublishingComponent, SearchPapersComponent],
+  declarations: [PublishingComponent, SearchPapersComponent, PapersFromAuthorComponent],
   imports: [
     CommonModule,
     ScientificPaperRoutingModule,

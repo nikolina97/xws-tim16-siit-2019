@@ -24,4 +24,12 @@ export class ScientificPaperService {
     return this.http.post<any[]>(this.baseUrl + "/basicSearch", searchText);
   }
 
+  public getMyPapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getByUser");
+  }
+
+  public revokePaper(id: string) {
+    return this.http.get(this.baseUrl + "/revoke/" + id);
+  }
+
 }

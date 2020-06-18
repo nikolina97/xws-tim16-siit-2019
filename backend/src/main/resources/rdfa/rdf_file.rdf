@@ -27,6 +27,6 @@
     <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-18T13:40:03</pred:dateReceived>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">in_procedure</pred:state>
+    <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">revoked</pred:state>
   </rdf:Description>
 </rdf:RDF>

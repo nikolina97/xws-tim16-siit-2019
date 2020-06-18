@@ -4,6 +4,9 @@ import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.service.ScientificPaperService;
+
+import java.awt.PageAttributes.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +59,14 @@ public class ScientificPaperController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	
+	@GetMapping(value = "/revoke/{paperId}")
+	public ResponseEntity<?> revoke(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.revokePaper(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 }

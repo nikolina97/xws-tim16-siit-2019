@@ -234,7 +234,7 @@ public class XMLDBManager {
 			} else {
 
 				System.out.println("[INFO] Binding XML resouce to an JAXB instance: ");
-				JAXBContext context = JAXBContext.newInstance("rs.ac.uns.ftn.examples.xmldb.bookstore");
+				JAXBContext context = JAXBContext.newInstance("com.xws.application.model");
 
 				Unmarshaller unmarshaller = context.createUnmarshaller();
 
@@ -267,7 +267,7 @@ public class XMLDBManager {
 
 		// initialize collection and document identifiers
 		System.out.println("\t- collection ID: " + collectionId);
-
+		
 		// initialize database driver
 		System.out.println("[INFO] Loading driver class: " + conn.driver);
 		Class<?> cl = Class.forName(conn.driver);
