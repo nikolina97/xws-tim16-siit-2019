@@ -182,7 +182,7 @@ public class XMLDBManager {
 				return null;
 			}
 
-			model = res.toString();
+			model = res.getContent().toString();
 		} finally {
 			//don't forget to clean up!
 

@@ -1,15 +1,19 @@
 package com.xws.application.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.StringReader;
+import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.xml.XMLConstants;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -19,6 +23,11 @@ import com.xws.application.model.BusinessProcess;
 import com.xws.application.model.ScientificPaper;
 import com.xws.application.model.TReviewAssignementState;
 import com.xws.application.model.TState;
+import com.xws.application.exception.BadRequestException;
+import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
+import com.xws.application.model.*;
+import com.xws.application.parser.JAXB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,9 +41,11 @@ import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
 import com.xws.application.util.rdf.DOMToXMLFile;
 import com.xws.application.util.rdf.MetadataExtractor;
 import com.xws.application.util.rdf.RDFFileToString;
+import org.xml.sax.SAXException;
 
 @Service
 public class ScientificPaperService {
@@ -53,6 +64,9 @@ public class ScientificPaperService {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private XSLFOTransformer transformer;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
@@ -144,7 +158,7 @@ public class ScientificPaperService {
 		return true;
 	}
 
-	private Document generateIDs(Document document, String paperId, XPathExpressionHandlerNS handler) throws Exception {
+	private Document generateIDs(Document document, String paperId, XPathExpressionHandlerNS handler) {
 		document.getDocumentElement().setAttribute("about", "http://ftn.uns.ac.rs/paper/" + paperId);
 		document.getDocumentElement().setAttribute("id", paperId);
 
@@ -252,6 +266,57 @@ public class ScientificPaperService {
 		return document;
 	}
 
+	public void revise(String revision, String id) {
+		try {
+			ScientificPaper original = repository.retrieveJAXB(id + ".xml");
+			if(original == null)
+				throw new NotFoundException("Paper not found.");
+
+			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+
+			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", user.getUserInfo().getEmail());
+			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(user.getUserInfo().getEmail()))))
+				throw new BadRequestException("This paper is not yours.");
+
+			BusinessProcess process = processService.get(id + ".xml");
+
+			if(!process.getState().equals(TState.ON_REVISE) || original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED))
+				throw new BadRequestException("Your don't have permission to write revision of this paper.");
+
+			// Validate against schema
+			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/scientific_paper.xsd"));
+
+			Validator validator = schema.newValidator();
+			validator.validate(new StreamSource(new StringReader(revision)));
+
+			// Change version
+			ScientificPaper revisionModel = (ScientificPaper) JAXB.unmarshal(revision, DocType.SCIENTIFIC_PAPER);
+			revisionModel.getVersion().setValue(BigInteger.valueOf(revisionModel.getVersion().getValue().intValue() + 1));
+
+			// Set date of revision
+			GregorianCalendar c = new GregorianCalendar();
+			c.clear();
+			c.setTime(new Date());
+			ScientificPaper.DateRevised dateRevised = new ScientificPaper.DateRevised();
+			dateRevised.setValue(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
+			revisionModel.setDateRevised(dateRevised);
+
+			// Update the business process for this paper
+			process.setState(TState.REVISED);
+			process.setVersion(revisionModel.getVersion().getValue());
+
+			processService.save(process, id + ".xml");
+
+		} catch (SAXException | IOException e) {
+			e.printStackTrace();
+			throw new BadRequestException("Your revision is incorrect, check it.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new InternalServerErrorException("Something bad happend on the server.");
+		}
+	}
+
 	public ScientificPaper get(String paperID) {
 		try {
 			return (ScientificPaper) repository.retrieve(paperID);
@@ -331,6 +396,26 @@ public class ScientificPaperService {
 		List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, searchText, loggedIn);
 		return papers;
 	}
+	
+	public String getPaperHTML(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPaperPDF(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/scientific_paper_fo.xsl");
+		return html;
+	}
+	
+	public String getPaperXML(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+		return xml;
+	}
+
 
 	public Boolean revokePaper(String paperId) {
 		String schemaPath = "src/main/resources/schemas/scientific_paper.xsd";

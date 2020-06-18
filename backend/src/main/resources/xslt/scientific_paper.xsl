@@ -51,6 +51,15 @@
                         <xsl:with-param name="reference" select = "." />
                    	 	</xsl:call-template>
                     </xsl:for-each>
+                    <br/>
+                    <br/>
+                    <foooter><h4>Metadata:</h4>
+                    	<small><b>Category:&#160;</b><xsl:value-of select = "sp:scientific_paper/sp:category"></xsl:value-of><br/>
+                    	<b>Version:&#160;</b><xsl:value-of select = "sp:scientific_paper/sp:version"></xsl:value-of><br/>
+                    	<b>Received:&#160;</b><xsl:value-of select = "sp:scientific_paper/sp:dateReceived"></xsl:value-of><br/>
+                    	<b>State:&#160;</b><xsl:value-of select = "sp:scientific_paper/sp:state"></xsl:value-of><br/>
+					</small>
+					</foooter>
              </body>
         </html>
     </xsl:template>

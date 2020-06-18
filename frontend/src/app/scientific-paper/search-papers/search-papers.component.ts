@@ -3,6 +3,7 @@ import { ScientificPaperService } from '../services/scientific-paper.service';
 import { Router } from '@angular/router';
 import { SearchMetadataDTO } from '../models/search-dto';
 import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-search-papers',
@@ -14,7 +15,7 @@ export class SearchPapersComponent implements OnInit {
   form: FormGroup;
   formBasic: FormGroup;
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state"];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "pdf", "xml"];
   dataSource : any[] = [];
   searchDTO : SearchMetadataDTO = {
     category: null,
@@ -138,5 +139,24 @@ export class SearchPapersComponent implements OnInit {
       console.log(this.dataSource);
       }
     )
+  }
+
+  download(id: string){
+    this.paperService.getXML(id).subscribe(
+      data => 
+      { console.log(data);
+        this.downloadFile(data);
+      },
+      error =>{
+        console.log(error.error);
+      }
+    )
+  }
+
+  downloadFile(data) {
+    const blob = new Blob([data], { type: 'text/xml' });
+    const url= window.URL.createObjectURL(blob);
+    saveAs(url, "scientific_paper.xml");
+    window.open(url);
   }
 }
