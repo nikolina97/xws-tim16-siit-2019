@@ -15,6 +15,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import com.xws.application.model.BusinessProcess;
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.model.TState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,10 +27,6 @@ import org.w3c.dom.NodeList;
 
 import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
-import com.xws.application.model.BusinessProcess;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.TState;
-import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
@@ -145,13 +144,13 @@ public class ScientificPaperService {
 
 	private Document generateIDs(Document document, String paperId, XPathExpressionHandlerNS handler) throws Exception {
 		document.getDocumentElement().setAttribute("about", "http://ftn.uns.ac.rs/paper/" + paperId);
-		document.getDocumentElement().setAttribute("sp:id", paperId);
+		document.getDocumentElement().setAttribute("id", paperId);
 
 		String abstractPath = "//sp:abstract";
 		String abstractId = paperId + "/abstract";
 
 		Element abstractElement = (Element) handler.evaluateXPath(document, abstractPath).item(0);
-		abstractElement.setAttribute("sp:id", abstractId);
+		abstractElement.setAttribute("id", abstractId);
 
 		document = generateIDsForParagraph(document, abstractPath, abstractId, handler);
 
@@ -162,7 +161,7 @@ public class ScientificPaperService {
 			String chapterId = paperId + "/chapter" + (i + 1);
 
 			Element chapter = (Element) chapters.item(i);
-			chapter.setAttribute("sp:id", chapterId);
+			chapter.setAttribute("id", chapterId);
 
 			document = generateIDsForParagraph(document, chaptersPath, chapterId, handler);
 			document = generateIDsForSubchapters(document, chaptersPath, chapterId, handler);
@@ -175,7 +174,7 @@ public class ScientificPaperService {
 			String chapterId = paperId + "/reference" + (i + 1);
 
 			Element reference = (Element) references.item(i);
-			reference.setAttribute("sp:id", chapterId);
+			reference.setAttribute("id", chapterId);
 		}
 
 		return document;
@@ -188,7 +187,7 @@ public class ScientificPaperService {
 			String paragraphId = parentID + "/paragraph" + (i + 1);
 
 			Element paragraph = (Element) paragraphs.item(i);
-			paragraph.setAttribute("sp:id", paragraphId);
+			paragraph.setAttribute("id", paragraphId);
 
 			String tablesPath = paragraphsPath + "/sp:table";
 			NodeList tables = handler.evaluateXPath(document, tablesPath);
@@ -197,7 +196,7 @@ public class ScientificPaperService {
 				String tableId = paragraphId + "/table" + (j + 1);
 
 				Element table = (Element) tables.item(j);
-				table.setAttribute("sp:id", tableId);
+				table.setAttribute("id", tableId);
 			}
 
 			String figuresPath = paragraphsPath + "/sp:figure";
@@ -207,7 +206,7 @@ public class ScientificPaperService {
 				String figureId = paragraphId + "/figure" + (j + 1);
 
 				Element figure = (Element) figures.item(j);
-				figure.setAttribute("sp:id", figureId);
+				figure.setAttribute("id", figureId);
 			}
 
 			String formulasPath = paragraphsPath + "/sp:formula";
@@ -217,7 +216,7 @@ public class ScientificPaperService {
 				String formulaId = paragraphId + "/formula" + (j + 1);
 
 				Element formula = (Element) formulas.item(j);
-				formula.setAttribute("sp:id", formulaId);
+				formula.setAttribute("id", formulaId);
 			}
 
 			String listsPath = paragraphsPath + "/sp:list";
@@ -227,7 +226,7 @@ public class ScientificPaperService {
 				String listId = paragraphId + "/list" + (j + 1);
 
 				Element list = (Element) lists.item(j);
-				list.setAttribute("sp:id", listId);
+				list.setAttribute("id", listId);
 			}
 		}
 
@@ -242,7 +241,7 @@ public class ScientificPaperService {
 			String subchapterId = parentID + "/subchapter" + (i + 1);
 
 			Element subchapter = (Element) subchapters.item(i);
-			subchapter.setAttribute("sp:id", subchapterId);
+			subchapter.setAttribute("id", subchapterId);
 
 			document = generateIDsForParagraph(document, subchaptersPath, subchapterId, handler);
 			document = generateIDsForSubchapters(document, subchaptersPath, subchapterId, handler);

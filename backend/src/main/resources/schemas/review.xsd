@@ -54,6 +54,7 @@
                 <xs:element minOccurs="0" name="date" type="xs:date"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:anyAttribute namespace="##local" processContents="skip"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="reviewer" type="TPerson"/>
