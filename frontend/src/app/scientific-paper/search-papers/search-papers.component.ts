@@ -12,6 +12,7 @@ import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 export class SearchPapersComponent implements OnInit {
 
   form: FormGroup;
+  formBasic: FormGroup;
 
   displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state"];
   dataSource : any[] = [];
@@ -40,7 +41,11 @@ export class SearchPapersComponent implements OnInit {
       authorName: [null],
       version: [null],
       keywords: [null],
-		});
+    });
+    
+    this.formBasic = this.fb.group({
+      searchText: [null]
+    })
 
    }
 
@@ -129,4 +134,12 @@ export class SearchPapersComponent implements OnInit {
     this.getPapers(this.searchDTO);
   }
 
+  searchBasic() {
+    this.paperService.basicSearch(this.formBasic.value.searchText).subscribe(
+      (result) => {
+        this.dataSource = result;
+      console.log(this.dataSource);
+      }
+    )
+  }
 }

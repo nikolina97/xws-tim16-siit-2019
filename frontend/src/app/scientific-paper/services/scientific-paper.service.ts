@@ -20,4 +20,8 @@ export class ScientificPaperService {
     return this.http.post<any[]>(this.baseUrl + "/advancedSearch", dto);
   }
 
+  public basicSearch(searchText : string) {
+    return this.http.post<any[]>(this.baseUrl + "/basicSearch", searchText);
+  }
+
 }
