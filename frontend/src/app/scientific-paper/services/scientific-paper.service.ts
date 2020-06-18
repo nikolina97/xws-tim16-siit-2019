@@ -27,4 +27,12 @@ export class ScientificPaperService {
     return this.http.get(this.baseUrl + "/getXMLById/"+id, {responseType: 'text' });
   }
 
+  public getMyPapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getByUser");
+  }
+
+  public revokePaper(id: string) {
+    return this.http.get(this.baseUrl + "/revoke/" + id);
+  }
+
 }

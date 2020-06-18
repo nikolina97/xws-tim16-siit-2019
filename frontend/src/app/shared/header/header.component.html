@@ -3,6 +3,9 @@
 	<mat-menu #paper_menu="matMenu">
 		<button mat-menu-item routerLink="/paper/new">Publish</button>
 		<button mat-menu-item routerLink="/paper/search">All papers</button>
+		<span *ngIf = "auth.isLoggedIn()">
+			<button mat-menu-item routerLink="/paper/byAuthor">My papers</button>
+		</span>
 	</mat-menu>
 	<div style= "flex: 1 1 auto;">
 	</div>

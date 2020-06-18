@@ -2,6 +2,9 @@ package com.xws.application.repository;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,7 +25,9 @@ import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
@@ -31,11 +36,21 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.model.ScientificPaper;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.util.rdf.DOMToXMLFile;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RDFFileToString;
 import com.xws.application.util.rdf.RdfConnectionProperties;
 import com.xws.application.util.rdf.SparqlUtil;
 
 @Repository
 public class ScientificPaperRepository {
+	
+	@Autowired
+	private DOMParser domParser;
+	
+	@Autowired
+	private MetadataExtractor metadataExtractor;
 
 	public static final String TARGET_NAMESPACE = "https://github.com/nikolina97/xws-tim16-siit-2019";
 
@@ -63,7 +78,7 @@ public class ScientificPaperRepository {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         model.write(out, SparqlUtil.NTRIPLES); 
-        
+       
 		String sparqlUpdate = SparqlUtil.insertData(conn.getDataEndpoint() + graphName, new String(out.toByteArray()));
 		UpdateRequest request = UpdateFactory.create(sparqlUpdate);
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.getUpdateEndpoint());
@@ -99,6 +114,7 @@ public class ScientificPaperRepository {
 		    }
 		    System.out.println();
 		}
+		query.close();
 		List<ScientificPaper> papers = new ArrayList<>();
 		
 		String xpathExp = null;
@@ -117,6 +133,7 @@ public class ScientificPaperRepository {
 					res = (XMLResource) i.nextResource();
 					// pretvori ga u TPerson
 					sp = unmarshalling(res);
+					sp.setId(s);
 					papers.add(sp);
 				} finally {
 					// don't forget to cleanup resources
@@ -139,12 +156,14 @@ public class ScientificPaperRepository {
 	public List<ScientificPaper> getAllPapersByAuthor(String graphName, String condition, String advancedQuery, Boolean loggedIn) throws Exception {
 		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
 		String condition1 = "?subject <https://schema.org/state> \"accepted\"";
+		String sparqlQuery = "";
 		if (!loggedIn) {
-			condition = "";
+			condition = condition1 + " . " + "\n\t" + advancedQuery;
+			sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
 		}else {
 			condition = "?subject <https://schema.org/author> <http://ftn.uns.ac.rs" + condition + ">";
+			sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition, advancedQuery);
 		}
-		String sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition, advancedQuery);
 //		String sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
 		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
 		QueryExecution query = null;
@@ -293,7 +312,7 @@ public class ScientificPaperRepository {
 	public String getPaperById(String id) throws Exception {
 		String xml = null;
 		String xpathExp = "//scientificPublication[@id=\"" + id + "\"]";
-		String xpath = String.format("//sp:scientific_paper[@sp:id=\"%s\"]", id);
+		String xpath = String.format("//sp:scientific_paper[@id=\"%s\"]", id);
 //        String xpath = "//sp:scientific_paper[@sp:id=\"paper5\"]";
 		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers", xpath, TARGET_NAMESPACE);
         if (result == null) {
@@ -326,5 +345,48 @@ public class ScientificPaperRepository {
 	    	return sPaper;
     }
 	
+	public String findOneById(String id, String schemaPath) throws Exception {
+		String xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", id);
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		String sp = null;
+		while (i.hasMoreResources()) {
+			try {
+				res = (XMLResource) i.nextResource();
+				sp = res.getContent().toString();
+				// pretvori ga u TPerson
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		return sp;
+	}
 
+	public void updateMetadata(String paperId, String metadata, String subject, String object, String predicate, String graphName) throws IOException {
+		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
+		Model model = ModelFactory.createDefaultModel();
+        model.read(new ByteArrayInputStream(metadata.getBytes()), null);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        model.write(out, SparqlUtil.NTRIPLES); 
+        
+        String removeUpdate = SparqlUtil.deleteTriples(conn.getDataEndpoint() + graphName, subject, predicate, object);
+        System.out.println("remove update " + removeUpdate);
+        UpdateRequest request1 = UpdateFactory.create(removeUpdate);
+        UpdateProcessor processor1 = UpdateExecutionFactory.createRemote(request1, conn.getUpdateEndpoint());
+        processor1.execute();
+
+		String sparqlUpdate = SparqlUtil.insertData(conn.getDataEndpoint() + graphName, new String(out.toByteArray()));
+		UpdateRequest request = UpdateFactory.create(sparqlUpdate);
+		UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.getUpdateEndpoint());
+        processor.execute();
+		
+	}
 }
+

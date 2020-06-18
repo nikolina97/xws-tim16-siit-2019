@@ -36,7 +36,7 @@ public class CoverLetterService {
 			letterDOM.getDocumentElement().setAttribute("about", "http://ftn.uns.ac.rs/letter/" + letterId);
 			letterDOM.getDocumentElement().setAttribute("rel", "pred:letter");
 			letterDOM.getDocumentElement().setAttribute("href", "http://ftn.uns.ac.rs/paper/paper" + (paperRepository.getDocumentCount()));
-			letterDOM.getDocumentElement().setAttribute("sp:id", letterId);
+			letterDOM.getDocumentElement().setAttribute("id", letterId);
 
 			/*metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
 			String metadata = RDFFileToString.toString(rdfFilePath);

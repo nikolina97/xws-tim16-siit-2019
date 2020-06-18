@@ -24,6 +24,7 @@ public class SparqlUtil {
 	
 	private static final String SELECT_DISTINCT_UNION_META =  "SELECT DISTINCT ?subject FROM <%1$s> WHERE { {%2$s} UNION {%3$s} . %4$s}";
 	
+	private static final String DELETE_TRIPLES = "DELETE DATA { GRAPH <%1$s>  { <%2$s> <%3$s> %4$s . }};";
 	
 	/* Plain text RDF serialization format */
 	public static final String NTRIPLES = "N-TRIPLES";
@@ -54,6 +55,10 @@ public class SparqlUtil {
 	
 	public static String selectDistinctUnionMeta(String graphUri,String sparqlCondition1,  String sparqlCondition2, String sparqlCondition3) {
 		return String.format(SELECT_DISTINCT_UNION_META, graphUri, sparqlCondition1, sparqlCondition2, sparqlCondition3);
+	}
+	
+	public static String deleteTriples(String graphUri, String subject, String predicate, String object) {
+		return String.format(DELETE_TRIPLES, graphUri, subject, predicate, object);
 	}
 	
 }

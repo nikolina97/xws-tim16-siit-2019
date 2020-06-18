@@ -19,6 +19,10 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import com.xws.application.model.BusinessProcess;
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.model.TReviewAssignementState;
+import com.xws.application.model.TState;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
 import com.xws.application.exception.NotFoundException;
@@ -29,6 +33,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.xws.application.dto.PaperLetterDTO;
@@ -324,7 +329,7 @@ public class ScientificPaperService {
 	
 	public List<ScientificPaper> getPapersFromUser() throws Exception {
 		String email = "/person/john.doe@uns.ac.rs";
-		String graphName = "scientific_paper/";
+		String graphName = "scientific_paper";
 		List<ScientificPaper> papers = repository.getQuerySP(graphName, email);
 		return papers;
 	}
@@ -411,5 +416,39 @@ public class ScientificPaperService {
 		return xml;
 	}
 
+
+	public Boolean revokePaper(String paperId) {
+		String schemaPath = "src/main/resources/schemas/scientific_paper.xsd";
+		
+		BusinessProcess process;
+
+		try {
+			String sp = repository.findOneById(paperId, schemaPath);
+			System.out.println(sp);
+			Document paperDOM = domParser.buildDocument(sp);
+			Node staff = paperDOM.getElementsByTagName("sp:state").item(0);
+			staff.setTextContent("revoked");
+
+			repository.store(paperDOM, paperId + ".xml");
+			
+			DOMToXMLFile.toXML(paperDOM, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			String metadata = RDFFileToString.toString(rdfFilePath);
+			System.out.println(metadata);
+//			repository.storeMetadata(metadata, "/scientific_paper");
+			repository.updateMetadata(paperId, metadata, "http://ftn.uns.ac.rs/paper/" + paperId, "'in_procedure'" , "https://schema.org/state" ,"/scientific_paper");
+			repository.store(paperDOM, paperId + ".xml");
+			
+			// Update the business process for this paper
+			process = processService.get(paperId + ".xml");
+			process.setState(TState.REVOKED);
+			processService.save(process, paperId + ".xml");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 }

@@ -71,6 +71,15 @@ public class ScientificPaperController {
 		
 	}
 	
+	@GetMapping(value = "/revoke/{paperId}")
+	public ResponseEntity<?> revoke(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.revokePaper(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping(value = "/getHtmlById/{id}", produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> getHtmlById(@PathVariable("id") String id) {
 		try {

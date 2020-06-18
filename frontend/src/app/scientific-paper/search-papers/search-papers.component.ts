@@ -29,9 +29,6 @@ export class SearchPapersComponent implements OnInit {
     keywords: null
   }
 
-  hideRequiredControl = new FormControl(false);
-  floatLabelControl = new FormControl('auto');
-
   constructor(private paperService: ScientificPaperService, private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
 			category: [null],
@@ -109,7 +106,7 @@ export class SearchPapersComponent implements OnInit {
       this.searchDTO.keywords = null;
     }
     else{
-      this.searchDTO.version = this.form.value.version;
+      this.searchDTO.keywords = this.form.value.keywords;
     }
    
     let firstName = null;
