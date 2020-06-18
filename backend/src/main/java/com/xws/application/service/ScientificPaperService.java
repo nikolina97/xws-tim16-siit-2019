@@ -1,5 +1,6 @@
 package com.xws.application.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
 import com.xws.application.util.rdf.DOMToXMLFile;
 import com.xws.application.util.rdf.MetadataExtractor;
 import com.xws.application.util.rdf.RDFFileToString;
@@ -51,6 +53,9 @@ public class ScientificPaperService {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private XSLFOTransformer transformer;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
@@ -329,5 +334,25 @@ public class ScientificPaperService {
 		List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, searchText, loggedIn);
 		return papers;
 	}
+	
+	public String getPaperHTML(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPaperPDF(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/scientific_paper_fo.xsl");
+		return html;
+	}
+	
+	public String getPaperXML(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+		return xml;
+	}
+
 
 }
