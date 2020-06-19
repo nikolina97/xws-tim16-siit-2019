@@ -145,6 +145,16 @@ public class ScientificPaperController {
 		}
 	}
 	
+	@GetMapping(value = "/getOnRevisePapers")
+	public ResponseEntity<?> getOnRevisePapers() {
+		try {
+			return new ResponseEntity<>(service.getOnRevisePapers(), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 	@GetMapping(value = "/getReferenced/{paperId}")
 	public ResponseEntity<?> getReferenced(@PathVariable String paperId) {
 		try {

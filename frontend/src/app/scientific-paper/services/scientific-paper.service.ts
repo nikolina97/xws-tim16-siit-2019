@@ -58,6 +58,19 @@ export class ScientificPaperService {
     return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
   }
 
+  public publishPaper(id: string){
+    return this.http.get(this.baseUrl+"/publish/"+id);
+  }
+
+  public rejectPaper(id: string){
+    return this.http.get(this.baseUrl+"/reject/"+id);
+  }
+
+  public onRevisePapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getOnRevisePapers" );
+  }
+
+
   public getReferenced(id:string) {
     return this.http.get<any[]>(this.baseUrl + "/getReferenced/" + id );
   }

@@ -537,6 +537,29 @@ public class ScientificPaperService {
 		List<ScientificPaper> papers = repository.getPapersByIds(ids);
 		return papers;
 	}
+	public List<ScientificPaper> getOnRevisePapers() throws Exception {
+		String xpathExp = "/sp:businessProcess[sp:state = 'onRevise' or sp:state = 'revised']//sp:scientificPaperId//text()";
+		System.out.println("xpath: "  + xpathExp);
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/processes/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+		List<String> ids = new ArrayList<>();
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			try {
+				res = (XMLResource) i.nextResource();
+				ids.add(res.getContent().toString());
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		List<ScientificPaper> papers = repository.getPapersByIds(ids);
+		return papers;
+	}
 
 	public List<ScientificPaper> getReferenced(String paperId) throws Exception {
 		
