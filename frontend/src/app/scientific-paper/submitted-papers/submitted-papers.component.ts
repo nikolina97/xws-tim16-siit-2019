@@ -9,7 +9,7 @@ import { saveAs } from 'file-saver';
 })
 export class SubmittedPapersComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "paper", "letter"];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "paper", "letter", "reviewers"];
   dataSource : any[] = [];
 
   constructor(private paperService: ScientificPaperService) { }
