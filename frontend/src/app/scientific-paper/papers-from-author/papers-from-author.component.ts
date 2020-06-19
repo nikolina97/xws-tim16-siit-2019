@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class PapersFromAuthorComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "button"];
-  dataSource : any[] = [];
+  dataSource: any[] = [];
 
   constructor(private paperService: ScientificPaperService, private router: Router) { }
 
@@ -26,12 +26,16 @@ export class PapersFromAuthorComponent implements OnInit {
       }
     )
   }
-  revoke(element) { 
-    this.paperService.revokePaper(element.id).subscribe(
+  revoke(element) {
+    this.paperService.revokePaper(element.paper.id).subscribe(
       (result) => {
         this.getPapers();
       }
     )
     console.log(element)
+  }
+
+  revise(element) {
+    this.router.navigate(['/paper/write-revision', element.paper.id]);
   }
 }

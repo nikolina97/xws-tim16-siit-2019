@@ -58,9 +58,9 @@ public class ReviewService {
 				throw new NotFoundException("Paper not found.");
 
 			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
-			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())))
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
 				throw new BadRequestException("Your don't have permission to write review of this paper.");
 
 			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
@@ -89,7 +89,7 @@ public class ReviewService {
 			reviewRepository.store(reviewDOM, reviewId + ".xml");
 
 			// Update the business process for this paper
-			process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())).forEach(assignment -> assignment.setStatus(TReviewAssignementState.REVIEWED));
+			process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(email)).forEach(assignment -> assignment.setStatus(TReviewAssignementState.REVIEWED));
 
 			/*for(TReviewAssignment assignment : process.getReviewAssignments().getReviewAssignment()) {
 				if(assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())) {
