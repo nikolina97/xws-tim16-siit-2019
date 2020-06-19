@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:cover_letter
+	xmlns:xs = "http://www.w3.org/2001/XMLSchema#"
+    xmlns:pred="https://schema.org/"
+    xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+    typeof="pred:ScholarlyArticle">
+	<sp:author href="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+		<sp:first_name>Milos</sp:first_name>
+		<sp:last_name>Radojcin</sp:last_name>
+		<sp:university>
+			<sp:name>University of Novi Sad</sp:name>
+			<sp:city>Novi Sad</sp:city>
+			<sp:country>Serbia</sp:country>
+		</sp:university>
+		<sp:email>milos.radojcin@uns.ac.rs</sp:email>
+		<sp:expertise>OMR</sp:expertise>
+	</sp:author>
+	<sp:editor>
+		<sp:name>Michael Brown</sp:name>
+		<sp:title>MSc</sp:title>
+		<sp:journal_name>Astronomical Journal</sp:journal_name>
+	</sp:editor>
+	<sp:date>2020-06-22</sp:date>
+	<sp:content>
+		We believe that the problem to progress in OMR for CWMN lies in the complexity involved in
+		correctly modeling the composition of musical symbols. Unlike these hand-engineered multi-stage
+		approaches, we propose a holistic strategy in which the musical notation is learned as a whole using
+		machine learning strategies. However, to reduce the complexity to a feasible level, we do consider
+		a first initial stage in which the image is pre-processed to find and separate the different staves of the
+		score. Staves are good basic units to work on, analogously to similar text recognition where a single
+		line of text is assumed as input unit. Note that this is not a strong assumption as there are successful
+		algorithms for isolating staves, as mentioned above.
+	</sp:content>
+	<sp:signature>
+		<sp:name>Milos Radojcin</sp:name>
+		<sp:degree>MSc</sp:degree>
+		<sp:department>Department of Information Technology</sp:department>
+		<sp:university_name>University of Novi Sad</sp:university_name>
+	</sp:signature>
+</sp:cover_letter>

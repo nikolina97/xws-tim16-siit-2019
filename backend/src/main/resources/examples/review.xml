@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:review
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	xmlns:pred="https://schema.org/"
+	xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	typeof="pred:Review">
+	<sp:title rel="pred:review" href="http://ftn.uns.ac.rs/paper/paper3">Lorem Ipsum</sp:title>
+	<sp:reviewer href="http://ftn.uns.ac.rs/person/reviewer@uns.ac.rs" rel="pred:reviewer" typeof="pred:Person">
+		<sp:first_name>Jane</sp:first_name>
+		<sp:last_name>Doe</sp:last_name>
+		<sp:university>
+			<sp:name>University of Novi Sad</sp:name>
+			<sp:city>Novi Sad</sp:city>
+			<sp:country>Serbia</sp:country>
+		</sp:university>
+		<sp:email>reviewer@uns.ac.rs</sp:email>
+	</sp:reviewer>
+	<sp:questions>
+		<sp:question>
+			<sp:question>Question 1</sp:question>
+			<sp:answer>
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+				It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+				It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</sp:answer>
+		</sp:question>
+		<sp:question>
+			<sp:question>Question 2</sp:question>
+			<sp:answer>
+				There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+				If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+				All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
+				It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
+				The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+				<sp:table>
+					<sp:th>
+						<sp:td>Header cell 1</sp:td>
+						<sp:td>Header cell 2</sp:td>
+					</sp:th>
+					<sp:tr>
+						<sp:td>Row cell 1</sp:td>
+						<sp:td>Row cell 2</sp:td>
+					</sp:tr>
+					<sp:tr>
+						<sp:td>Row cell 3</sp:td>
+						<sp:td>Row cell 4</sp:td>
+					</sp:tr>
+					<sp:description>Description of table 1</sp:description>
+				</sp:table>
+			</sp:answer>
+		</sp:question>
+	</sp:questions>
+	<sp:comments>
+		<sp:comment elementId="chapter1/paragraph2/list1">
+			Contrary to popular belief, Lorem Ipsum is not simply random text.
+			It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+			Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+			Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+			This book is a treatise on the theory of ethics, very popular during the Renaissance.
+			The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+		</sp:comment>
+	</sp:comments>
+	<sp:grades>
+		<sp:introduction>4</sp:introduction>
+		<sp:consclusion>5</sp:consclusion>
+		<sp:experimentResults>5</sp:experimentResults>
+		<sp:finalGrade>5</sp:finalGrade>
+	</sp:grades>
+	<sp:paper_version>1</sp:paper_version>
+	<sp:date>2006-05-04</sp:date>
+</sp:review>

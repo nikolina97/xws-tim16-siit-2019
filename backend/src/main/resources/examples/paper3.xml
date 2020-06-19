@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:scientific_paper
+	xmlns:xs = "http://www.w3.org/2001/XMLSchema#"
+    xmlns:pred="https://schema.org/"
+    xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+    typeof="pred:ScholarlyArticle">
+	<sp:title property="pred:headline" datatype = "xs:string">End to End Neural OMR</sp:title>
+	<sp:authors>
+		<sp:author href="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+			<sp:first_name about = "http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" property = "pred:first_name" datatype = "xs:string">Milos</sp:first_name>
+			<sp:last_name about = "http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" property = "pred:last_name" datatype = "xs:string">Radojcin</sp:last_name>
+			<sp:university>
+				<sp:name>University of Novi Sad</sp:name>
+				<sp:city>Novi Sad</sp:city>
+				<sp:country>Serbia</sp:country>
+			</sp:university>
+			<sp:email>milos.radojcin@uns.ac.rs</sp:email>
+		</sp:author>
+		<sp:author href="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+			<sp:first_name about = "http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" property = "pred:first_name" datatype = "xs:string">Nikolina</sp:first_name>
+			<sp:last_name about = "http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" property = "pred:last_name" datatype = "xs:string">Batinic</sp:last_name>
+			<sp:university>
+				<sp:name>University of Novi Sad</sp:name>
+				<sp:city>Novi Sad</sp:city>
+				<sp:country>Serbia</sp:country>
+			</sp:university>
+			<sp:email>nikolina.batinic@uns.ac.rs</sp:email>
+		</sp:author>
+	</sp:authors>
+	<sp:abstract>
+		<sp:paragraph>
+			Up till now, the development of mining industry in China has followed the road of the overseas introduction and absorption, independent innovation and technology export.
+			Mere English reading ability can hardly meet the demands of high-level professionals to export research achievements.
+			To improve the graduate students’ ability to write English scientific papers on mining industry has become one of the main tasks to cultivate mining engineering professionals.
+			Considering the current condition of China’s test-oriented education, the mode to efficiently and quickly enhance graduate students’ English writing ability of scientific papers
+			on mining industry has been proposed, specifically, intensively reading high-level English scientific papers on mining industry, writing the Chinese version
+			according to the requirements of the corresponding English scientific paper, rewriting the paper in English based on the Chinese version,
+			performing language refinement and polish by experts or institutions, finally completing the paper through communication and exchange with the experts.
+		</sp:paragraph>
+		<sp:keywords>
+			<sp:keyword property="pred:keyword" datatype = "xs:string">mining engineering</sp:keyword>
+			<sp:keyword property="pred:keyword" datatype = "xs:string">scientific paper</sp:keyword>
+		</sp:keywords>
+	</sp:abstract>
+	<sp:chapters>
+		<sp:chapter>
+			<sp:subtitle>Introduction</sp:subtitle>
+			<sp:paragraph>
+				Mining industry is to be a fundamental one of the national economy construction.
+				Since its founding, China has witnessed three stages of mining industry development: the beginning stage of overseas introduction and absorption,
+				the stage of independent self-development and the disseminating stage of exporting technology, which have provided the crucial support of mineral resources
+				for the national economy and promoted the economic and social development of China.
+			</sp:paragraph>
+			<sp:subchapter>
+				<sp:subtitle>The Instructional Model to Improve Graduate Students’ Ability to Read English Scientific Papers</sp:subtitle>
+				<sp:paragraph>
+					To improve postgraduates’ English comprehension through intensively reading the high-standard English scientific papers on mining industry. [1]
+				</sp:paragraph>
+				<sp:paragraph>
+					The introduction part of an English scientific paper, a succinct generalization of the current situation and trend in the relevant research field,
+					is vital to the entire writing process, calling for plenty of literature reading. Literature reading on the one hand enables graduates to know and keep track
+					of the research trend, research subject and research level related to the paper to be written, so as to ensure the innovation, quality and significance of the paper.
+					On the other hand, it can enhance reading comprehension of scientific papers written in English.
+					The good understanding of English scientific papers lays the foundation for writing such papers in an easy-to-understand way. [0]
+				</sp:paragraph>
+			</sp:subchapter>
+		</sp:chapter>
+	</sp:chapters>
+	<sp:references>
+        <sp:reference rel="pred:reference" href="http://ftn.uns.ac.rs/paper/paper1">
+            <sp:ref_number>[0]</sp:ref_number>
+            <sp:ref_author>Katarina Aleksic</sp:ref_author>
+            <sp:article_name>Applications of RISM data</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+		<sp:reference rel="pred:reference" href="http://ftn.uns.ac.rs/paper/paper2">
+            <sp:ref_number>[1]</sp:ref_number>
+            <sp:ref_author>Nikolina Batinic</sp:ref_author>
+            <sp:article_name>End to End Neural OMR</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+    </sp:references>
+	<sp:category property="pred:category" datatype = "xs:string">original research</sp:category>
+</sp:scientific_paper>

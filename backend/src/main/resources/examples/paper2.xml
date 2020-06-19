@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:scientific_paper
+	xmlns:xs = "http://www.w3.org/2001/XMLSchema#"
+    xmlns:pred="https://schema.org/"
+    xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+    typeof="pred:ScholarlyArticle">
+	<sp:title property="pred:headline" datatype = "xs:string">End to End Neural OMR</sp:title>
+	<sp:authors>
+		<sp:author href="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+			<sp:first_name about = "http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" property = "pred:first_name" datatype = "xs:string">Nikolina</sp:first_name>
+			<sp:last_name about = "http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" property = "pred:last_name" datatype = "xs:string">Batinic</sp:last_name>
+			<sp:university>
+				<sp:name>University of Novi Sad</sp:name>
+				<sp:city>Novi Sad</sp:city>
+				<sp:country>Serbia</sp:country>
+			</sp:university>
+			<sp:email>nikolina.batinic@uns.ac.rs</sp:email>
+		</sp:author>
+	</sp:authors>
+	<sp:abstract>
+		<sp:paragraph>
+			Optical Music Recognition is a field of research that investigates how to computationally
+            decode music notation from images. Despite the efforts made so far, there are hardly any complete
+            solutions to the problem. In this work, we study the use of neural networks that work in an end-to-end
+            manner. This is achieved by using a neural model that combines the capabilities of convolutional
+            neural networks, which work on the input image, and recurrent neural networks, which deal with
+            the sequential nature of the problem. Thanks to the use of the the so-called Connectionist Temporal
+            Classification loss function, these models can be directly trained from input images accompanied by
+            their corresponding transcripts into music symbol sequences. We also present the Printed Images
+            of Music Staves (PrIMuS) dataset, containing more than 80,000 monodic single-staff real scores in
+            common western notation, that is used to train and evaluate the neural approach. In our experiments,
+            it is demonstrated that this formulation can be carried out successfully. Additionally, we study several
+            considerations about the codification of the output musical sequences, the convergence and scalability
+            of the neural models, as well as the ability of this approach to locate symbols in the input score.
+		</sp:paragraph>
+		<sp:keywords>
+			<sp:keyword property="pred:keyword" datatype = "xs:string">OMR</sp:keyword>
+			<sp:keyword property="pred:keyword" datatype = "xs:string">Deep Learning</sp:keyword>
+		</sp:keywords>
+	</sp:abstract>
+	<sp:chapters>
+		<sp:chapter>
+			<sp:subtitle>Introduction</sp:subtitle>
+			<sp:paragraph>
+				Despite the great advantages of its development, OMR is far from being totally reliable as
+				a black box, as current optical character or speech recognition technologies do.
+				Commercial software is constantly being improved by fixing specific problems from version to
+				version. In the scientific community, there are hardly any complete approach for its.
+				Traditionally, this has been motivated because of the small sub-tasks in which the workflow can be
+				divided. Simpler tasks such as symbol localization and classification, or music
+				notation assembly, have so far represented major obstacles.
+			</sp:paragraph>
+			<sp:subchapter>
+				<sp:subtitle>Background</sp:subtitle>
+				<sp:paragraph>
+					We believe that the problem to progress in OMR for CWMN lies in the complexity involved in
+					correctly modeling the composition of musical symbols. Unlike these hand-engineered multi-stage
+					approaches, we propose a holistic strategy in which the musical notation is learned as a whole using
+					machine learning strategies. However, to reduce the complexity to a feasible level, we do consider
+					a first initial stage in which the image is pre-processed to find and separate the different staves of the
+					score. Staves are good basic units to work on, analogously to similar text recognition where a single
+					line of text is assumed as input unit. Note that this is not a strong assumption as there are successful
+					algorithms for isolating staves, as mentioned above.
+				</sp:paragraph>
+				<sp:paragraph>
+					Then, the staff can be addressed as a single unit instead of considering it as a sequence of isolated
+					elements that have to be detected and recognized independently. This also opens the possibility
+					to boost the optical recognition by taking into account the musical context which, in spite of being
+					extremely difficult to model entirely, can certainly help in the process. Thus, it seems interesting to
+					tackle the OMR task over single staves in an holistic fashion, in which the expected output is directly
+					the sequence of musical symbols present in the image. [0]
+				</sp:paragraph>
+			</sp:subchapter>
+		</sp:chapter>
+	</sp:chapters>
+	<sp:references>
+        <sp:reference rel="pred:reference" href="http://ftn.uns.ac.rs/paper/paper1">
+            <sp:ref_number>[0]</sp:ref_number>
+            <sp:ref_author>Katarina Aleksic</sp:ref_author>
+            <sp:article_name>Applications of RISM data</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+    </sp:references>
+	<sp:category property="pred:category" datatype = "xs:string">original research</sp:category>
+</sp:scientific_paper>
