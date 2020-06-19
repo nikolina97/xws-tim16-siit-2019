@@ -12,3 +12,5 @@ Frontend se nalazi na adresi [http://localhost:4200/](http://localhost:4200/)
 Fuseki baza se nalazi na adresi [http://localhost:3030](http://localhost:3030)
 
 Exist baza se nalazi na adresi [http://localhost:8080/exist](http://localhost:8080/exist)
+
+Link do videa: https://nina-yahoo-0.tinytake.com/tt/NDM5MjI2Ml8xMzg2ODg5MA
