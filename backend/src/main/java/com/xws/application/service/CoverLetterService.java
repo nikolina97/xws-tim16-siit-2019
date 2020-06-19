@@ -4,7 +4,10 @@ import com.xws.application.model.CoverLetter;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.CoverLetterRepository;
 import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.util.XSLFOTransformer;
 import com.xws.application.util.rdf.MetadataExtractor;
+
+import java.io.ByteArrayOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class CoverLetterService {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private XSLFOTransformer transformer;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
@@ -59,6 +65,22 @@ public class CoverLetterService {
 
 			return null;
 		}
+	}
+	
+	public String getHTML(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = letterrepository.getLetterById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/cover_letter.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPDF(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = letterrepository.getLetterById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/cover_letter_fo.xsl");
+		return html;
 	}
 
 }

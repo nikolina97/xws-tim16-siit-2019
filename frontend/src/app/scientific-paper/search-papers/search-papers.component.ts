@@ -15,7 +15,7 @@ export class SearchPapersComponent implements OnInit {
   form: FormGroup;
   formBasic: FormGroup;
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "pdf", "xml"];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html"];
   dataSource : any[] = [];
   searchDTO : SearchMetadataDTO = {
     category: null,

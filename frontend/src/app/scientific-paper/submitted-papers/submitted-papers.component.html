@@ -34,21 +34,28 @@
               <td mat-cell *matCellDef="let element"> {{element?.state.value}} </td>
             </ng-container>
   
-            <ng-container matColumnDef="html">
-              <th mat-header-cell *matHeaderCellDef > HTML </th>
-              <td mat-cell *matCellDef="let element"><a href = "http://localhost:8081/api/paper/getHtmlById/{{element.id}}"style="text-align: left;">Get HTML</a> </td>
+            <ng-container matColumnDef="paper">
+              <th mat-header-cell *matHeaderCellDef > Export Paper </th>
+              <td mat-cell *matCellDef="let element">
+              <mat-menu #paper_menu="matMenu">
+                <a  mat-menu-item href = "http://localhost:8081/api/paper/getHtmlById/{{element.id}}"style="text-align: left;">Get HTML</a> 
+                <a  mat-menu-item href = "http://localhost:8081/api/paper/getPDFById/{{element.id}}"style="text-align: left;">Get PDF</a> 
+                <a   mat-menu-item href = "javascript:void(0);" (click)="download(element.id)" style="text-align: left;">Get XML</a>
+              </mat-menu>
+              <button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
+            </td>
             </ng-container>
-  
-            <ng-container matColumnDef="pdf">
-              <th mat-header-cell *matHeaderCellDef > PDF </th>
-              <td mat-cell *matCellDef="let element"><a href = "http://localhost:8081/api/paper/getPDFById/{{element.id}}"style="text-align: left;">Get PDF</a> </td>
+
+            <ng-container matColumnDef="letter">
+              <th mat-header-cell *matHeaderCellDef > Export Letter </th>
+              <td mat-cell *matCellDef="let element">
+              <mat-menu #letter_menu="matMenu">
+                <a  mat-menu-item href = "http://localhost:8081/api/letter/getHtmlById/{{element.id}}"style="text-align: left;">Get HTML</a> 
+                <a  mat-menu-item href = "http://localhost:8081/api/letter/getPDFById/{{element.id}}"style="text-align: left;">Get PDF</a> 
+              </mat-menu>
+              <button mat-button [matMenuTriggerFor]="letter_menu">Cover letter</button>
+            </td>
             </ng-container>
-  
-            <ng-container matColumnDef="xml">
-              <th mat-header-cell *matHeaderCellDef > XML </th>
-              <td mat-cell *matCellDef="let element"><a href = "javascript:void(0);" (click)="download(element.id)" style="text-align: left;">Get XML</a> </td>
-            </ng-container>
-          
             <ng-container matColumnDef="reviewers">
                 <th mat-header-cell *matHeaderCellDef>  </th>
                 <td mat-cell *matCellDef="let element"> <a href = "javascript:void(0);" routerLink="/review/assign/{{element.id}}" style="text-align: left;">Add reviewers</a> </td>
