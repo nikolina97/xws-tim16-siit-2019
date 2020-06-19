@@ -1,5 +1,5 @@
 <div class="wrapper fadeInDown" [ngStyle]="{'margin-top': '2%'}">
-  <form [formGroup] = "form" (ngSubmit)="search()">
+  <form [formGroup]="form" (ngSubmit)="search()">
     <p>
       <mat-form-field appearance="standard">
         <input matInput placeholder="Title" [formControl]="form.controls['title']">
@@ -14,97 +14,103 @@
         <input matInput placeholder="Keywords" [formControl]="form.controls['keywords']">
       </mat-form-field>
       <mat-form-field appearance="standard">
-        <input matInput placeholder="Date received" type="text" onfocus="(this.type='date')" [formControl]="form.controls['dateReceived']">
+        <input matInput placeholder="Date received" type="text" onfocus="(this.type='date')"
+          [formControl]="form.controls['dateReceived']">
       </mat-form-field>
-    
-    <mat-form-field appearance="standard">
-      <input matInput placeholder="Date published" type="text" onfocus="(this.type='date')" [formControl]="form.controls['dateAccepted']">
-    </mat-form-field>
-    <mat-form-field appearance="standard">
-      <input matInput placeholder="Version" [formControl]="form.controls['version']" type = "number">
-    </mat-form-field>
-    
-      <button type = "submit" mat-raised-button color="primary">Search</button>
+
+      <mat-form-field appearance="standard">
+        <input matInput placeholder="Date published" type="text" onfocus="(this.type='date')"
+          [formControl]="form.controls['dateAccepted']">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <input matInput placeholder="Version" [formControl]="form.controls['version']" type="number">
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary">Search</button>
     </p>
 
-</form>
-<form [formGroup] = "formBasic" (ngSubmit)="searchBasic()">
-  <p>
-    <mat-form-field class = "search" appearance="standard">
-      <input matInput placeholder="Search by text" [formControl]="formBasic.controls['searchText']">
-    </mat-form-field>
-    <button type = "submit" mat-raised-button color="primary">Search</button>
-  </p>
-</form>
+  </form>
+  <form [formGroup]="formBasic" (ngSubmit)="searchBasic()">
+    <p>
+      <mat-form-field class="search" appearance="standard">
+        <input matInput placeholder="Search by text" [formControl]="formBasic.controls['searchText']">
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">Search</button>
+    </p>
+  </form>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <!--- Note that these columns can be defined in any order.
+    <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
-        
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
-          </ng-container>
-          <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Title </th>
-            <td mat-cell *matCellDef="let element"> {{element?.title.value}} </td>
-          </ng-container>
-        
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef> Category </th>
-            <td mat-cell *matCellDef="let element"> {{element?.category.value}} </td>
-          </ng-container>
-        
-          <ng-container matColumnDef="version">
-            <th mat-header-cell *matHeaderCellDef> Version </th>
-            <td mat-cell *matCellDef="let element"> {{element?.version.value}} </td>
-          </ng-container>
-        
-          <ng-container matColumnDef="dateReceived">
-            <th mat-header-cell *matHeaderCellDef> Date received </th>
-            <td mat-cell *matCellDef="let element"> {{element?.dateReceived.value | date:'dd/MM/yyyy'}} </td>
-          </ng-container>
 
-          <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State </th>
-            <td mat-cell *matCellDef="let element"> {{element?.state.value}} </td>
-          </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element?.title.value}} </td>
+    </ng-container>
 
-          <ng-container matColumnDef="ref">
-            <th mat-header-cell *matHeaderCellDef > Referenced by </th>
-            <td mat-cell *matCellDef="let element"><a href = "javascript:void(0);" (click)="getRef(element.id)" style="text-align: left;">Show papers</a> </td>
-          </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element?.category.value}} </td>
+    </ng-container>
 
-          <ng-container matColumnDef="html">
-          <th mat-header-cell *matHeaderCellDef > Export paper </th>
-          <td mat-cell *matCellDef="let element">
-          <mat-menu #paper_menu="matMenu">
-            <a  mat-menu-item href = "http://localhost:8081/api/paper/getHtmlById/{{element.id}}"style="text-align: left;">Get HTML</a> 
-            <a  mat-menu-item href = "http://localhost:8081/api/paper/getPDFById/{{element.id}}"style="text-align: left;">Get PDF</a> 
-            <a   mat-menu-item href = "javascript:void(0);" (click)="download(element.id)" style="text-align: left;">Get XML</a>
-          </mat-menu>
-          <button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
+    <ng-container matColumnDef="version">
+      <th mat-header-cell *matHeaderCellDef> Version </th>
+      <td mat-cell *matCellDef="let element"> {{element?.version.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateReceived">
+      <th mat-header-cell *matHeaderCellDef> Date received </th>
+      <td mat-cell *matCellDef="let element"> {{element?.dateReceived.value | date:'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> State </th>
+      <td mat-cell *matCellDef="let element"> {{element?.state.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ref">
+      <th mat-header-cell *matHeaderCellDef> Referenced by </th>
+      <td mat-cell *matCellDef="let element"><a href="javascript:void(0);" (click)="getRef(element.id)"
+          style="text-align: left;">Show papers</a> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="html">
+      <th mat-header-cell *matHeaderCellDef> Export paper </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-menu #paper_menu="matMenu">
+          <a mat-menu-item href="http://localhost:8081/api/paper/getHtmlById/{{element.id}}"
+            style="text-align: left;">Get HTML</a>
+          <a mat-menu-item href="http://localhost:8081/api/paper/getPDFById/{{element.id}}"
+            style="text-align: left;">Get PDF</a>
+          <a mat-menu-item href="javascript:void(0);" (click)="download(element.id)" style="text-align: left;">Get
+            XML</a>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
+      </td>
+    </ng-container>
+    <div *ngIf="auth?.getRole()=='ROLE_EDITOR'">
+      <ng-container matColumnDef="reviews">
+        <th mat-header-cell *matHeaderCellDef> Reviews </th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-menu-item routerLink="/review/author-review/{{element.id}}" style="text-align: left;">Get Reviews</a>
         </td>
-        </ng-container>
-        <div *ngIf="auth.getRole()=='ROLE_EDITOR'">
-        <ng-container matColumnDef="reviews">
-          <th mat-header-cell *matHeaderCellDef> Reviews </th>
-          <td mat-cell *matCellDef="let element">
-            <a   mat-menu-item  routerLink="/review/author-review/{{element.id}}" style="text-align: left;">Get Reviews</a>
-          </td>
-        </ng-container>
-      </div>
-      <div *ngIf="auth.getRole()!='ROLE_EDITOR'">
-        <ng-container matColumnDef="reviews">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-          </td>
-        </ng-container>
-      </div>
-        
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+      </ng-container>
+    </div>
+    <div *ngIf="auth?.getRole()!='ROLE_EDITOR'">
+      <ng-container matColumnDef="reviews">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+        </td>
+      </ng-container>
+    </div>
 
-        </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

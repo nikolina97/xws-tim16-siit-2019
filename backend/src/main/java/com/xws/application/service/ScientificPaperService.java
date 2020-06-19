@@ -427,10 +427,10 @@ public class ScientificPaperService {
 			loggedIn = true;
 		}
 		if (searchText == null || searchText == "") {
-			List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, "", loggedIn);
+			List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, "/person/" + email, "", loggedIn);
 			return papers;
 		}
-		List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, email, searchText, loggedIn);
+		List<ScientificPaper> papers = repository.getAllSPbasicSearch(graphName, "/person/" + email, searchText, loggedIn);
 		return papers;
 	}
 	
