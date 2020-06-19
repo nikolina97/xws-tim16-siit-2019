@@ -132,11 +132,76 @@ public class ReviewRepository {
 		return usersS;
 	}
 
+	public List<Review> getReviews(String paperID) throws Exception {
+		List<Review> reviews = new ArrayList<Review>();
+		String href = "http://ftn.uns.ac.rs/paper/" + paperID;
+		String xpathExp = String.format("//sp:review[sp:title/@href=\"%s\"]", href);
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/reviews/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+
+		if (result == null) {
+			return reviews;
+		}
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		Review r = null;
+		while (i.hasMoreResources()) {
+			try {
+				res = (XMLResource) i.nextResource();
+				// pretvori ga u TPerson
+				r = unmarshallReview(res);
+				reviews.add(r);
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		return reviews;
+	}
+
 	public Users.User unmarshalling(XMLResource res) throws Exception {
 		JAXBContext context = JAXBContext.newInstance("com.xws.application.model");
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		Node node = res.getContentAsDOM();
 		Users.User user = (Users.User) unmarshaller.unmarshal(node);
 		return user;
+	}
+
+	public Review unmarshallReview(XMLResource res) throws Exception {
+		JAXBContext context = JAXBContext.newInstance("com.xws.application.model");
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		Node node = res.getContentAsDOM();
+		Review user = (Review) unmarshaller.unmarshal(node);
+		return user;
+	}
+
+	public String getReviewById(String id) throws Exception {
+		String xml = null;
+		String xpath = String.format("//sp:review[@id=\"%s\"]", id);
+//	        String xpath = "//sp:scientific_paper[@sp:id=\"paper5\"]";
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/reviews", xpath, TARGET_NAMESPACE);
+		if (result == null) {
+			return xml;
+		}
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			System.out.println("HEJ!");
+			try {
+				res = (XMLResource) i.nextResource();
+				xml = res.getContent().toString();
+				return xml;
+			} finally {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 }

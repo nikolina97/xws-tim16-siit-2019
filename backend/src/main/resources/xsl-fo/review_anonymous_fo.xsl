@@ -23,14 +23,6 @@
 	                	Review
 	          		</fo:block>
 	          		<fo:block text-align="left" space-after="16px" space-before="16px">
-	          		<fo:inline font-size ="12px" font-weight="bold" space-after="3px">Reviewers:</fo:inline>
-            			 <xsl:for-each select="sp:review/sp:reviewer">
-			                        <xsl:call-template name="AuthorTemplate">
-		            							<xsl:with-param name="author" select = "." />
-		            				</xsl:call-template>
-			               </xsl:for-each>
-					</fo:block>
-	          		<fo:block text-align="left" space-after="16px" space-before="16px">
 	          		<fo:block font-size ="12px" font-weight="bold" space-after="3px">Questions:</fo:block>
 	          		<fo:list-block font-size ="10px">
             			 <xsl:for-each select="sp:review/sp:questions/sp:question">
