@@ -1,10 +1,15 @@
 package com.xws.application.repository;
 
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RdfConnectionProperties;
-import com.xws.application.util.rdf.SparqlUtil;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -25,14 +30,13 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.model.TRole;
+import com.xws.application.model.Users;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RdfConnectionProperties;
+import com.xws.application.util.rdf.SparqlUtil;
 
 @Repository
 public class ScientificPaperRepository {
@@ -42,6 +46,9 @@ public class ScientificPaperRepository {
 	
 	@Autowired
 	private MetadataExtractor metadataExtractor;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public static final String TARGET_NAMESPACE = "https://github.com/nikolina97/xws-tim16-siit-2019";
 
@@ -144,16 +151,33 @@ public class ScientificPaperRepository {
 		return papers;
 	}
 	
-	public List<ScientificPaper> getAllPapersByAuthor(String graphName, String condition, String advancedQuery, Boolean loggedIn) throws Exception {
+	public List<ScientificPaper> getAllPapersByAuthor(String graphName, String condition, String advancedQuery, String email) throws Exception {
+		
+		Boolean loggedIn = false;
+		if (email == "anonymousUser") {
+			loggedIn = false;
+		}
+		else {
+			loggedIn = true;
+		}
+		
 		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
 		String condition1 = "?subject <https://schema.org/state> \"accepted\"";
+		String conditionEditor1 = "?subject <https://schema.org/state> \"accepted\"";
+		String conditionEditor2 = "?subject <https://schema.org/state> \"in_procedure\"";
 		String sparqlQuery = "";
 		if (!loggedIn) {
 			condition = condition1 + " . " + "\n\t" + advancedQuery;
 			sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
 		}else {
-			condition = "?subject <https://schema.org/author> <http://ftn.uns.ac.rs" + condition + ">";
-			sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition, advancedQuery);
+			Users.User user = userRepository.findByEmail(email);
+			if (user.getRole() == TRole.ROLE_EDITOR) {
+				sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, conditionEditor1, conditionEditor2, advancedQuery);
+			}
+			else {
+				condition = "?subject <https://schema.org/author> <http://ftn.uns.ac.rs" + condition + ">";
+				sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition, advancedQuery);
+			}			
 		}
 //		String sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
 		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);

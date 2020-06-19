@@ -350,6 +350,7 @@ public class XMLDBManager {
 		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 		Class<?> cl = Class.forName(conn.driver);
 
+
 		Database database = (Database) cl.newInstance();
 		database.setProperty("create-database", "true");
 
@@ -365,7 +366,7 @@ public class XMLDBManager {
 			System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
 
 			long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
-			System.out.println("[INFO] " + mods + " modifications processed.");
+//			System.out.println("[INFO] " + mods + " modifications processed.");
 		} finally {
 			// don't forget to cleanup
 			if (col != null) {

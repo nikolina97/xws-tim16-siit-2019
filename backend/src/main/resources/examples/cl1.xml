@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:cover_letter
+    xmlns:xs = "http://www.w3.org/2001/XMLSchema#"
+    xmlns:pred="https://schema.org/"
+    xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+    typeof="pred:ScholarlyArticle">
+    <sp:author href="http://ftn.uns.ac.rs/person/marko@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+        <sp:first_name>Marko</sp:first_name>
+        <sp:last_name>Markovic</sp:last_name>
+        <sp:university>
+            <sp:name>University of Novi Sad</sp:name>
+            <sp:city>Novi Sad</sp:city>
+            <sp:country>Serbia</sp:country>
+        </sp:university>
+        <sp:email>marko@uns.ac.rs</sp:email>
+    </sp:author>
+    <sp:editor>
+        <sp:name>Editor</sp:name>
+        <sp:title>Title</sp:title>
+        <sp:journal_name>Journal Name</sp:journal_name>
+    </sp:editor>
+    <sp:date>2020-06-18</sp:date>
+    <sp:content>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </sp:content>
+    <sp:signature>
+        <sp:name>John Doe</sp:name>
+        <sp:degree>MSc</sp:degree>
+        <sp:department>Department of Information Technology</sp:department>
+        <sp:university_name>University of Novi Sad</sp:university_name>
+    </sp:signature>
+</sp:cover_letter>

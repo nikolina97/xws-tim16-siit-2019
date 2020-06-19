@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
 	<button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
 	<mat-menu #paper_menu="matMenu">
-		<button mat-menu-item routerLink="/paper/new">Submit</button>
+		<span *ngIf="auth.isLoggedIn()">
+			<button mat-menu-item routerLink="/paper/new">Submit</button>
+		</span>
 		<button mat-menu-item routerLink="/paper/search">All papers</button>
 		<span *ngIf="auth.isLoggedIn()">
 			<button mat-menu-item routerLink="/paper/byAuthor">My papers</button>

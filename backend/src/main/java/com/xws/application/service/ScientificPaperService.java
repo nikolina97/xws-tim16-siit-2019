@@ -410,14 +410,7 @@ public class ScientificPaperService {
 		if (metadataSearch.getKeywords() != null) {
 			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
 		}
-		Boolean loggedIn = false;
-		if (email == "anonymousUser") {
-			loggedIn = false;
-		}
-		else {
-			loggedIn = true;
-		}
-		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery, loggedIn);
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery, email);
 		System.out.println(papers.size());
 		return papers;
 	}
