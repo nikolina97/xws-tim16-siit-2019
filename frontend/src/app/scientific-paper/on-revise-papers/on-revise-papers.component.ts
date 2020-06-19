@@ -3,13 +3,13 @@ import { ScientificPaperService } from '../services/scientific-paper.service';
 import { saveAs } from 'file-saver';
 
 @Component({
-  selector: 'app-submitted-papers',
-  templateUrl: './submitted-papers.component.html',
-  styleUrls: ['./submitted-papers.component.css']
+  selector: 'app-on-revise-papers',
+  templateUrl: './on-revise-papers.component.html',
+  styleUrls: ['./on-revise-papers.component.css']
 })
-export class SubmittedPapersComponent implements OnInit {
+export class OnRevisePapersComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "paper", "letter", "reviewers", "accept", "reject"];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "paper", "letter", "accept", "reject"];
   dataSource : any[] = [];
 
   constructor(private paperService: ScientificPaperService) { }
@@ -19,7 +19,7 @@ export class SubmittedPapersComponent implements OnInit {
   }
 
   getPapers() {
-    this.paperService.submittedPapers().subscribe(
+    this.paperService.onRevisePapers().subscribe(
       (result) => {
         this.dataSource = result;
       console.log(this.dataSource);
@@ -50,7 +50,7 @@ export class SubmittedPapersComponent implements OnInit {
       error => { console.log(error.error()) }
     )
   };
-
+  
   download(id: string){
     this.paperService.getXML(id).subscribe(
       data => 
