@@ -234,8 +234,18 @@ public class ReviewService {
 		
 		List<String> keywords = paperRepository.getKeywords(paperId);
 		List<Users.User> users = reviewRepository.getUsersByExpertise(keywords);
+		List<Users.User> filteredUsers = new ArrayList<>();
 		
-		return users;
+		BusinessProcess process;
+		process = processService.get(paperId + ".xml");
+		
+		for (Users.User u : users) { 
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(u.getUserInfo().getEmail()))) {
+				filteredUsers.add(u);
+			}
+		}
+		
+		return filteredUsers;
 	}
 
 	public Boolean assigneReviewer(String email, String paperId) throws Exception {

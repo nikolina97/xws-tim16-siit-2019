@@ -35,6 +35,7 @@ export class AssignReviewerComponent implements OnInit {
       (result) => {
         if (result == true) {
           alert("Successfully added reviewer.")
+          window.location.reload();
         }
       }
     )
