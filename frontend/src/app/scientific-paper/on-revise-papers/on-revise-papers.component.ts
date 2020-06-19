@@ -32,8 +32,10 @@ export class OnRevisePapersComponent implements OnInit {
       result => {
         if(result==false){
           alert("Document can't be published!");
-          this.getPapers();
+          window.location.reload();
         }
+        window.location.reload();
+
       },
       error => { console.log(error.error()) }
     )
@@ -44,8 +46,10 @@ export class OnRevisePapersComponent implements OnInit {
       result => { 
         if(result==false){
         alert("Document can't be rejected!");
-        this.getPapers();
+        window.location.reload();
       }
+      window.location.reload();
+
      },
       error => { console.log(error.error()) }
     )

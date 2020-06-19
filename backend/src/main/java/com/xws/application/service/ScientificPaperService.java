@@ -567,4 +567,83 @@ public class ScientificPaperService {
 		return papers;
 	}
 
+	public Boolean rejectPaper(String paperId) {
+		
+		String schemaPath = "src/main/resources/schemas/scientific_paper.xsd";
+		
+		BusinessProcess process;
+
+		try {
+			String sp = repository.findOneById(paperId, schemaPath);
+			System.out.println(sp);
+			Document paperDOM = domParser.buildDocument(sp);
+			Node staff = paperDOM.getElementsByTagName("sp:state").item(0);
+			staff.setTextContent("rejected");
+
+			repository.store(paperDOM, paperId + ".xml");
+			
+			DOMToXMLFile.toXML(paperDOM, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			String metadata = RDFFileToString.toString(rdfFilePath);
+			System.out.println(metadata);
+//			repository.storeMetadata(metadata, "/scientific_paper");
+			repository.updateMetadata(paperId, metadata, "http://ftn.uns.ac.rs/paper/" + paperId, "'in_procedure'" , "https://schema.org/state" ,"/scientific_paper");
+			repository.store(paperDOM, paperId + ".xml");
+			
+			// Update the business process for this paper
+			process = processService.get(paperId + ".xml");
+			
+			if (process.getState() == TState.ACCEPTED || process.getState() == TState.PUBLISHED) {
+				return false;
+			}
+			process.setState(TState.REJECTED);
+			processService.save(process, paperId + ".xml");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+		
+	}
+
+	public Boolean publishPaper(String paperId) {
+
+		String schemaPath = "src/main/resources/schemas/scientific_paper.xsd";
+		
+		BusinessProcess process;
+
+		try {
+			String sp = repository.findOneById(paperId, schemaPath);
+			System.out.println(sp);
+			Document paperDOM = domParser.buildDocument(sp);
+			Node staff = paperDOM.getElementsByTagName("sp:state").item(0);
+			staff.setTextContent("accepted");
+
+			repository.store(paperDOM, paperId + ".xml");
+			
+			DOMToXMLFile.toXML(paperDOM, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			String metadata = RDFFileToString.toString(rdfFilePath);
+			System.out.println(metadata);
+//			repository.storeMetadata(metadata, "/scientific_paper");
+			repository.updateMetadata(paperId, metadata, "http://ftn.uns.ac.rs/paper/" + paperId, "'in_procedure'" , "https://schema.org/state" ,"/scientific_paper");
+			repository.store(paperDOM, paperId + ".xml");
+			
+			// Update the business process for this paper
+			process = processService.get(paperId + ".xml");
+			
+			if (process.getState() == TState.ACCEPTED || process.getState() == TState.PUBLISHED) {
+				return false;
+			}
+			process.setState(TState.PUBLISHED);
+			processService.save(process, paperId + ".xml");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 }

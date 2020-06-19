@@ -164,8 +164,21 @@ public class ScientificPaperController {
 		}
 	}
 	
-//	@GetMapping(value = "/reject/{paperId}")
-//	public ResponseBody<?> rejectPaper(@PathVariable String paperId) {
-//		
-//	}
+	@GetMapping(value = "/reject/{paperId}")
+	public ResponseEntity<?> rejectPaper(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.rejectPaper(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/publish/{paperId}")
+	public ResponseEntity<?> publishPaper(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.publishPaper(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 }
