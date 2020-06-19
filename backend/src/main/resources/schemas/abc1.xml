@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019"
+ xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/nikolina97/xws-tim16-siit-2019 file:/D:/xml/projekatv3/xws-tim16-siit-2019/backend/src/main/resources/schemas/scientific_paper.xsd" id="id0">
+    <sp:title>title0</sp:title>
+    <sp:authors>
+        <sp:author>
+            <sp:first_name>first_name0</sp:first_name>
+            <sp:last_name>last_name0</sp:last_name>
+            <sp:university>
+                <sp:name>name0</sp:name>
+                <sp:city>city0</sp:city>
+                <sp:country>country0</sp:country>
+            </sp:university>
+            <sp:email>0@00.AA</sp:email>
+            <sp:expertise>expertise0</sp:expertise>
+            <sp:expertise>expertise1</sp:expertise>
+        </sp:author>
+        <sp:author>
+            <sp:first_name>first_name1</sp:first_name>
+            <sp:last_name>last_name1</sp:last_name>
+            <sp:university>
+                <sp:name>name1</sp:name>
+                <sp:city>city1</sp:city>
+                <sp:country>country1</sp:country>
+            </sp:university>
+            <sp:email>0@00.AA</sp:email>
+            <sp:expertise>expertise2</sp:expertise>
+            <sp:expertise>expertise3</sp:expertise>
+        </sp:author>
+    </sp:authors>
+    <sp:abstract id="id1">
+        <sp:paragraph id="id2">
+            <sp:table id="id3">
+                <sp:th>
+                    <sp:td>td0</sp:td>
+                    <sp:td>td1</sp:td>
+                </sp:th>
+                <sp:tr>
+                    <sp:td>td2</sp:td>
+                    <sp:td>td3</sp:td>
+                </sp:tr>
+                <sp:tr>
+                    <sp:td>td4</sp:td>
+                    <sp:td>td5</sp:td>
+                </sp:tr>
+                <sp:description>description0</sp:description>
+            </sp:table>
+            <sp:table id="id4">
+                <sp:th>
+                    <sp:td>td6</sp:td>
+                    <sp:td>td7</sp:td>
+                </sp:th>
+                <sp:tr>
+                    <sp:td>td8</sp:td>
+                    <sp:td>td9</sp:td>
+                </sp:tr>
+                <sp:tr>
+                    <sp:td>td10</sp:td>
+                    <sp:td>td11</sp:td>
+                </sp:tr>
+                <sp:description>description1</sp:description>
+            </sp:table>
+            <sp:text>
+                <sp:italic>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:italic>
+                <sp:italic>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:italic>
+                <sp:underline>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:underline>
+                <sp:underline>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:underline>
+            </sp:text>
+            <sp:text>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                </sp:bold>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                </sp:bold>
+                <sp:italic>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:italic>
+                <sp:italic>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:bold>
+                    </sp:bold>
+                    <sp:bold>
+                    </sp:bold>
+                </sp:italic>
+            </sp:text>
+        </sp:paragraph>
+        <sp:paragraph id="id5">
+            <sp:formula>formula0</sp:formula>
+            <sp:formula>formula1</sp:formula>
+            <sp:figure id="id6">
+                <sp:description>description2</sp:description>
+                <sp:image>ZGVmYXVsdA==</sp:image>
+            </sp:figure>
+            <sp:figure id="id7">
+                <sp:description>description3</sp:description>
+                <sp:image>ZGVmYXVsdA==</sp:image>
+            </sp:figure>
+        </sp:paragraph>
+        <sp:keywords>
+            <sp:keyword>keyword0</sp:keyword>
+            <sp:keyword>keyword1</sp:keyword>
+        </sp:keywords>
+    </sp:abstract>
+    <sp:chapters>
+        <sp:chapter id="id8">
+            <sp:subtitle>subtitle0</sp:subtitle>
+            <sp:paragraph id="id9">
+                <sp:formula>formula2</sp:formula>
+                <sp:formula>formula3</sp:formula>
+                <sp:ref refId="refId0">ref0</sp:ref>
+                <sp:ref refId="refId1">ref1</sp:ref>
+            </sp:paragraph>
+            <sp:paragraph id="id10">
+                <sp:ref refId="refId2">ref2</sp:ref>
+                <sp:ref refId="refId3">ref3</sp:ref>
+                <sp:ref refId="refId4">ref4</sp:ref>
+                <sp:ref refId="refId5">ref5</sp:ref>
+            </sp:paragraph>
+            <sp:subchapter id="id11">
+                <sp:subtitle>subtitle1</sp:subtitle>
+                <sp:paragraph id="id12">
+                    <sp:text>
+                    </sp:text>
+                    <sp:text>
+                    </sp:text>
+                    <sp:figure id="id13">
+                        <sp:description>description4</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id14">
+                        <sp:description>description5</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                </sp:paragraph>
+                <sp:paragraph id="id15">
+                    <sp:formula>formula4</sp:formula>
+                    <sp:formula>formula5</sp:formula>
+                    <sp:text>
+                    </sp:text>
+                    <sp:text>
+                    </sp:text>
+                </sp:paragraph>
+                <sp:paragraph id="id16">
+                    <sp:table id="id17">
+                        <sp:tr>
+                            <sp:td>td12</sp:td>
+                            <sp:td>td13</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td14</sp:td>
+                            <sp:td>td15</sp:td>
+                        </sp:tr>
+                        <sp:description>description6</sp:description>
+                    </sp:table>
+                    <sp:table id="id18">
+                        <sp:tr>
+                            <sp:td>td16</sp:td>
+                            <sp:td>td17</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td18</sp:td>
+                            <sp:td>td19</sp:td>
+                        </sp:tr>
+                        <sp:description>description7</sp:description>
+                    </sp:table>
+                    <sp:figure id="id19">
+                        <sp:description>description8</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id20">
+                        <sp:description>description9</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                </sp:paragraph>
+                <sp:paragraph id="id21">
+                    <sp:formula>formula6</sp:formula>
+                    <sp:formula>formula7</sp:formula>
+                    <sp:formula>formula8</sp:formula>
+                    <sp:formula>formula9</sp:formula>
+                </sp:paragraph>
+            </sp:subchapter>
+            <sp:subchapter id="id22">
+                <sp:subtitle>subtitle2</sp:subtitle>
+                <sp:paragraph id="id23">
+                    <sp:ref refId="refId6">ref6</sp:ref>
+                    <sp:ref refId="refId7">ref7</sp:ref>
+                    <sp:figure id="id24">
+                        <sp:description>description10</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id25">
+                        <sp:description>description11</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                </sp:paragraph>
+                <sp:paragraph id="id26">
+                    <sp:quote>
+                        <sp:from>from0</sp:from>
+                        <sp:content>content0</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from1</sp:from>
+                        <sp:content>content1</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from2</sp:from>
+                        <sp:content>content2</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from3</sp:from>
+                        <sp:content>content3</sp:content>
+                    </sp:quote>
+                </sp:paragraph>
+                <sp:paragraph id="id27">
+                    <sp:ref refId="refId8">ref8</sp:ref>
+                    <sp:ref refId="refId9">ref9</sp:ref>
+                    <sp:quote>
+                        <sp:from>from4</sp:from>
+                        <sp:content>content4</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from5</sp:from>
+                        <sp:content>content5</sp:content>
+                    </sp:quote>
+                </sp:paragraph>
+                <sp:paragraph id="id28">
+                    <sp:figure id="id29">
+                        <sp:description>description12</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id30">
+                        <sp:description>description13</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:text>
+                    </sp:text>
+                    <sp:text>
+                    </sp:text>
+                </sp:paragraph>
+            </sp:subchapter>
+        </sp:chapter>
+        <sp:chapter id="id31">
+            <sp:subtitle>subtitle3</sp:subtitle>
+            <sp:subchapter id="id32">
+                <sp:subtitle>subtitle4</sp:subtitle>
+                <sp:paragraph id="id33">
+                    <sp:ref refId="refId10">ref10</sp:ref>
+                    <sp:ref refId="refId11">ref11</sp:ref>
+                    <sp:list id="id34">
+                        <sp:decorator>
+                        </sp:decorator>
+                        <sp:decorator>
+                        </sp:decorator>
+                    </sp:list>
+                    <sp:list id="id35">
+                        <sp:decorator>
+                        </sp:decorator>
+                        <sp:decorator>
+                        </sp:decorator>
+                    </sp:list>
+                </sp:paragraph>
+                <sp:paragraph id="id36">
+                    <sp:formula>formula10</sp:formula>
+                    <sp:formula>formula11</sp:formula>
+                    <sp:quote>
+                        <sp:from>from6</sp:from>
+                        <sp:content>content6</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from7</sp:from>
+                        <sp:content>content7</sp:content>
+                    </sp:quote>
+                </sp:paragraph>
+                <sp:paragraph id="id37">
+                    <sp:table id="id38">
+                        <sp:tr>
+                            <sp:td>td20</sp:td>
+                            <sp:td>td21</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td22</sp:td>
+                            <sp:td>td23</sp:td>
+                        </sp:tr>
+                        <sp:description>description14</sp:description>
+                    </sp:table>
+                    <sp:table id="id39">
+                        <sp:tr>
+                            <sp:td>td24</sp:td>
+                            <sp:td>td25</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td26</sp:td>
+                            <sp:td>td27</sp:td>
+                        </sp:tr>
+                        <sp:description>description15</sp:description>
+                    </sp:table>
+                    <sp:quote>
+                        <sp:from>from8</sp:from>
+                        <sp:content>content8</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from9</sp:from>
+                        <sp:content>content9</sp:content>
+                    </sp:quote>
+                </sp:paragraph>
+                <sp:paragraph id="id40">
+                    <sp:figure id="id41">
+                        <sp:description>description16</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id42">
+                        <sp:description>description17</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:formula>formula12</sp:formula>
+                    <sp:formula>formula13</sp:formula>
+                </sp:paragraph>
+            </sp:subchapter>
+            <sp:subchapter id="id43">
+                <sp:subtitle>subtitle5</sp:subtitle>
+                <sp:paragraph id="id44">
+                    <sp:list id="id45">
+                        <sp:decorator>
+                        </sp:decorator>
+                        <sp:decorator>
+                        </sp:decorator>
+                    </sp:list>
+                    <sp:list id="id46">
+                        <sp:decorator>
+                        </sp:decorator>
+                        <sp:decorator>
+                        </sp:decorator>
+                    </sp:list>
+                    <sp:ref refId="refId12">ref12</sp:ref>
+                    <sp:ref refId="refId13">ref13</sp:ref>
+                </sp:paragraph>
+                <sp:paragraph id="id47">
+                    <sp:table id="id48">
+                        <sp:tr>
+                            <sp:td>td28</sp:td>
+                            <sp:td>td29</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td30</sp:td>
+                            <sp:td>td31</sp:td>
+                        </sp:tr>
+                        <sp:description>description18</sp:description>
+                    </sp:table>
+                    <sp:table id="id49">
+                        <sp:tr>
+                            <sp:td>td32</sp:td>
+                            <sp:td>td33</sp:td>
+                        </sp:tr>
+                        <sp:tr>
+                            <sp:td>td34</sp:td>
+                            <sp:td>td35</sp:td>
+                        </sp:tr>
+                        <sp:description>description19</sp:description>
+                    </sp:table>
+                    <sp:quote>
+                        <sp:from>from10</sp:from>
+                        <sp:content>content10</sp:content>
+                    </sp:quote>
+                    <sp:quote>
+                        <sp:from>from11</sp:from>
+                        <sp:content>content11</sp:content>
+                    </sp:quote>
+                </sp:paragraph>
+                <sp:paragraph id="id50">
+                    <sp:figure id="id51">
+                        <sp:description>description20</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:figure id="id52">
+                        <sp:description>description21</sp:description>
+                        <sp:image>ZGVmYXVsdA==</sp:image>
+                    </sp:figure>
+                    <sp:ref refId="refId14">ref14</sp:ref>
+                    <sp:ref refId="refId15">ref15</sp:ref>
+                </sp:paragraph>
+                <sp:paragraph id="id53">
+                    <sp:formula>formula14</sp:formula>
+                    <sp:formula>formula15</sp:formula>
+                    <sp:ref refId="refId16">ref16</sp:ref>
+                    <sp:ref refId="refId17">ref17</sp:ref>
+                </sp:paragraph>
+            </sp:subchapter>
+            <sp:paragraph id="id54">
+                <sp:list id="id55">
+                    <sp:decorator>
+                    </sp:decorator>
+                    <sp:decorator>
+                    </sp:decorator>
+                </sp:list>
+                <sp:list id="id56">
+                    <sp:decorator>
+                    </sp:decorator>
+                    <sp:decorator>
+                    </sp:decorator>
+                </sp:list>
+                <sp:ref refId="refId18">ref18</sp:ref>
+                <sp:ref refId="refId19">ref19</sp:ref>
+            </sp:paragraph>
+            <sp:paragraph id="id57">
+                <sp:formula>formula16</sp:formula>
+                <sp:formula>formula17</sp:formula>
+                <sp:table id="id58">
+                    <sp:th>
+                        <sp:td>td36</sp:td>
+                        <sp:td>td37</sp:td>
+                    </sp:th>
+                    <sp:tr>
+                        <sp:td>td38</sp:td>
+                        <sp:td>td39</sp:td>
+                    </sp:tr>
+                    <sp:tr>
+                        <sp:td>td40</sp:td>
+                        <sp:td>td41</sp:td>
+                    </sp:tr>
+                    <sp:description>description22</sp:description>
+                </sp:table>
+                <sp:table id="id59">
+                    <sp:th>
+                        <sp:td>td42</sp:td>
+                        <sp:td>td43</sp:td>
+                    </sp:th>
+                    <sp:tr>
+                        <sp:td>td44</sp:td>
+                        <sp:td>td45</sp:td>
+                    </sp:tr>
+                    <sp:tr>
+                        <sp:td>td46</sp:td>
+                        <sp:td>td47</sp:td>
+                    </sp:tr>
+                    <sp:description>description23</sp:description>
+                </sp:table>
+            </sp:paragraph>
+        </sp:chapter>
+    </sp:chapters>
+    <sp:references>
+        <sp:reference id="id60">
+            <sp:ref_number>[0]</sp:ref_number>
+            <sp:ref_author>ref_author0</sp:ref_author>
+            <sp:ref_author>ref_author1</sp:ref_author>
+            <sp:article_name>article_name0</sp:article_name>
+            <sp:year>50</sp:year>
+        </sp:reference>
+        <sp:reference id="id61">
+            <sp:ref_number>[1]</sp:ref_number>
+            <sp:ref_author>ref_author2</sp:ref_author>
+            <sp:ref_author>ref_author3</sp:ref_author>
+            <sp:article_name>article_name1</sp:article_name>
+            <sp:year>50</sp:year>
+        </sp:reference>
+    </sp:references>
+    <sp:comments>
+        <sp:comment id="id62">
+            <sp:text>
+                <sp:bold>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+                <sp:bold>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+                <sp:bold>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                </sp:bold>
+            </sp:text>
+            <sp:text>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+                <sp:bold>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                </sp:bold>
+                <sp:bold>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:italic>
+                    </sp:italic>
+                    <sp:underline>
+                    </sp:underline>
+                    <sp:underline>
+                    </sp:underline>
+                </sp:bold>
+            </sp:text>
+            <sp:formula>formula18</sp:formula>
+            <sp:formula>formula19</sp:formula>
+        </sp:comment>
+        <sp:comment id="id63">
+            <sp:table id="id64">
+                <sp:th>
+                    <sp:td>td48</sp:td>
+                    <sp:td>td49</sp:td>
+                </sp:th>
+                <sp:tr>
+                    <sp:td>td50</sp:td>
+                    <sp:td>td51</sp:td>
+                </sp:tr>
+                <sp:tr>
+                    <sp:td>td52</sp:td>
+                    <sp:td>td53</sp:td>
+                </sp:tr>
+                <sp:description>description24</sp:description>
+            </sp:table>
+            <sp:table id="id65">
+                <sp:th>
+                    <sp:td>td54</sp:td>
+                    <sp:td>td55</sp:td>
+                </sp:th>
+                <sp:tr>
+                    <sp:td>td56</sp:td>
+                    <sp:td>td57</sp:td>
+                </sp:tr>
+                <sp:tr>
+                    <sp:td>td58</sp:td>
+                    <sp:td>td59</sp:td>
+                </sp:tr>
+                <sp:description>description25</sp:description>
+            </sp:table>
+            <sp:quote>
+                <sp:from>from12</sp:from>
+                <sp:content>content12</sp:content>
+            </sp:quote>
+            <sp:quote>
+                <sp:from>from13</sp:from>
+                <sp:content>content13</sp:content>
+            </sp:quote>
+        </sp:comment>
+    </sp:comments>
+    <sp:category>category0</sp:category>
+    <sp:version>50</sp:version>
+    <sp:dateReceived>2006-05-04</sp:dateReceived>
+    <sp:dateRevised>2006-05-04</sp:dateRevised>
+    <sp:dateAccepted>2006-05-04</sp:dateAccepted>
+    <sp:state>in_procedure</sp:state>
+</sp:scientific_paper>

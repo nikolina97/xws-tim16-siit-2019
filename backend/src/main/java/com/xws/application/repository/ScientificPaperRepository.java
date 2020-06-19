@@ -388,5 +388,76 @@ public class ScientificPaperRepository {
         processor.execute();
 		
 	}
+	
+	public List<ScientificPaper> getPapersByIds(List<String> ids) throws Exception {
+		
+		List<ScientificPaper> papers = new ArrayList<>();
+		
+		for (String s : ids) {
+			String xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
+			ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+			
+	        ResourceIterator i = result.getIterator();
+			XMLResource res = null;
+			ScientificPaper sp = null;
+			while (i.hasMoreResources()) {
+				try {
+					res = (XMLResource) i.nextResource();
+					// pretvori ga u TPerson
+					sp = unmarshalling(res);
+					sp.setId(s);
+					papers.add(sp);
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException xe) {
+						xe.printStackTrace();
+					}
+				}
+			}
+			
+			//			papers.add((ScientificPaper) XMLDBManager.retrieveWithXPath("/db/library/papers", xpathExp, TARGET_NAMESPACE));
+		}
+		
+		return papers;
+	}
+	
+	public List<String> getKeywords(String paperId) throws IOException {
+		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
+		String graphName = "scientific_paper";
+		String subject = "http://ftn.uns.ac.rs/paper/" + paperId;
+		String predicate = "https://schema.org/keyword";
+//		String sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition2, "");
+		String sparqlQuery = SparqlUtil.selectObject(conn.getDataEndpoint() + "/" + graphName, subject, predicate);
+		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
+		System.out.println("sparqlQuery: " + sparqlQuery);
+		QueryExecution query = null;
+		query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
+		ResultSet results = null;
+		results = query.execSelect();
+		String varName;
+		RDFNode varValue;
+		List<String> kws = new ArrayList<String>();
+		while(results.hasNext()) {
+			// A single answer from a SELECT query
+			QuerySolution querySolution = results.next() ;
+			Iterator<String> variableBindings = querySolution.varNames();
+			
+			// Retrieve variable bindings
+				while (variableBindings.hasNext()) {
+					   
+			    	varName = variableBindings.next();
+			    	varValue = querySolution.get(varName);
+			    	
+			    	System.out.println(varName + ": " + varValue);
+			    	String kw = varValue.toString();
+			    	kws.add(kw);
+			    }
+		    
+			}
+		query.close();
+		return kws;
+	}
 }
 
