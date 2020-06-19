@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScientificPaperService } from '../services/scientific-paper.service';
 import { Router } from '@angular/router';
+import { ReviewService } from 'src/app/review/services/review.service';
 
 @Component({
   selector: 'app-papers-from-author',
@@ -9,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class PapersFromAuthorComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "button"];
-  dataSource: any[] = [];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "button", "reviews"];
+  dataSource : any[] = [];
 
   constructor(private paperService: ScientificPaperService, private router: Router) { }
 

@@ -3,12 +3,14 @@ package com.xws.application.service;
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ReviewRepository;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.repository.UserRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
 import com.xws.application.util.rdf.MetadataExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,11 +25,13 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -50,6 +54,9 @@ public class ReviewService {
 	@Autowired
 	private DOMParser domParser;
 	
+	@Autowired
+	private XSLFOTransformer transformer;
+	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
 
@@ -57,17 +64,20 @@ public class ReviewService {
 		dto.setReview("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + dto.getReview());
 		try {
 			ScientificPaper original = paperRepository.retrieveJAXB(dto.getPaperId() + ".xml");
-			/*if(original == null)
-				throw new NotFoundException("Paper not found.");*/
+			if(original == null)
+				throw new NotFoundException("Paper not found.");
 
 			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			/*if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
 				throw new BadRequestException("Your don't have permission to write review of this paper.");
 
 			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
-				throw new BadRequestException("Your don't have permission to write review of this paper.");*/
+				throw new BadRequestException("Your don't have permission to write review of this paper.");
+
+			if(process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(email)).collect(Collectors.toList()).get(0).getStatus().equals(TReviewAssignementState.REVIEWED))
+				throw new BadRequestException("You have already reviewed this paper.");
 
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/review.xsd"));
@@ -259,6 +269,44 @@ public class ReviewService {
 		process.getReviewAssignments().getReviewAssignment().add(ra);
 		processService.save(process, paperId + ".xml");
 		return true;
+	}
+	
+	public List<Review> getReviewes(String paperID) throws Exception {
+//		Boolean loggedIn = false;
+		List<Review> reviews = reviewRepository.getReviews(paperID);
+		return reviews;
+	}
+	
+	public String getHTML(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/review.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPDF(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/review_fo.xsl");
+		return html;
+	}
+	
+	public String getHTMLAnonymous(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/review_anonymous.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPDFAnonymous(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/review_anonymous_fo.xsl");
+		return html;
 	}
 
 }

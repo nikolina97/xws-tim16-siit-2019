@@ -10,8 +10,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import com.xws.application.model.Users;
-import com.xws.application.util.XUpdateTemplate;
 
+import com.xws.application.util.XUpdateTemplate;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceIterator;

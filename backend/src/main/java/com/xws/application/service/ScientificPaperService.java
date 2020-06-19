@@ -1,5 +1,6 @@
 package com.xws.application.service;
 
+import com.xws.application.dto.AssignmentDTO;
 import com.xws.application.dto.PaperDTO;
 import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
@@ -42,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScientificPaperService {
@@ -271,9 +273,6 @@ public class ScientificPaperService {
 
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-//			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", "/person/" + email);
-//			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(email))))
-//				throw new BadRequestException("This paper is not yours.");
 			if(original.getAuthors().getAuthor().stream().noneMatch(author -> author.getEmail().equals(email)))
 				throw new BadRequestException("This paper is not yours.");
 
@@ -436,12 +435,22 @@ public class ScientificPaperService {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REVIEWER')")
-	public List<ScientificPaper> getReviewersPapers() throws Exception {
-		String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
-		System.out.println(email);
-//		Boolean loggedIn = false;
+	public List<AssignmentDTO> getReviewersPapers() throws Exception {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
 		List<ScientificPaper> papers = repository.getReviewersPapers(email);
-		return papers;
+		List<AssignmentDTO> result = new ArrayList<>();
+
+		papers.forEach(paper -> {
+			try {
+				BusinessProcess process = processService.get(paper.getId() + ".xml");
+				result.add(new AssignmentDTO(paper, process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(email)).collect(Collectors.toList()).get(0).getStatus().value()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new InternalServerErrorException("Something bad happened on the server.");
+			}
+		});
+		return result;
 	}
 	
 	public String getPaperHTML(String id) throws Exception {

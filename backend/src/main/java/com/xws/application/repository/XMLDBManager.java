@@ -55,7 +55,7 @@ public class XMLDBManager {
 			System.out.println("[INFO] Inserting the document: " + documentId);
 			res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
 
-			if(model instanceof Document) {
+			if (model instanceof Document) {
 				DOMSource domSource = new DOMSource((Document) model);
 				StringWriter writer = new StringWriter();
 				StreamResult result = new StreamResult(writer);
@@ -78,15 +78,15 @@ public class XMLDBManager {
 		} finally {
 
 			//don't forget to cleanup
-			if(res != null) {
+			if (res != null) {
 				try {
-					((EXistResource)res).freeResources();
+					((EXistResource) res).freeResources();
 				} catch (XMLDBException xe) {
 					xe.printStackTrace();
 				}
 			}
 
-			if(col != null) {
+			if (col != null) {
 				try {
 					col.close();
 				} catch (XMLDBException xe) {
@@ -104,27 +104,24 @@ public class XMLDBManager {
 		Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
 
 		// create the collection if it does not exist
-		if(col == null) {
+		if (col == null) {
 
-			if(collectionUri.startsWith("/")) {
+			if (collectionUri.startsWith("/")) {
 				collectionUri = collectionUri.substring(1);
 			}
 
-			String pathSegments[] = collectionUri.split("/");
+			String[] pathSegments = collectionUri.split("/");
 
-			if(pathSegments.length > 0) {
+			if (pathSegments.length > 0) {
 				StringBuilder path = new StringBuilder();
 
-				for(int i = 0; i <= pathSegmentOffset; i++) {
-					path.append("/" + pathSegments[i]);
+				for (int i = 0; i <= pathSegmentOffset; i++) {
+					path.append("/").append(pathSegments[i]);
 				}
 
 				Collection startCol = DatabaseManager.getCollection(conn.uri + path, conn.user, conn.password);
 
 				if (startCol == null) {
-
-					// child collection does not exist
-
 					String parentPath = path.substring(0, path.lastIndexOf("/"));
 					Collection parentCol = DatabaseManager.getCollection(conn.uri + parentPath, conn.user, conn.password);
 
@@ -175,9 +172,9 @@ public class XMLDBManager {
 			col.setProperty(OutputKeys.INDENT, "yes");
 
 			System.out.println("[INFO] Retrieving the document: " + documentId);
-			res = (XMLResource)col.getResource(documentId);
+			res = (XMLResource) col.getResource(documentId);
 
-			if(res == null) {
+			if (res == null) {
 				System.out.println("[WARNING] Document '" + documentId + "' can not be found!");
 				return null;
 			}
@@ -186,15 +183,15 @@ public class XMLDBManager {
 		} finally {
 			//don't forget to clean up!
 
-			if(res != null) {
+			if (res != null) {
 				try {
-					((EXistResource)res).freeResources();
+					((EXistResource) res).freeResources();
 				} catch (XMLDBException xe) {
 					xe.printStackTrace();
 				}
 			}
 
-			if(col != null) {
+			if (col != null) {
 				try {
 					col.close();
 				} catch (XMLDBException xe) {
@@ -261,13 +258,13 @@ public class XMLDBManager {
 
 		return null;
 	}
-	
+
 	public static ResourceSet retrieveWithXPath(String collectionId, String xpathExp, String TARGET_NAMESPACE) throws Exception {
 		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
 		// initialize collection and document identifiers
 		System.out.println("\t- collection ID: " + collectionId);
-		
+
 		// initialize database driver
 		System.out.println("[INFO] Loading driver class: " + conn.driver);
 		Class<?> cl = Class.forName(conn.driver);
@@ -278,41 +275,32 @@ public class XMLDBManager {
 		DatabaseManager.registerDatabase(database);
 
 		Collection col = null;
-		ResourceSet result = null;
-//
-//		Object model = null;
+		ResourceSet result;
 
 		try {
 			// get the collection
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
 			col = getOrCreateCollection(collectionId, conn);
 
-            if (col == null) {
-                return null;
-            }
-         // get an instance of xpath query service
-            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-            xpathService.setProperty("indent", "yes");
+			// get an instance of xpath query service
+			XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+			xpathService.setProperty("indent", "yes");
 
-            // make the service aware of namespaces, using the default one
-            xpathService.setNamespace("sp", TARGET_NAMESPACE);
-            // System.out.println("\n[INPUT] Enter an XPath expression (e.g.
-            // doc(\"1.xml\")//book[@category=\"WEB\" and price>35]/title): ");
-            // execute xpath expression
-            System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
-            result = xpathService.query(xpathExp);
-            // handle the results
-            System.out.println("[INFO] Handling the results... ");
+			// make the service aware of namespaces, using the default one
+			xpathService.setNamespace("sp", TARGET_NAMESPACE);
+
+			System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+			result = xpathService.query(xpathExp);
+			// handle the results
+			System.out.println("[INFO] Handling the results... ");
 		} finally {
-			//don't forget to clean up!
-
 			// don't forget to cleanup
-            if(col != null) {
-                try { 
-                	col.close();
-                } catch (XMLDBException xe) {
-                	xe.printStackTrace();
-                }
+			if (col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
 			}
 		}
 		return result;
@@ -340,14 +328,13 @@ public class XMLDBManager {
 		try {
 			// get the collection
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
-			// col = DatabaseManager.getCollection(conn.uri + collectionId);
 			col = getOrCreateCollection(collectionId, conn);
 			col.setProperty(OutputKeys.INDENT, "yes");
 
 			count = col.getResourceCount();
 		} finally {
 			//don't forget to clean up!
-			if(col != null) {
+			if (col != null) {
 				try {
 					col.close();
 				} catch (XMLDBException xe) {
@@ -362,33 +349,34 @@ public class XMLDBManager {
 	public static void update( String documentId, String collectionId, String contextXPath, String xmlFragment, String template) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 		Class<?> cl = Class.forName(conn.driver);
-        
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
-        
-        DatabaseManager.registerDatabase(database);
-        
-        Collection col = null;
-        try { 
-		 col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
-         col.setProperty("indent", "yes");
-         XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
-         xupdateService.setProperty("indent", "yes");
-         
-         System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
-         long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
-//                  System.out.println("[INFO] " + mods + " modifications processed.");
+
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		Collection col = null;
+		try {
+			col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+			col.setProperty("indent", "yes");
+			XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+			xupdateService.setProperty("indent", "yes");
+
+			System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
+
+			long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
+//			System.out.println("[INFO] " + mods + " modifications processed.");
 		} finally {
-		        	
-		            // don't forget to cleanup
-		            if(col != null) {
-		                try { 
-		                	col.close();
-		                } catch (XMLDBException xe) {
-		                	xe.printStackTrace();
-		                }
-		            }
-		        }
+			// don't forget to cleanup
+			if (col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

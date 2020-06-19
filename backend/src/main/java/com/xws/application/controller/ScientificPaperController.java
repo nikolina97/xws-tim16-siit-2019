@@ -154,8 +154,8 @@ public class ScientificPaperController {
 		}
 	}
 	
-	@GetMapping(value = "/reject/{paperId}")
-	public ResponseBody<?> rejectPaper(@PathVariable String paperId) {
-		
-	}
+//	@GetMapping(value = "/reject/{paperId}")
+//	public ResponseBody<?> rejectPaper(@PathVariable String paperId) {
+//		
+//	}
 }

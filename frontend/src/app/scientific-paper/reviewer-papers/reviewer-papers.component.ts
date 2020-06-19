@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScientificPaperService } from '../services/scientific-paper.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reviewer-papers',
@@ -9,14 +10,14 @@ import { ScientificPaperService } from '../services/scientific-paper.service';
 export class ReviewerPapersComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "accept", "reject"];
-  dataSource : any[] = [];
-  constructor(private paperService: ScientificPaperService) { }
+  dataSource: any[] = [];
+  constructor(private paperService: ScientificPaperService, private router: Router) { }
 
   ngOnInit() {
     this.getPapers();
   }
 
-  getPapers(){
+  getPapers() {
     this.paperService.getReviewersPapers().subscribe(
       (result) => {
         this.dataSource = result;
@@ -25,16 +26,19 @@ export class ReviewerPapersComponent implements OnInit {
     )
   }
 
-  accept(spId:string){
-    console.log(spId);
+  accept(spId: string) {
     this.paperService.accept(spId).subscribe(
-      result => {this.getPapers()},
-      error => {console.log(error.error())}
-      )};
+      result => {
+        this.router.navigate(['/review/write-review', spId]);
+      },
+      error => { console.log(error.error()) }
+    )
+  };
 
-  reject(spId:string){
+  reject(spId: string) {
     this.paperService.reject(spId).subscribe(
-      result => {this.getPapers()},
-      error => {console.log(error.error())}
-      )};
-  }
+      result => { this.getPapers() },
+      error => { console.log(error.error()) }
+    )
+  };
+}

@@ -1,0 +1,27 @@
+<div class="wrapper fadeInDown" style="margin-top:5%; margin-left:40%">
+  
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="review">
+            <th mat-header-cell *matHeaderCellDef> Review</th>
+            <td mat-cell *matCellDef="let element;let i = index;" >Review {{i+1}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="html">
+            <th mat-header-cell *matHeaderCellDef> HTML</th>
+            <td mat-cell *matCellDef="let element">
+                <a *ngIf="auth.getRole()=='ROLE_EDITOR'" mat-menu-item href = "http://localhost:8081/api/review/getHtmlById/{{element.id}}"style="text-align: left;">Get HTML</a>
+                <a *ngIf="auth.getRole()=='ROLE_AUTHOR'" mat-menu-item href = "http://localhost:8081/api/review/getHtmlByIdAnonymoys/{{element.id}}"style="text-align: left;">Get HTML</a>
+            </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="pdf">
+            <th mat-header-cell *matHeaderCellDef> PDF </th>
+            <td mat-cell *matCellDef="let element"> 
+                <a *ngIf="auth.getRole()=='ROLE_EDITOR'" mat-menu-item href = "http://localhost:8081/api/review/getPDFById/{{element.id}}"style="text-align: left;">Get PDF</a>
+                <a *ngIf="auth.getRole()=='ROLE_AUTHOR'" mat-menu-item href = "http://localhost:8081/api/review/getPDFByIdAnonymoys/{{element.id}}"style="text-align: left;">Get PDF</a> 
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

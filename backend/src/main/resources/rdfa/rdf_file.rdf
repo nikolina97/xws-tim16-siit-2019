@@ -1,5 +1,6 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+<<<<<<< HEAD
     <pred:headline xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xaxa</pred:headline>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
@@ -19,6 +20,18 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/hex@uns.ac.rs">
     <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hex</pred:last_name>
+=======
+    <pred:headline xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lorem Ipsum</pred:headline>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/milos@uns.ac.rs"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs">
+    <pred:first_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Milos</pred:first_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs">
+    <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Radojcin</pred:last_name>
+>>>>>>> master
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
     <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">programming</pred:keyword>
@@ -30,15 +43,22 @@
     <pred:category xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">original research</pred:category>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+<<<<<<< HEAD
     <pred:version xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3</pred:version>
+=======
+    <pred:version xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</pred:version>
+>>>>>>> master
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
     <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateReceived>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+<<<<<<< HEAD
     <pred:dateRevised xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateRevised>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+=======
+>>>>>>> master
     <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">in_procedure</pred:state>
   </rdf:Description>
 </rdf:RDF>
