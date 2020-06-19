@@ -90,7 +90,7 @@ public class UserService {
 		TPerson.FirstName fName = new TPerson.FirstName();
 		fName.setValue(dto.getFirstName());
 		TPerson.LastName lName = new TPerson.LastName();
-		fName.setValue(dto.getLastName());
+		lName.setValue(dto.getLastName());
 		user.getUserInfo().setFirstName(fName);
 		user.getUserInfo().setLastName(lName);
 		user.getUserInfo().setUniversity(new University());

@@ -35,6 +35,17 @@ export class ScientificPaperService {
     return this.http.get(this.baseUrl + "/revoke/" + id);
   }
 
+  public getReviewersPapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getReviewrsPapersToAccept");
+  }
+
+  public accept(id:string) {
+    return this.http.post("http://localhost:8081/api/review/accept/"+id, null);
+  }
+
+  public reject(id:string) {
+    return this.http.post("http://localhost:8081/api/review/reject/"+id, null);
+  }
   public submittedPapers() {
     return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
   }

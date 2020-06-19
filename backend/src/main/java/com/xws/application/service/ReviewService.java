@@ -216,6 +216,18 @@ public class ReviewService {
 			return null;
 		}
 	}
+	
+	public boolean accept(String paperId) throws Exception {
+		BusinessProcess bp =reviewRepository.acceptOrReject(paperId, TReviewAssignementState.ACCEPTED);
+		processService.save(bp, paperId+".xml");
+		return true;
+	}
+	
+	public boolean reject(String paperId) throws Exception {
+		BusinessProcess bp =reviewRepository.acceptOrReject(paperId, TReviewAssignementState.REJECTED);
+		processService.save(bp, paperId+".xml");
+		return true;
+	}
 
 	public List<Users.User> getRecommendedReviewers(String paperId) throws Exception {
 		String graphName = "users";
