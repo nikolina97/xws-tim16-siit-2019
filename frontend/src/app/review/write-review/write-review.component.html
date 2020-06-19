@@ -1,1 +1,15 @@
-<p>write-review works!</p>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-md-9" style="max-height: 88vh; overflow: auto;">
+			<input type="file" accept="text/xml" #review_file name="review" hidden (change)="onFileLoad($event)"
+				required>
+			<button mat-flat-button color="primary" (click)="review_file.click()">Attach review</button>
+			<div id="editor"></div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-9">
+			<button mat-raised-button color="primary" (click)="submit()" [disabled]="paper == ''">Send</button>
+		</div>
+	</div>
+</div>

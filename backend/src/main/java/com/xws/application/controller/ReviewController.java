@@ -35,7 +35,7 @@ public class ReviewController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REVIEWER')")
-	@PostMapping(value = "accept/{spId}")
+	@PostMapping(value = "accept/{spId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity accept(@PathVariable String spId) {
 		try {	
 			return new ResponseEntity<>(service.accept(spId), HttpStatus.OK);
