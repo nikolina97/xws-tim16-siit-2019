@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, } from "@angular/common/http";
+import { HttpClient, HttpHeaders, } from "@angular/common/http";
 import { PaperLetterDTO } from '../models/paper-letter-dto';
 import { SearchMetadataDTO } from '../models/search-dto';
 
@@ -12,19 +12,27 @@ export class ScientificPaperService {
 
   constructor(private http: HttpClient) { }
 
-  public publish(dto: PaperLetterDTO) {
-    return this.http.post(this.baseUrl, dto);
+  public get(id: string) {
+    return this.http.get(this.baseUrl + "/" + id, { responseType: 'text' });
   }
 
-  public getAllByMetadata(dto : SearchMetadataDTO) {
+  public publish(dto: PaperLetterDTO) {
+    return this.http.post(this.baseUrl, dto, { responseType: 'text' });
+  }
+
+  public revise(revision: string, id: string) {
+    return this.http.put(this.baseUrl + "/" + id, revision, { responseType: 'text' });
+  }
+
+  public getAllByMetadata(dto: SearchMetadataDTO) {
     return this.http.post<any[]>(this.baseUrl + "/advancedSearch", dto);
   }
 
-  public basicSearch(searchText : string) {
+  public basicSearch(searchText: string) {
     return this.http.post<any[]>(this.baseUrl + "/basicSearch", searchText);
   }
   public getXML(id: string) {
-    return this.http.get(this.baseUrl + "/getXMLById/"+id, {responseType: 'text' });
+    return this.http.get(this.baseUrl + "/getXMLById/" + id, { responseType: 'text' });
   }
 
   public getMyPapers() {

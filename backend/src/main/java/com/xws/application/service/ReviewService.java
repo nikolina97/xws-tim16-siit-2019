@@ -1,29 +1,18 @@
 package com.xws.application.service;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
-import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
-import com.xws.application.model.BusinessProcess.ReviewAssignments;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.repository.ReviewRepository;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.repository.UserRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
-
-import org.apache.tomcat.jni.User;
+import com.xws.application.util.rdf.MetadataExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import com.xws.application.parser.DOMParser;
-import com.xws.application.parser.JAXB;
-import com.xws.application.repository.ReviewRepository;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -34,6 +23,11 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -63,17 +57,17 @@ public class ReviewService {
 		dto.setReview("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + dto.getReview());
 		try {
 			ScientificPaper original = paperRepository.retrieveJAXB(dto.getPaperId() + ".xml");
-			if(original == null)
-				throw new NotFoundException("Paper not found.");
+			/*if(original == null)
+				throw new NotFoundException("Paper not found.");*/
 
 			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
-			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())))
+			/*if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
 				throw new BadRequestException("Your don't have permission to write review of this paper.");
 
 			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
-				throw new BadRequestException("Your don't have permission to write review of this paper.");
+				throw new BadRequestException("Your don't have permission to write review of this paper.");*/
 
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/review.xsd"));
@@ -98,7 +92,7 @@ public class ReviewService {
 			reviewRepository.store(reviewDOM, reviewId + ".xml");
 
 			// Update the business process for this paper
-			process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())).forEach(assignment -> assignment.setStatus(TReviewAssignementState.REVIEWED));
+			process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(email)).forEach(assignment -> assignment.setStatus(TReviewAssignementState.REVIEWED));
 
 			/*for(TReviewAssignment assignment : process.getReviewAssignments().getReviewAssignment()) {
 				if(assignment.getReviewer().getEmail().equals(user.getUserInfo().getEmail())) {

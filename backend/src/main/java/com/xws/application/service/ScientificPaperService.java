@@ -1,25 +1,21 @@
 package com.xws.application.service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.xml.XMLConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
+import com.xws.application.dto.PaperDTO;
+import com.xws.application.dto.PaperLetterDTO;
+import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
+import com.xws.application.exception.BadRequestException;
+import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
+import com.xws.application.model.*;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.parser.JAXB;
+import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.repository.XMLDBManager;
+import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
+import com.xws.application.util.rdf.DOMToXMLFile;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RDFFileToString;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,26 +31,17 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import com.xws.application.dto.PaperLetterDTO;
-import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
-import com.xws.application.exception.BadRequestException;
-import com.xws.application.exception.InternalServerErrorException;
-import com.xws.application.exception.NotFoundException;
-import com.xws.application.model.BusinessProcess;
-import com.xws.application.model.DocType;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.TSPState;
-import com.xws.application.model.TState;
-import com.xws.application.model.Users;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.parser.JAXB;
-import com.xws.application.repository.ScientificPaperRepository;
-import com.xws.application.repository.XMLDBManager;
-import com.xws.application.util.XPathExpressionHandlerNS;
-import com.xws.application.util.XSLFOTransformer;
-import com.xws.application.util.rdf.DOMToXMLFile;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.*;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ScientificPaperService {
@@ -106,7 +93,7 @@ public class ScientificPaperService {
 			version.setAttribute("property", "pred:version");
 			version.setAttribute("datatype", "xs:string");
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String date = sdf.format(new Date());
 			Element dateReceived = paperDOM.createElement("sp:dateReceived");
 			dateReceived.setTextContent(date);
@@ -276,15 +263,16 @@ public class ScientificPaperService {
 	}
 
 	public void revise(String revision, String id) {
+		revision = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + revision;
 		try {
 			ScientificPaper original = repository.retrieveJAXB(id + ".xml");
 			if(original == null)
 				throw new NotFoundException("Paper not found.");
 
-			Users.User user = (Users.User) SecurityContextHolder.getContext().getAuthentication();
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", user.getUserInfo().getEmail());
-			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(user.getUserInfo().getEmail()))))
+			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", email);
+			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(email))))
 				throw new BadRequestException("This paper is not yours.");
 
 			BusinessProcess process = processService.get(id + ".xml");
@@ -303,17 +291,46 @@ public class ScientificPaperService {
 			ScientificPaper revisionModel = (ScientificPaper) JAXB.unmarshal(revision, DocType.SCIENTIFIC_PAPER);
 			revisionModel.getVersion().setValue(BigInteger.valueOf(revisionModel.getVersion().getValue().intValue() + 1));
 
+			Document revisionDOM = domParser.buildDocument(revision);
+
+			XPathExpressionHandlerNS handler = new XPathExpressionHandlerNS();
+			handler.addNamespaceMapping("sp", "https://github.com/nikolina97/xws-tim16-siit-2019");
+
 			// Set date of revision
-			GregorianCalendar c = new GregorianCalendar();
-			c.clear();
-			c.setTime(new Date());
-			ScientificPaper.DateRevised dateRevised = new ScientificPaper.DateRevised();
-			dateRevised.setValue(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
-			revisionModel.setDateRevised(dateRevised);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf.format(new Date());
+
+			Element dateRevised = (Element) handler.evaluateXPath(revisionDOM, "//sp:dateRevised").item(0);
+			boolean dateRevisedExist = true;
+			if(dateRevised == null) {
+				dateRevised = revisionDOM.createElement("sp:dateRevised");
+				dateRevisedExist = false;
+			}
+
+			dateRevised.setTextContent(date);
+			dateRevised.setAttribute("property", "pred:dateRevised");
+			dateRevised.setAttribute("datatype", "xs:string");
+
+			if(!dateRevisedExist)
+				revisionDOM.getDocumentElement().insertBefore(dateRevised, handler.evaluateXPath(revisionDOM, "//sp:state").item(0));
+
+			// Change version
+			Element version = (Element) handler.evaluateXPath(revisionDOM, "//sp:version").item(0);
+			version.setTextContent("" + (Integer.parseInt(version.getTextContent()) + 1));
 
 			// Update the business process for this paper
 			process.setState(TState.REVISED);
 			process.setVersion(revisionModel.getVersion().getValue());
+			process.setScientificPaperTitle(revisionModel.getTitle().getValue());
+
+			DOMToXMLFile.toXML(revisionDOM, xmlFilePath);
+			metadataExtractor.extractMetadata(new FileInputStream(new File(xmlFilePath)), new FileOutputStream(new File(rdfFilePath)));
+			String metadata = RDFFileToString.toString(rdfFilePath);
+			System.out.println(metadata);
+			repository.updateMetadata(id, metadata, "http://ftn.uns.ac.rs/paper/" + id, "'" + (Integer.parseInt(revisionModel.getVersion().getValue().toString()) - 1) + "'", "https://schema.org/version" ,"/scientific_paper");
+			repository.updateMetadata(id, metadata, "http://ftn.uns.ac.rs/paper/" + id, "'" + original.getTitle().getValue() + "'", "https://schema.org/headline" ,"/scientific_paper");
+
+			repository.store(revisionDOM, id + ".xml");
 
 			processService.save(process, id + ".xml");
 
@@ -322,26 +339,42 @@ public class ScientificPaperService {
 			throw new BadRequestException("Your revision is incorrect, check it.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new InternalServerErrorException("Something bad happend on the server.");
+			throw new InternalServerErrorException("Something bad happened on the server.");
 		}
 	}
 
-	public ScientificPaper get(String paperID) {
+	public String get(String paperID) {
 		try {
-			return (ScientificPaper) repository.retrieve(paperID);
+			ScientificPaper original = repository.retrieveJAXB(paperID + ".xml");
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+			if(original.getAuthors().getAuthor().stream().noneMatch(author -> author.getEmail().equals(email)))
+				throw new BadRequestException("This paper is not yours.");
+
+			return (String) repository.retrieve(paperID + ".xml");
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			return null;
+			throw new NotFoundException("Paper not found.");
 		}
 	}
-	
-	public List<ScientificPaper> getPapersFromUser() throws Exception {
+
+	public List<PaperDTO> getPapersFromUser() throws Exception {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(email);
 		String graphName = "scientific_paper";
 		List<ScientificPaper> papers = repository.getQuerySP(graphName, "/person/" + email);
-		return papers;
+		List<PaperDTO> result = new ArrayList<>();
+
+		papers.forEach(paper -> {
+			try {
+				BusinessProcess process = processService.get(paper.getId() + ".xml");
+				result.add(new PaperDTO(paper, process.getState().value()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new InternalServerErrorException("Something bad happened on the server.");
+			}
+		});
+
+		return result;
 	}
 	
 	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {

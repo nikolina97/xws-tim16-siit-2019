@@ -1,18 +1,10 @@
 package com.xws.application.repository;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RdfConnectionProperties;
+import com.xws.application.util.rdf.SparqlUtil;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -27,21 +19,20 @@ import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.util.rdf.DOMToXMLFile;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
-import com.xws.application.util.rdf.RdfConnectionProperties;
-import com.xws.application.util.rdf.SparqlUtil;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Repository
 public class ScientificPaperRepository {
