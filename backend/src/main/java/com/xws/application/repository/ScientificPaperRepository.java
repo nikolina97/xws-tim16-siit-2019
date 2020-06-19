@@ -1,18 +1,10 @@
 package com.xws.application.repository;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RdfConnectionProperties;
+import com.xws.application.util.rdf.SparqlUtil;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -27,21 +19,20 @@ import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.util.rdf.DOMToXMLFile;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
-import com.xws.application.util.rdf.RdfConnectionProperties;
-import com.xws.application.util.rdf.SparqlUtil;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Repository
 public class ScientificPaperRepository {
@@ -309,6 +300,78 @@ public class ScientificPaperRepository {
 		return papers;
 	}
 	
+	public List<ScientificPaper> getReviewersPapers(String email) throws Exception {
+		// get paper ids from business processes
+		
+		String xml = null;
+		List<ScientificPaper> papers = new ArrayList<>();
+		List<String> paperIDs = new ArrayList<>();
+		String xpath = String.format("for $e in //sp:businessProcess\r\n" + 
+				"for $bp in $e/sp:reviewAssignments/sp:reviewAssignment/sp:reviewer\r\n" + 
+				"let $stats :=$bp/following-sibling::sp:status[1]\r\n" + 
+				"let $email := $bp/sp:email\r\n" + 
+				"where $email = \"%s\" and $stats=\"assigned\"\r\n" + 
+				"return $e/sp:scientificPaperId/text()", email);
+//        String xpath = "//sp:scientific_paper[@sp:id=\"paper5\"]";
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/processes", xpath, TARGET_NAMESPACE);
+        if (result == null) {
+			return papers;
+		}
+        ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			System.out.println("HEJ!");
+			try {
+				res = (XMLResource) i.nextResource();
+				xml = res.getContent().toString();
+				System.out.println(xml);
+				paperIDs.add(xml);
+			} finally {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		
+		String xpathExp = null;
+		for (String s : paperIDs) {
+				xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
+			result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+			
+			if (result == null) {
+				return papers;
+			}
+	        i = result.getIterator();
+			res = null;
+			ScientificPaper sp = null;
+			while (i.hasMoreResources()) {
+				try {
+					res = (XMLResource) i.nextResource();
+					// pretvori ga u TPerson
+					sp = unmarshalling(res);
+					sp.setId(s);
+					papers.add(sp);
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException xe) {
+						xe.printStackTrace();
+					}
+				}
+			}
+			
+			//			papers.add((ScientificPaper) XMLDBManager.retrieveWithXPath("/db/library/papers", xpathExp, TARGET_NAMESPACE));
+		}
+		for (ScientificPaper sp : papers) {
+			System.out.println("ID " + sp.getId());
+		}
+		return papers;
+	}
+	
+	
 	public String getPaperById(String id) throws Exception {
 		String xml = null;
 		String xpathExp = "//scientificPublication[@id=\"" + id + "\"]";
@@ -338,6 +401,7 @@ public class ScientificPaperRepository {
     }
 	
 	 public ScientificPaper unmarshalling(XMLResource res) throws Exception {
+		 System.out.println(res.getContent().toString());
 	        JAXBContext context = JAXBContext.newInstance("com.xws.application.model");     
 	    	Unmarshaller unmarshaller = context.createUnmarshaller();
 	    	Node node = res.getContentAsDOM();
@@ -387,6 +451,117 @@ public class ScientificPaperRepository {
 		UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.getUpdateEndpoint());
         processor.execute();
 		
+	}
+	
+	public List<ScientificPaper> getPapersByIds(List<String> ids) throws Exception {
+		
+		List<ScientificPaper> papers = new ArrayList<>();
+		
+		for (String s : ids) {
+			String xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
+			ResourceSet result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+			
+	        ResourceIterator i = result.getIterator();
+			XMLResource res = null;
+			ScientificPaper sp = null;
+			while (i.hasMoreResources()) {
+				try {
+					res = (XMLResource) i.nextResource();
+					// pretvori ga u TPerson
+					sp = unmarshalling(res);
+					sp.setId(s);
+					papers.add(sp);
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException xe) {
+						xe.printStackTrace();
+					}
+				}
+			}
+			
+			//			papers.add((ScientificPaper) XMLDBManager.retrieveWithXPath("/db/library/papers", xpathExp, TARGET_NAMESPACE));
+		}
+		
+		return papers;
+	}
+	
+	public List<String> getKeywords(String paperId) throws IOException {
+		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
+		String graphName = "scientific_paper";
+		String subject = "http://ftn.uns.ac.rs/paper/" + paperId;
+		String predicate = "https://schema.org/keyword";
+//		String sparqlQuery = SparqlUtil.selectDistinctUnionMeta(conn.getDataEndpoint() + "/" + graphName, condition1, condition2, "");
+		String sparqlQuery = SparqlUtil.selectObject(conn.getDataEndpoint() + "/" + graphName, subject, predicate);
+		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
+		System.out.println("sparqlQuery: " + sparqlQuery);
+		QueryExecution query = null;
+		query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
+		ResultSet results = null;
+		results = query.execSelect();
+		String varName;
+		RDFNode varValue;
+		List<String> kws = new ArrayList<String>();
+		while(results.hasNext()) {
+			// A single answer from a SELECT query
+			QuerySolution querySolution = results.next() ;
+			Iterator<String> variableBindings = querySolution.varNames();
+			
+			// Retrieve variable bindings
+				while (variableBindings.hasNext()) {
+					   
+			    	varName = variableBindings.next();
+			    	varValue = querySolution.get(varName);
+			    	
+			    	System.out.println(varName + ": " + varValue);
+			    	String kw = varValue.toString();
+			    	kws.add(kw);
+			    }
+		    
+			}
+		query.close();
+		return kws;
+	}
+
+	public List<ScientificPaper> getReferenced(String paperId) throws Exception {
+		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
+		String graphName = "scientific_paper";
+		String condition = "?subject <https://schema.org/reference> <http://ftn.uns.ac.rs/paper/" + paperId+ ">";
+		String sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
+		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
+		System.out.println("sparqlQuery: " + sparqlQuery);
+		QueryExecution query = null;
+		query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
+		ResultSet results = null;
+		results = query.execSelect();
+		String varName;
+		RDFNode varValue;
+		List<String> paperIDs = new ArrayList<>();
+		while(results.hasNext()) {
+			// A single answer from a SELECT query
+			QuerySolution querySolution = results.next() ;
+			Iterator<String> variableBindings = querySolution.varNames();
+			
+		// Retrieve variable bindings
+			while (variableBindings.hasNext()) {
+
+		    	varName = variableBindings.next();
+		    	varValue = querySolution.get(varName);
+		    	System.out.println(varName + ": " + varValue);
+
+		    	String[] ids = varValue.toString().split("/");
+		    	paperIDs.add(ids[ids.length-1]);
+		    		
+			}
+	    
+		}
+		
+		for (String s : paperIDs) {
+			System.out.println(s);
+		}
+		query.close();
+		return getPapersByIds(paperIDs);
 	}
 }
 

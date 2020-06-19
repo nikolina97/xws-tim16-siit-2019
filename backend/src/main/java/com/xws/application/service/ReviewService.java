@@ -1,23 +1,18 @@
 package com.xws.application.service;
 
-import java.io.*;
-
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
-import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
+import com.xws.application.parser.DOMParser;
+import com.xws.application.repository.ReviewRepository;
 import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.repository.UserRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.rdf.MetadataExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import com.xws.application.parser.DOMParser;
-import com.xws.application.parser.JAXB;
-import com.xws.application.repository.ReviewRepository;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -28,6 +23,11 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -45,6 +45,9 @@ public class ReviewService {
 	private MetadataExtractor metadataExtractor;
 	
 	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private DOMParser domParser;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
@@ -54,17 +57,17 @@ public class ReviewService {
 		dto.setReview("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + dto.getReview());
 		try {
 			ScientificPaper original = paperRepository.retrieveJAXB(dto.getPaperId() + ".xml");
-			if(original == null)
-				throw new NotFoundException("Paper not found.");
+			/*if(original == null)
+				throw new NotFoundException("Paper not found.");*/
 
 			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
+			/*if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
 				throw new BadRequestException("Your don't have permission to write review of this paper.");
 
 			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
-				throw new BadRequestException("Your don't have permission to write review of this paper.");
+				throw new BadRequestException("Your don't have permission to write review of this paper.");*/
 
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/review.xsd"));
@@ -206,6 +209,56 @@ public class ReviewService {
 
 			return null;
 		}
+	}
+	
+	public boolean accept(String paperId) throws Exception {
+		BusinessProcess bp =reviewRepository.acceptOrReject(paperId, TReviewAssignementState.ACCEPTED);
+		processService.save(bp, paperId+".xml");
+		return true;
+	}
+	
+	public boolean reject(String paperId) throws Exception {
+		BusinessProcess bp =reviewRepository.acceptOrReject(paperId, TReviewAssignementState.REJECTED);
+		processService.save(bp, paperId+".xml");
+		return true;
+	}
+
+	public List<Users.User> getRecommendedReviewers(String paperId) throws Exception {
+		String graphName = "users";
+		
+		List<String> keywords = paperRepository.getKeywords(paperId);
+		List<Users.User> users = reviewRepository.getUsersByExpertise(keywords);
+		List<Users.User> filteredUsers = new ArrayList<>();
+		
+		BusinessProcess process;
+		process = processService.get(paperId + ".xml");
+		
+		for (Users.User u : users) { 
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(u.getUserInfo().getEmail()))) {
+				filteredUsers.add(u);
+			}
+		}
+		
+		return filteredUsers;
+	}
+
+	public Boolean assigneReviewer(String email, String paperId) throws Exception {
+		
+		Users.User reviewer = userRepository.findByEmail(email);
+		BusinessProcess process;
+		process = processService.get(paperId + ".xml");
+		
+		if (process.getState() != TState.SUBMITTED) {
+			throw new BadRequestException("Paper is not submitted");
+		}
+
+		TReviewAssignment ra = new TReviewAssignment();
+		ra.setReviewer(reviewer.getUserInfo());
+		ra.setStatus(TReviewAssignementState.ASSIGNED);
+		
+		process.getReviewAssignments().getReviewAssignment().add(ra);
+		processService.save(process, paperId + ".xml");
+		return true;
 	}
 
 }

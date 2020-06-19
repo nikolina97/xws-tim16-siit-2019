@@ -1,53 +1,47 @@
 package com.xws.application.service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.StringReader;
-import java.io.*;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.xml.XMLConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
 import com.xws.application.dto.PaperDTO;
-import com.xws.application.model.BusinessProcess;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.TReviewAssignementState;
-import com.xws.application.model.TState;
+import com.xws.application.dto.PaperLetterDTO;
+import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
 import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
+import com.xws.application.parser.DOMParser;
 import com.xws.application.parser.JAXB;
+import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.repository.XMLDBManager;
+import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
+import com.xws.application.util.rdf.DOMToXMLFile;
+import com.xws.application.util.rdf.MetadataExtractor;
+import com.xws.application.util.rdf.RDFFileToString;
+import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.xws.application.dto.PaperLetterDTO;
-import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
-import com.xws.application.parser.DOMParser;
-import com.xws.application.repository.ScientificPaperRepository;
-import com.xws.application.util.XPathExpressionHandlerNS;
-import com.xws.application.util.XSLFOTransformer;
-import com.xws.application.util.rdf.DOMToXMLFile;
-import com.xws.application.util.rdf.MetadataExtractor;
-import com.xws.application.util.rdf.RDFFileToString;
 import org.xml.sax.SAXException;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
+
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.*;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ScientificPaperService {
@@ -147,7 +141,7 @@ public class ScientificPaperService {
 			process.setScientificPaperId(paperId);
 			process.setScientificPaperTitle(title);
 			process.setId(paperId);
-			process.setState(TState.PUBLISHED);
+			process.setState(TState.SUBMITTED);
 			process.setVersion(BigInteger.valueOf(1));
 			process.setReviewAssignments(new BusinessProcess.ReviewAssignments());
 
@@ -272,19 +266,19 @@ public class ScientificPaperService {
 		revision = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + revision;
 		try {
 			ScientificPaper original = repository.retrieveJAXB(id + ".xml");
-			/*if(original == null)
+			if(original == null)
 				throw new NotFoundException("Paper not found.");
 
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
 			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", email);
 			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(email))))
-				throw new BadRequestException("This paper is not yours.");*/
+				throw new BadRequestException("This paper is not yours.");
 
 			BusinessProcess process = processService.get(id + ".xml");
 
-			/*if(!process.getState().equals(TState.ON_REVISE) || original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED))
-				throw new BadRequestException("Your don't have permission to write revision of this paper.");*/
+			if(!process.getState().equals(TState.ON_REVISE) || original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED))
+				throw new BadRequestException("Your don't have permission to write revision of this paper.");
 
 			// Validate against schema
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -363,7 +357,7 @@ public class ScientificPaperService {
 			throw new NotFoundException("Paper not found.");
 		}
 	}
-	
+
 	public List<PaperDTO> getPapersFromUser() throws Exception {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		String graphName = "scientific_paper";
@@ -384,7 +378,7 @@ public class ScientificPaperService {
 	}
 	
 	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {
-		String email = SecurityContextHolder.getContext().getAuthentication().getName(); //hard coded
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println(email);
 		String graphName = "scientific_paper";
 		String advancedQuery = "";
@@ -446,10 +440,26 @@ public class ScientificPaperService {
 		return papers;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	public List<ScientificPaper> getReviewersPapers() throws Exception {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+		System.out.println(email);
+//		Boolean loggedIn = false;
+		List<ScientificPaper> papers = repository.getReviewersPapers(email);
+		return papers;
+	}
+	
 	public String getPaperHTML(String id) throws Exception {
 		String xml = repository.getPaperById(id);
 
 		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper.xsl");
+		return html;
+	}
+	
+	public String getPaperHTMLAnonymous(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper_anonymous.xsl");
 		return html;
 	}
 	
@@ -498,6 +508,36 @@ public class ScientificPaperService {
 			return false;
 		}
 		return true;
+	}
+
+	public List<ScientificPaper> getSubmittedPapers() throws Exception {
+		String xpathExp = "/sp:businessProcess[sp:state = 'submitted']//sp:scientificPaperId//text()";
+		System.out.println("xpath: "  + xpathExp);
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/processes/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+		List<String> ids = new ArrayList<>();
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			try {
+				res = (XMLResource) i.nextResource();
+				ids.add(res.getContent().toString());
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		List<ScientificPaper> papers = repository.getPapersByIds(ids);
+		return papers;
+	}
+
+	public List<ScientificPaper> getReferenced(String paperId) throws Exception {
+		
+		List<ScientificPaper> papers = repository.getReferenced(paperId);
+		return papers;
 	}
 
 }

@@ -70,6 +70,17 @@ public class ScientificPaperController {
 		
 	}
 	
+	@GetMapping(value = "/getReviewrsPapersToAccept")
+	public ResponseEntity<?> getReviewersPapers() {
+		try {
+			return new ResponseEntity<>(service.getReviewersPapers(), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
 	@GetMapping(value = "/revoke/{paperId}")
 	public ResponseEntity<?> revoke(@PathVariable String paperId) {
 		try {
@@ -83,6 +94,17 @@ public class ScientificPaperController {
 	public ResponseEntity<?> getHtmlById(@PathVariable("id") String id) {
 		try {
 			return new ResponseEntity<>(service.getPaperHTML(id), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@GetMapping(value = "/getHtmlByIdAnonymous/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<?> getHtmlByIdAnonymous(@PathVariable("id") String id) {
+		try {
+			return new ResponseEntity<>(service.getPaperHTMLAnonymous(id), HttpStatus.OK);	
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -112,5 +134,23 @@ public class ScientificPaperController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	
+	@GetMapping(value = "/getSubmittedPapers")
+	public ResponseEntity<?> getSubmittedPapers() {
+		try {
+			return new ResponseEntity<>(service.getSubmittedPapers(), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/getReferenced/{paperId}")
+	public ResponseEntity<?> getReferenced(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.getReferenced(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 }

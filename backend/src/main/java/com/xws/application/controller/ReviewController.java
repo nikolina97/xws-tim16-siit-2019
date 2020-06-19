@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,11 +23,52 @@ public class ReviewController {
 
 		return new ResponseEntity<>("Review successfully saved", HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_REVIEWER')")
 	@GetMapping(value = "/review/{reviewID}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity get(@PathVariable String reviewID) {
 		Review review = service.get(reviewID);
 		return review != null ? new ResponseEntity<>(review, HttpStatus.OK) : new ResponseEntity<>("Review doesn't exist.", HttpStatus.NOT_FOUND);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	@PostMapping(value = "accept/{spId}")
+	public ResponseEntity accept(@PathVariable String spId) {
+		try {	
+			return new ResponseEntity<>(service.accept(spId), HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(value = "reject/{spId}")
+	public ResponseEntity reject(@PathVariable String spId) {
+		try {	
+			return new ResponseEntity<>(service.reject(spId), HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+			
+	@GetMapping(value = "/recommended/{paperId}")
+	public ResponseEntity<?> getRecommendedReviewers(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.getRecommendedReviewers(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(value = "/assignReviewer/{paperId}")
+	public ResponseEntity<?> assigneReviewer(@RequestBody String email,@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.assigneReviewer(email, paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
