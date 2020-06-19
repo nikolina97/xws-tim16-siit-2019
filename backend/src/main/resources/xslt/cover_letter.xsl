@@ -44,7 +44,7 @@
                  <br></br>
                  <div align="left">
                  	<i><xsl:value-of select = "sp:cover_letter/sp:signature/sp:name"/></i>,<br/>
-                 	<xsl:value-of select = "sp:cover_letter/sp:signature/sp:degree"/><br/>,
+                 	<xsl:value-of select = "sp:cover_letter/sp:signature/sp:degree"/>,<br/>
                  	<xsl:value-of select = "sp:cover_letter/sp:signature/sp:department"/><br></br>
                  	<xsl:value-of select = "sp:cover_letter/sp:signature/sp:university_name"/><br/> 	
                  </div>
