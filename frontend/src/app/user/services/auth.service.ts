@@ -48,6 +48,16 @@ export class AuthService {
 		return false;
  }
 
+ isEditor(): boolean{
+	const token = localStorage.getItem('user');
+	if(token!=null){
+		if (this.getRole()=="ROLE_EDITOR")
+			return true;
+		}
+	else
+		return false;
+ }
+
 
   register(dto: UserRegistrationDTO): Observable<any> {
 		let registerUrl =  "http://localhost:8081/auth/registration";

@@ -46,5 +46,8 @@ export class ScientificPaperService {
   public reject(id:string) {
     return this.http.post("http://localhost:8081/api/review/reject/"+id, null);
   }
+  public submittedPapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
+  }
 
 }

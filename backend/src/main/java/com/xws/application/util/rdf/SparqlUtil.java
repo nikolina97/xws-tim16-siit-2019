@@ -26,6 +26,8 @@ public class SparqlUtil {
 	
 	private static final String DELETE_TRIPLES = "DELETE DATA { GRAPH <%1$s>  { <%2$s> <%3$s> %4$s . }};";
 	
+	private static final String SELECT_OBJECT = "SELECT ?object FROM <%1$s> WHERE { <%2$s> <%3$s> ?object . }";
+	
 	/* Plain text RDF serialization format */
 	public static final String NTRIPLES = "N-TRIPLES";
 
@@ -61,4 +63,7 @@ public class SparqlUtil {
 		return String.format(DELETE_TRIPLES, graphUri, subject, predicate, object);
 	}
 	
+	public static String selectObject(String graphUri, String subject, String predicate) {
+		return String.format(SELECT_OBJECT, graphUri, subject, predicate);
+	}
 }

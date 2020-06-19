@@ -136,4 +136,13 @@ public class ScientificPaperController {
 		}
 		
 	}
+	
+	@GetMapping(value = "/getSubmittedPapers")
+	public ResponseEntity<?> getSubmittedPapers() {
+		try {
+			return new ResponseEntity<>(service.getSubmittedPapers(), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

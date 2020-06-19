@@ -1,5 +1,10 @@
 package com.xws.application.controller;
 
+import com.xws.application.dto.ReviewDTO;
+import com.xws.application.model.Review;
+import com.xws.application.service.ReviewService;
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,6 +59,26 @@ public class ReviewController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+			
+	@GetMapping(value = "/recommended/{paperId}")
+	public ResponseEntity<?> getRecommendedReviewers(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.getRecommendedReviewers(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(value = "/assignReviewer/{paperId}")
+	public ResponseEntity<?> assigneReviewer(@RequestBody String email,@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.assigneReviewer(email, paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
