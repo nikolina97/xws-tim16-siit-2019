@@ -55,9 +55,9 @@
                  		<xsl:apply-templates select="sp:cover_letter/sp:content"></xsl:apply-templates>
 		        	</fo:block>
 		        	<fo:block text-align="left" font-size="10px" space-after="16px" space-before="16px">
-			        	<fo:block font-style="italic"><xsl:value-of select = "sp:cover_letter/sp:signature/sp:name"/></fo:block>
-	                 	<fo:block><xsl:value-of select = "sp:cover_letter/sp:signature/sp:degree"/></fo:block>
-	                 	<fo:block><xsl:value-of select = "sp:cover_letter/sp:signature/sp:department"/></fo:block>
+			        	<fo:block font-style="italic"><xsl:value-of select = "sp:cover_letter/sp:signature/sp:name"/>,</fo:block>
+	                 	<fo:block><xsl:value-of select = "sp:cover_letter/sp:signature/sp:degree"/>,</fo:block>
+	                 	<fo:block><xsl:value-of select = "sp:cover_letter/sp:signature/sp:department"/>,</fo:block>
 	                 	<fo:block><xsl:value-of select = "sp:cover_letter/sp:signature/sp:university_name"/></fo:block> 
 		        	</fo:block>
 	       		</fo:flow>

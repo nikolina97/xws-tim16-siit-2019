@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatButtonModule } from "@angular/material/button";
 import {MatTableModule} from '@angular/material/table';
-import {MatFormFieldModule, MatInputModule } from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -25,7 +25,8 @@ import { ReviewerPapersComponent } from './reviewer-papers/reviewer-papers.compo
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
   ]
 })
 export class ScientificPaperModule { }
