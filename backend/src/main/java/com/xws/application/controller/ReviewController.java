@@ -27,14 +27,14 @@ public class ReviewController {
 
 		return new ResponseEntity<>("Review successfully saved", HttpStatus.OK);
 	}
-	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	//@PreAuthorize("hasRole('ROLE_REVIEWER')")
 	@GetMapping(value = "/review/{reviewID}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity get(@PathVariable String reviewID) {
 		Review review = service.get(reviewID);
 		return review != null ? new ResponseEntity<>(review, HttpStatus.OK) : new ResponseEntity<>("Review doesn't exist.", HttpStatus.NOT_FOUND);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	//@PreAuthorize("hasRole('ROLE_REVIEWER')")
 	@PostMapping(value = "accept/{spId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity accept(@PathVariable String spId) {
 		try {	
@@ -85,7 +85,7 @@ public class ReviewController {
 		}
 		
 	}
-	@PreAuthorize("hasRole('ROLE_EDITOR')")
+//	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	@GetMapping(value = "/getHtmlById/{id}", produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> getHtmlById(@PathVariable("id") String id) {
 		try {
@@ -97,7 +97,7 @@ public class ReviewController {
 		
 	}
 	
-	@PreAuthorize("hasRole('ROLE_EDITOR')")
+//	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	@GetMapping(value = "/getPDFById/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> getPDFById(@PathVariable("id") String id) {
 		try {

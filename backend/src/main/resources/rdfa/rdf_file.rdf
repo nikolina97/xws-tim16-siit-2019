@@ -1,32 +1,47 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:headline xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lorem Ipsum</pred:headline>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:headline xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">End to End Neural OMR</pred:headline>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/milos@uns.ac.rs"/>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs">
     <pred:first_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Milos</pred:first_name>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs">
     <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Radojcin</pred:last_name>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">programming</pred:keyword>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">biology</pred:keyword>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs">
+    <pred:first_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nikolina</pred:first_name>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs">
+    <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Batinic</pred:last_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mining engineering</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">scientific paper</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:reference xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/paper/paper1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:reference xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/paper/paper2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
     <pred:category xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">original research</pred:category>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
     <pred:version xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</pred:version>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateReceived>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
+    <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-20</pred:dateReceived>
   </rdf:Description>
-  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper3">
     <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">accepted</pred:state>
   </rdf:Description>
 </rdf:RDF>

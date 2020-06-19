@@ -1,69 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?><sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019" xmlns:pred="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="http://ftn.uns.ac.rs/paper/paper1" id="paper1" typeof="pred:ScholarlyArticle">
-	<sp:title datatype="xs:string" property="pred:headline">Lorem Ipsum</sp:title>
+<?xml version="1.0" encoding="UTF-8"?><sp:scientific_paper xmlns:sp="https://github.com/nikolina97/xws-tim16-siit-2019" xmlns:pred="https://schema.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="http://ftn.uns.ac.rs/paper/paper3" id="paper3" typeof="pred:ScholarlyArticle">
+	<sp:title datatype="xs:string" property="pred:headline">End to End Neural OMR</sp:title>
 	<sp:authors>
-		<sp:author href="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" rel="pred:author" typeof="pred:Person">
-			<sp:first_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:first_name">Milos</sp:first_name>
-			<sp:last_name about="http://ftn.uns.ac.rs/person/milos@uns.ac.rs" datatype="xs:string" property="pred:last_name">Radojcin</sp:last_name>
+		<sp:author href="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+			<sp:first_name about="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" datatype="xs:string" property="pred:first_name">Milos</sp:first_name>
+			<sp:last_name about="http://ftn.uns.ac.rs/person/milos.radojcin@uns.ac.rs" datatype="xs:string" property="pred:last_name">Radojcin</sp:last_name>
 			<sp:university>
 				<sp:name>University of Novi Sad</sp:name>
 				<sp:city>Novi Sad</sp:city>
 				<sp:country>Serbia</sp:country>
 			</sp:university>
-			<sp:email>milos@uns.ac.rs</sp:email>
+			<sp:email>milos.radojcin@uns.ac.rs</sp:email>
+		</sp:author>
+		<sp:author href="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" rel="pred:author" typeof="pred:Person">
+			<sp:first_name about="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" datatype="xs:string" property="pred:first_name">Nikolina</sp:first_name>
+			<sp:last_name about="http://ftn.uns.ac.rs/person/nikolina.batinic@uns.ac.rs" datatype="xs:string" property="pred:last_name">Batinic</sp:last_name>
+			<sp:university>
+				<sp:name>University of Novi Sad</sp:name>
+				<sp:city>Novi Sad</sp:city>
+				<sp:country>Serbia</sp:country>
+			</sp:university>
+			<sp:email>nikolina.batinic@uns.ac.rs</sp:email>
 		</sp:author>
 	</sp:authors>
-	<sp:abstract id="paper1/abstract">
-		<sp:paragraph id="paper1/abstract/paragraph1">
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-			Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-			It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-			It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+	<sp:abstract id="paper3/abstract">
+		<sp:paragraph id="paper3/abstract/paragraph1">
+			Up till now, the development of mining industry in China has followed the road of the overseas introduction and absorption, independent innovation and technology export.
+			Mere English reading ability can hardly meet the demands of high-level professionals to export research achievements.
+			To improve the graduate students’ ability to write English scientific papers on mining industry has become one of the main tasks to cultivate mining engineering professionals.
+			Considering the current condition of China’s test-oriented education, the mode to efficiently and quickly enhance graduate students’ English writing ability of scientific papers
+			on mining industry has been proposed, specifically, intensively reading high-level English scientific papers on mining industry, writing the Chinese version
+			according to the requirements of the corresponding English scientific paper, rewriting the paper in English based on the Chinese version,
+			performing language refinement and polish by experts or institutions, finally completing the paper through communication and exchange with the experts.
 		</sp:paragraph>
 		<sp:keywords>
-			<sp:keyword datatype="xs:string" property="pred:keyword">programming</sp:keyword>
-			<sp:keyword datatype="xs:string" property="pred:keyword">biology</sp:keyword>
+			<sp:keyword datatype="xs:string" property="pred:keyword">mining engineering</sp:keyword>
+			<sp:keyword datatype="xs:string" property="pred:keyword">scientific paper</sp:keyword>
 		</sp:keywords>
 	</sp:abstract>
 	<sp:chapters>
-		<sp:chapter id="paper1/chapter1">
-			<sp:subtitle>Why do we use it?</sp:subtitle>
-			<sp:paragraph id="paper1/chapter1/paragraph1">
-				Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-				It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-				It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		<sp:chapter id="paper3/chapter1">
+			<sp:subtitle>Introduction</sp:subtitle>
+			<sp:paragraph id="paper3/chapter1/paragraph1">
+				Mining industry is to be a fundamental one of the national economy construction.
+				Since its founding, China has witnessed three stages of mining industry development: the beginning stage of overseas introduction and absorption,
+				the stage of independent self-development and the disseminating stage of exporting technology, which have provided the crucial support of mineral resources
+				for the national economy and promoted the economic and social development of China.
 			</sp:paragraph>
-			<sp:subchapter id="paper1/chapter1/subchapter1">
-				<sp:subtitle>Where does it come from?</sp:subtitle>
-				<sp:paragraph id="paper1/chapter1/subchapter1/paragraph1">
-					Contrary to popular belief, Lorem Ipsum is not simply random text.
-					It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-					Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
-					Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
-					This book is a treatise on the theory of ethics, very popular during the Renaissance.
-					The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+			<sp:subchapter id="paper3/chapter1/subchapter1">
+				<sp:subtitle>The Instructional Model to Improve Graduate Students’ Ability to Read English Scientific Papers</sp:subtitle>
+				<sp:paragraph id="paper3/chapter1/subchapter1/paragraph1">
+					To improve postgraduates’ English comprehension through intensively reading the high-standard English scientific papers on mining industry. [1]
 				</sp:paragraph>
-				<sp:paragraph id="paper1/chapter1/subchapter1/paragraph2">
-					There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-					If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
-					All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
-					It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
-					The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+				<sp:paragraph id="paper3/chapter1/subchapter1/paragraph2">
+					The introduction part of an English scientific paper, a succinct generalization of the current situation and trend in the relevant research field,
+					is vital to the entire writing process, calling for plenty of literature reading. Literature reading on the one hand enables graduates to know and keep track
+					of the research trend, research subject and research level related to the paper to be written, so as to ensure the innovation, quality and significance of the paper.
+					On the other hand, it can enhance reading comprehension of scientific papers written in English.
+					The good understanding of English scientific papers lays the foundation for writing such papers in an easy-to-understand way. [0]
 				</sp:paragraph>
 			</sp:subchapter>
-			<sp:paragraph id="paper1/chapter1/paragraph2">
-				<sp:list id="paper1/chapter1/paragraph2/list1">
-					<sp:decorator>
-						<sp:bold>Lorem Ipsum</sp:bold>
-						<sp:italic>Lorem Ipsum</sp:italic>
-						<sp:underline>Lorem Ipsum</sp:underline>
-					</sp:decorator>
-				</sp:list>
-			</sp:paragraph>
 		</sp:chapter>
 	</sp:chapters>
+	<sp:references>
+        <sp:reference href="http://ftn.uns.ac.rs/paper/paper1" id="paper3/reference1" rel="pred:reference">
+            <sp:ref_number>[0]</sp:ref_number>
+            <sp:ref_author>Katarina Aleksic</sp:ref_author>
+            <sp:article_name>Applications of RISM data</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+		<sp:reference href="http://ftn.uns.ac.rs/paper/paper2" id="paper3/reference2" rel="pred:reference">
+            <sp:ref_number>[1]</sp:ref_number>
+            <sp:ref_author>Nikolina Batinic</sp:ref_author>
+            <sp:article_name>End to End Neural OMR</sp:article_name>
+            <sp:year>2020</sp:year>
+        </sp:reference>
+    </sp:references>
 	<sp:category datatype="xs:string" property="pred:category">original research</sp:category>
 <sp:version datatype="xs:string" property="pred:version">1</sp:version>
-    <sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-19</sp:dateReceived>
+    <sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-20</sp:dateReceived>
     <sp:state datatype="xs:string" property="pred:state">accepted</sp:state>
 </sp:scientific_paper>
