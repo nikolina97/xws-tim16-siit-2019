@@ -14,10 +14,11 @@ import { PapersFromAuthorComponent } from './papers-from-author/papers-from-auth
 import { WriteRevisionComponent } from './write-revision/write-revision.component';
 import { SubmittedPapersComponent } from './submitted-papers/submitted-papers.component';
 import { ReviewerPapersComponent } from './reviewer-papers/reviewer-papers.component';
+import { OnRevisePapersComponent } from './on-revise-papers/on-revise-papers.component';
 
 
 @NgModule({
-  declarations: [PublishingComponent, SearchPapersComponent, PapersFromAuthorComponent, WriteRevisionComponent, SubmittedPapersComponent, ReviewerPapersComponent, RefByPopup],
+  declarations: [PublishingComponent, SearchPapersComponent, PapersFromAuthorComponent, WriteRevisionComponent, SubmittedPapersComponent, ReviewerPapersComponent, RefByPopup, OnRevisePapersComponent],
   entryComponents: [RefByPopup],
   imports: [
     CommonModule,

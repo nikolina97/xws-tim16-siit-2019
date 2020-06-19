@@ -6,6 +6,7 @@ import { PapersFromAuthorComponent } from './papers-from-author/papers-from-auth
 import { WriteRevisionComponent } from './write-revision/write-revision.component';
 import { ReviewerPapersComponent } from './reviewer-papers/reviewer-papers.component';
 import { SubmittedPapersComponent } from './submitted-papers/submitted-papers.component';
+import { OnRevisePapersComponent } from './on-revise-papers/on-revise-papers.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'paper/search', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'paper/search', component: SearchPapersComponent },
   { path: 'paper/byAuthor', component: PapersFromAuthorComponent },
   { path: 'paper/reviewer', component: ReviewerPapersComponent },
-  { path: 'paper/submittedPapers', component: SubmittedPapersComponent }
+  { path: 'paper/submittedPapers', component: SubmittedPapersComponent },
+  { path: 'paper/onRevisePapers', component: OnRevisePapersComponent }
 ];
 
 @NgModule({

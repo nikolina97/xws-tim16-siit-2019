@@ -75,5 +75,5 @@
     <sp:category datatype="xs:string" property="pred:category">original research</sp:category>
 <sp:version datatype="xs:string" property="pred:version">1</sp:version>
     <sp:dateReceived datatype="xs:string" property="pred:dateReceived">2020-06-19</sp:dateReceived>
-    <sp:state datatype="xs:string" property="pred:state">rejected</sp:state>
+    <sp:state datatype="xs:string" property="pred:state">accepted</sp:state>
 </sp:scientific_paper>

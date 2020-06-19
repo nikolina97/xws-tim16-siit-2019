@@ -36,6 +36,6 @@
     <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateReceived>
   </rdf:Description>
   <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
-    <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rejected</pred:state>
+    <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">accepted</pred:state>
   </rdf:Description>
 </rdf:RDF>
