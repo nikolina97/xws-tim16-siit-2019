@@ -300,7 +300,6 @@ public class XMLDBManager {
             // doc(\"1.xml\")//book[@category=\"WEB\" and price>35]/title): ");
             // execute xpath expression
             System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
-            System.out.println(xpathExp);
             result = xpathService.query(xpathExp);
             // handle the results
             System.out.println("[INFO] Handling the results... ");
@@ -377,7 +376,7 @@ public class XMLDBManager {
          xupdateService.setProperty("indent", "yes");
          
          System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
-         long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
+         long mods = xupdateService.updateResource(documentId, String.format(template, "/sp:businessProcess", xmlFragment));
          System.out.println("[INFO] " + mods + " modifications processed.");
 		} finally {
 		        	

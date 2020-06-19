@@ -29,6 +29,7 @@ import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
 import com.xws.application.parser.JAXB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -397,10 +398,26 @@ public class ScientificPaperService {
 		return papers;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	public List<ScientificPaper> getReviewersPapers() throws Exception {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+		System.out.println(email);
+//		Boolean loggedIn = false;
+		List<ScientificPaper> papers = repository.getReviewersPapers(email);
+		return papers;
+	}
+	
 	public String getPaperHTML(String id) throws Exception {
 		String xml = repository.getPaperById(id);
 
 		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper.xsl");
+		return html;
+	}
+	
+	public String getPaperHTMLAnonymous(String id) throws Exception {
+		String xml = repository.getPaperById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/scientific_paper_anonymous.xsl");
 		return html;
 	}
 	

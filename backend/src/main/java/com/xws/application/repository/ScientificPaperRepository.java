@@ -309,6 +309,78 @@ public class ScientificPaperRepository {
 		return papers;
 	}
 	
+	public List<ScientificPaper> getReviewersPapers(String email) throws Exception {
+		// get paper ids from business processes
+		
+		String xml = null;
+		List<ScientificPaper> papers = new ArrayList<>();
+		List<String> paperIDs = new ArrayList<>();
+		String xpath = String.format("for $e in //sp:businessProcess\r\n" + 
+				"for $bp in $e/sp:reviewAssignments/sp:reviewAssignment/sp:reviewer\r\n" + 
+				"let $stats :=$bp/following-sibling::sp:status[1]\r\n" + 
+				"let $email := $bp/sp:email\r\n" + 
+				"where $email = \"%s\" and $stats=\"assigned\"\r\n" + 
+				"return $e/sp:scientificPaperId/text()", email);
+//        String xpath = "//sp:scientific_paper[@sp:id=\"paper5\"]";
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/processes", xpath, TARGET_NAMESPACE);
+        if (result == null) {
+			return papers;
+		}
+        ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			System.out.println("HEJ!");
+			try {
+				res = (XMLResource) i.nextResource();
+				xml = res.getContent().toString();
+				System.out.println(xml);
+				paperIDs.add(xml);
+			} finally {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		
+		String xpathExp = null;
+		for (String s : paperIDs) {
+				xpathExp = String.format("/sp:scientific_paper[@id=\"%s\"]", s);
+			result = XMLDBManager.retrieveWithXPath("/db/papers/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+			
+			if (result == null) {
+				return papers;
+			}
+	        i = result.getIterator();
+			res = null;
+			ScientificPaper sp = null;
+			while (i.hasMoreResources()) {
+				try {
+					res = (XMLResource) i.nextResource();
+					// pretvori ga u TPerson
+					sp = unmarshalling(res);
+					sp.setId(s);
+					papers.add(sp);
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException xe) {
+						xe.printStackTrace();
+					}
+				}
+			}
+			
+			//			papers.add((ScientificPaper) XMLDBManager.retrieveWithXPath("/db/library/papers", xpathExp, TARGET_NAMESPACE));
+		}
+		for (ScientificPaper sp : papers) {
+			System.out.println("ID " + sp.getId());
+		}
+		return papers;
+	}
+	
+	
 	public String getPaperById(String id) throws Exception {
 		String xml = null;
 		String xpathExp = "//scientificPublication[@id=\"" + id + "\"]";
@@ -338,6 +410,7 @@ public class ScientificPaperRepository {
     }
 	
 	 public ScientificPaper unmarshalling(XMLResource res) throws Exception {
+		 System.out.println(res.getContent().toString());
 	        JAXBContext context = JAXBContext.newInstance("com.xws.application.model");     
 	    	Unmarshaller unmarshaller = context.createUnmarshaller();
 	    	Node node = res.getContentAsDOM();

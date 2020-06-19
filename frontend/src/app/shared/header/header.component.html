@@ -6,6 +6,9 @@
 		<span *ngIf = "auth.isLoggedIn()">
 			<button mat-menu-item routerLink="/paper/byAuthor">My papers</button>
 		</span>
+		<span *ngIf = "auth.isReviewer()">
+				<button mat-menu-item routerLink="/paper/reviewer">Papers for review</button>
+		</span>
 	</mat-menu>
 	<div style= "flex: 1 1 auto;">
 	</div>

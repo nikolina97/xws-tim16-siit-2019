@@ -10,10 +10,11 @@ import { ScientificPaperRoutingModule } from './scientific-paper-routing.module'
 import { PublishingComponent } from './publishing/publishing.component';
 import { SearchPapersComponent } from './search-papers/search-papers.component';
 import { PapersFromAuthorComponent } from './papers-from-author/papers-from-author.component';
+import { ReviewerPapersComponent } from './reviewer-papers/reviewer-papers.component';
 
 
 @NgModule({
-  declarations: [PublishingComponent, SearchPapersComponent, PapersFromAuthorComponent],
+  declarations: [PublishingComponent, SearchPapersComponent, PapersFromAuthorComponent, ReviewerPapersComponent],
   imports: [
     CommonModule,
     ScientificPaperRoutingModule,
