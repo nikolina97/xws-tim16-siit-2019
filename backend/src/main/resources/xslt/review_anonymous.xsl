@@ -10,14 +10,6 @@
             </head>
             <body>
             	<h1 align="center"><xsl:value-of select = "sp:review/sp:title"/></h1>
-           		<div>
-                  <h3>Reviewer:</h3>
-            			 <xsl:for-each select="sp:review/sp:reviewer">
-            			 	<xsl:call-template name="AuthorTemplate">
-		            							<xsl:with-param name="author" select = "." />
-		            		</xsl:call-template>
-            			 </xsl:for-each>
-                </div>
             	<div>
             		<h3>Questions:</h3>
             		<ol>

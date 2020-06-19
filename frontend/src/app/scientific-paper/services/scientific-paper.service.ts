@@ -49,5 +49,4 @@ export class ScientificPaperService {
   public submittedPapers() {
     return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
   }
-
 }

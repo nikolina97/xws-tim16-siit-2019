@@ -13,6 +13,7 @@ import com.xws.application.model.BusinessProcess.ReviewAssignments;
 import com.xws.application.repository.ScientificPaperRepository;
 import com.xws.application.repository.UserRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+import com.xws.application.util.XSLFOTransformer;
 
 import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -55,6 +59,9 @@ public class ReviewService {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private XSLFOTransformer transformer;
 	
 	private static String xmlFilePath = "src/main/resources/rdfa/xml_file.xml";
 	private static String rdfFilePath = "src/main/resources/rdfa/rdf_file.rdf";
@@ -255,6 +262,44 @@ public class ReviewService {
 		process.getReviewAssignments().getReviewAssignment().add(ra);
 		processService.save(process, paperId + ".xml");
 		return true;
+	}
+	
+	public List<Review> getReviewes(String paperID) throws Exception {
+//		Boolean loggedIn = false;
+		List<Review> reviews = reviewRepository.getReviews(paperID);
+		return reviews;
+	}
+	
+	public String getHTML(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/review.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPDF(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/review_fo.xsl");
+		return html;
+	}
+	
+	public String getHTMLAnonymous(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		String html = transformer.generateHTML(xml, "src/main/resources/xslt/review_anonymous.xsl");
+		return html;
+	}
+	
+	public ByteArrayOutputStream getPDFAnonymous(String paperId) throws Exception {
+		String id = paperId.replaceAll("paper", "letter");
+		String xml = reviewRepository.getReviewById(id);
+
+		ByteArrayOutputStream html = transformer.generatePDF(xml, "src/main/resources/xsl-fo/review_anonymous_fo.xsl");
+		return html;
 	}
 
 }

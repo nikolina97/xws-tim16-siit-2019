@@ -17,4 +17,12 @@ export class ReviewService {
   public addReviewer(paperId : string, email : string) {
     return this.http.post(this.baseUrl + "/assignReviewer/" + paperId, email );
   }
+
+  public getReviewersForPapper(paperId:string) {
+    return this.http.get<any[]>("http://localhost:8081/api/review/getReviewsForPapper/"+paperId);
+  }
+
+  public getHtml(review:any) {
+    return this.http.post(this.baseUrl + "/getHTML",review, {responseType: 'text' });
+  }
 }
