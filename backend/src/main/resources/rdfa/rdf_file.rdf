@@ -1,0 +1,44 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:headline xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xaxa</pred:headline>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/marko@uns.ac.rs"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/marko@uns.ac.rs">
+    <pred:first_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Marko</pred:first_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/marko@uns.ac.rs">
+    <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Markovic</pred:last_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:author xmlns:pred="https://schema.org/" rdf:resource="http://ftn.uns.ac.rs/person/hex@uns.ac.rs"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/hex@uns.ac.rs">
+    <pred:first_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hex</pred:first_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/person/hex@uns.ac.rs">
+    <pred:last_name xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hex</pred:last_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">programming</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:keyword xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lorem Ipsum</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:category xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">original research</pred:category>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:version xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3</pred:version>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:dateReceived xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateReceived>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:dateRevised xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2020-06-19</pred:dateRevised>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ftn.uns.ac.rs/paper/paper1">
+    <pred:state xmlns:pred="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">in_procedure</pred:state>
+  </rdf:Description>
+</rdf:RDF>

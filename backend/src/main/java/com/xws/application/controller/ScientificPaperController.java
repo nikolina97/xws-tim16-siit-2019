@@ -153,4 +153,9 @@ public class ScientificPaperController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping(value = "/reject/{paperId}")
+	public ResponseBody<?> rejectPaper(@PathVariable String paperId) {
+		
+	}
 }

@@ -376,8 +376,8 @@ public class XMLDBManager {
          xupdateService.setProperty("indent", "yes");
          
          System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
-         long mods = xupdateService.updateResource(documentId, String.format(template, "/sp:businessProcess", xmlFragment));
-         System.out.println("[INFO] " + mods + " modifications processed.");
+         long mods = xupdateService.updateResource(documentId, String.format(template, contextXPath, xmlFragment));
+//                  System.out.println("[INFO] " + mods + " modifications processed.");
 		} finally {
 		        	
 		            // don't forget to cleanup

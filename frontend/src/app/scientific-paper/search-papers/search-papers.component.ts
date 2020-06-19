@@ -164,9 +164,14 @@ export class SearchPapersComponent implements OnInit {
   getRef(paperId) {
     this.paperService.getReferenced(paperId).subscribe(
       (result) => {
-        this.dialog.open(RefByPopup, {
-          data : result
-        });
+        if (result.length == 0) {
+          alert ("There are no papers that reference the given scientific paper")
+        }
+        else{
+          this.dialog.open(RefByPopup, {
+            data : result
+          });
+        }
       }
     )
   }

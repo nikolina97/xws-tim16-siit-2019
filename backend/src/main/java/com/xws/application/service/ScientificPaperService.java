@@ -271,8 +271,10 @@ public class ScientificPaperService {
 
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", email);
-			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(email))))
+//			List<ScientificPaper> papers = repository.getQuerySP("scientific_paper", "/person/" + email);
+//			if(papers.stream().noneMatch(paper -> paper.getAuthors().getAuthor().stream().anyMatch(author -> author.getEmail().equals(email))))
+//				throw new BadRequestException("This paper is not yours.");
+			if(original.getAuthors().getAuthor().stream().noneMatch(author -> author.getEmail().equals(email)))
 				throw new BadRequestException("This paper is not yours.");
 
 			BusinessProcess process = processService.get(id + ".xml");
@@ -409,14 +411,7 @@ public class ScientificPaperService {
 		if (metadataSearch.getKeywords() != null) {
 			advancedQuery += "\n?subject <https://schema.org/keyword> \"" + metadataSearch.getKeywords() + "\" .";
 		}
-		Boolean loggedIn = false;
-		if (email == "anonymousUser") {
-			loggedIn = false;
-		}
-		else {
-			loggedIn = true;
-		}
-		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery, loggedIn);
+		List<ScientificPaper> papers = repository.getAllPapersByAuthor(graphName, "/person/" + email, advancedQuery, email);
 		System.out.println(papers.size());
 		return papers;
 	}
