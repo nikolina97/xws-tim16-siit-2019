@@ -501,4 +501,10 @@ public class ScientificPaperService {
 		return papers;
 	}
 
+	public List<ScientificPaper> getReferenced(String paperId) throws Exception {
+		
+		List<ScientificPaper> papers = repository.getReferenced(paperId);
+		return papers;
+	}
+
 }

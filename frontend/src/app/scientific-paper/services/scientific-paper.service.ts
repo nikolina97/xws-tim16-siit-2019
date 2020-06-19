@@ -50,4 +50,8 @@ export class ScientificPaperService {
     return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
   }
 
+  public getReferenced(id:string) {
+    return this.http.get<any[]>(this.baseUrl + "/getReferenced/" + id );
+  }
+
 }

@@ -145,4 +145,13 @@ public class ScientificPaperController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping(value = "/getReferenced/{paperId}")
+	public ResponseEntity<?> getReferenced(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.getReferenced(paperId), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 }
