@@ -87,6 +87,21 @@
           <button mat-button [matMenuTriggerFor]="paper_menu">Paper</button>
         </td>
         </ng-container>
+        <div *ngIf="auth.getRole()=='ROLE_EDITOR'">
+        <ng-container matColumnDef="reviews">
+          <th mat-header-cell *matHeaderCellDef> Reviews </th>
+          <td mat-cell *matCellDef="let element">
+            <a   mat-menu-item  routerLink="/review/author-review/{{element.id}}" style="text-align: left;">Get Reviews</a>
+          </td>
+        </ng-container>
+      </div>
+      <div *ngIf="auth.getRole()!='ROLE_EDITOR'">
+        <ng-container matColumnDef="reviews">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+          </td>
+        </ng-container>
+      </div>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

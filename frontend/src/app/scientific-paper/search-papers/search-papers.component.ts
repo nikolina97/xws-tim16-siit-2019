@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SearchMetadataDTO } from '../models/search-dto';
 import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { AuthService } from 'src/app/user/services/auth.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -16,7 +17,8 @@ export class SearchPapersComponent implements OnInit {
   form: FormGroup;
   formBasic: FormGroup;
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "ref"];
+
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "ref", "reviews"];
   dataSource : any[] = [];
   searchDTO : SearchMetadataDTO = {
     category: null,
@@ -30,7 +32,7 @@ export class SearchPapersComponent implements OnInit {
     keywords: null
   }
 
-  constructor(private paperService: ScientificPaperService, private router: Router, private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private paperService: ScientificPaperService, private router: Router, private fb: FormBuilder, private dialog: MatDialog,  private auth:AuthService) {
     this.form = this.fb.group({
 			category: [null],
       title: [null],

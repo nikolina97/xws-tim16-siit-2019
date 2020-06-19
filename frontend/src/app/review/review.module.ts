@@ -10,9 +10,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ReviewRoutingModule } from './review-routing.module';
 import { WriteReviewComponent } from './write-review/write-review.component';
 import { AssignReviewerComponent, ExpertiseDialog } from './assign-reviewer/assign-reviewer.component';
+import { AuthorPaperReviewsComponent } from './author-paper-reviews/author-paper-reviews.component';
 
 @NgModule({
-  declarations: [WriteReviewComponent, AssignReviewerComponent, ExpertiseDialog],
+  declarations: [WriteReviewComponent, AssignReviewerComponent, ExpertiseDialog, AuthorPaperReviewsComponent],
   entryComponents: [ExpertiseDialog],
   imports: [
     CommonModule,

@@ -106,7 +106,7 @@
                  <fo:table-row border="1px solid black">
                  <xsl:for-each select="./sp:th">
 				    <fo:table-cell border="1px solid black">
-				      <fo:block font-style="bold">
+				      <fo:block font-weight="bold">
 				         <xsl:apply-templates select="."></xsl:apply-templates>
 				       </fo:block>
 				    </fo:table-cell>
