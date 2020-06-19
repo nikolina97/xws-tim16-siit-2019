@@ -532,5 +532,45 @@ public class ScientificPaperRepository {
 		query.close();
 		return kws;
 	}
+
+	public List<ScientificPaper> getReferenced(String paperId) throws Exception {
+		RdfConnectionProperties conn = RdfConnectionProperties.loadProperties();
+		String graphName = "scientific_paper";
+		String condition = "?subject <https://schema.org/reference> <http://ftn.uns.ac.rs/paper/" + paperId+ ">";
+		String sparqlQuery = SparqlUtil.selectData(conn.getDataEndpoint() + "/" + graphName, condition);
+		System.out.println("endpoint " + conn.getDataEndpoint() + "/" + graphName + "  ----  "+ sparqlQuery);
+		System.out.println("sparqlQuery: " + sparqlQuery);
+		QueryExecution query = null;
+		query = QueryExecutionFactory.sparqlService(conn.getQueryEndpoint(), sparqlQuery);
+		ResultSet results = null;
+		results = query.execSelect();
+		String varName;
+		RDFNode varValue;
+		List<String> paperIDs = new ArrayList<>();
+		while(results.hasNext()) {
+			// A single answer from a SELECT query
+			QuerySolution querySolution = results.next() ;
+			Iterator<String> variableBindings = querySolution.varNames();
+			
+		// Retrieve variable bindings
+			while (variableBindings.hasNext()) {
+
+		    	varName = variableBindings.next();
+		    	varValue = querySolution.get(varName);
+		    	System.out.println(varName + ": " + varValue);
+
+		    	String[] ids = varValue.toString().split("/");
+		    	paperIDs.add(ids[ids.length-1]);
+		    		
+			}
+	    
+		}
+		
+		for (String s : paperIDs) {
+			System.out.println(s);
+		}
+		query.close();
+		return getPapersByIds(paperIDs);
+	}
 }
 

@@ -71,6 +71,11 @@
             <td mat-cell *matCellDef="let element"> {{element?.state.value}} </td>
           </ng-container>
 
+          <ng-container matColumnDef="ref">
+            <th mat-header-cell *matHeaderCellDef > Referenced by </th>
+            <td mat-cell *matCellDef="let element"><a href = "javascript:void(0);" (click)="getRef(element.id)" style="text-align: left;">Show papers</a> </td>
+          </ng-container>
+
           <ng-container matColumnDef="html">
           <th mat-header-cell *matHeaderCellDef > Export paper </th>
           <td mat-cell *matCellDef="let element">

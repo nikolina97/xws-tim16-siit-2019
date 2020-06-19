@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ScientificPaperService } from '../services/scientific-paper.service';
 import { Router } from '@angular/router';
 import { SearchMetadataDTO } from '../models/search-dto';
 import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-search-papers',
@@ -15,7 +16,7 @@ export class SearchPapersComponent implements OnInit {
   form: FormGroup;
   formBasic: FormGroup;
 
-  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html"];
+  displayedColumns: string[] = ['id', 'title', 'category', 'version', 'dateReceived', "state", "html", "ref"];
   dataSource : any[] = [];
   searchDTO : SearchMetadataDTO = {
     category: null,
@@ -29,7 +30,7 @@ export class SearchPapersComponent implements OnInit {
     keywords: null
   }
 
-  constructor(private paperService: ScientificPaperService, private router: Router, private fb: FormBuilder) {
+  constructor(private paperService: ScientificPaperService, private router: Router, private fb: FormBuilder, private dialog: MatDialog) {
     this.form = this.fb.group({
 			category: [null],
       title: [null],
@@ -159,4 +160,26 @@ export class SearchPapersComponent implements OnInit {
     saveAs(url, "scientific_paper.xml");
     window.open(url);
   }
+
+  getRef(paperId) {
+    this.paperService.getReferenced(paperId).subscribe(
+      (result) => {
+        this.dialog.open(RefByPopup, {
+          data : result
+        });
+      }
+    )
+  }
+}
+
+@Component({
+  selector: 'ref-by',
+  templateUrl: 'referenced-by.html',
+  styleUrls: ['./search-papers.component.css']
+})
+export class RefByPopup {
+
+  displayedColumns: string[] = ['id', 'title', 'category', 'dateReceived', "state"];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any[]) {}
 }
