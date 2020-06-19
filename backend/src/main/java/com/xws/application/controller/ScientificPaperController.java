@@ -36,9 +36,8 @@ public class ScientificPaperController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity get(@PathVariable String id) {
-		ScientificPaper paper = service.get(id);
-		return paper != null ? new ResponseEntity<>(paper, HttpStatus.OK) : new ResponseEntity<>("Paper doesn't exist.", HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> get(@PathVariable String id) {
+		return new ResponseEntity<>(service.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getByUser")
@@ -141,6 +140,15 @@ public class ScientificPaperController {
 	public ResponseEntity<?> getSubmittedPapers() {
 		try {
 			return new ResponseEntity<>(service.getSubmittedPapers(), HttpStatus.OK);	
+		}catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/getReferenced/{paperId}")
+	public ResponseEntity<?> getReferenced(@PathVariable String paperId) {
+		try {
+			return new ResponseEntity<>(service.getReferenced(paperId), HttpStatus.OK);	
 		}catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

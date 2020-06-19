@@ -55,10 +55,10 @@ export class PublishingComponent implements OnInit {
 
     this.paperService.publish(dto).subscribe(
       (result) => {
-        this.router.navigate(['']);
+        this.router.navigate(['paper/byAuthor']);
       },
       (error) => {
-        this.router.navigate(['']);
+        console.log(error.error);
       }
     );
   }

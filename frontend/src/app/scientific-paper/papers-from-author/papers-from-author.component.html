@@ -1,57 +1,60 @@
 <div class="wrapper fadeInDown" [ngStyle]="{'margin-top': '2%'}">
-  
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-      <!--- Note that these columns can be defined in any order.
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
                             The actual rendered columns are set as a property on the row definition" -->
-  
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
-      </ng-container>
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Title </th>
-        <td mat-cell *matCellDef="let element"> {{element?.title.value}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef> Category </th>
-        <td mat-cell *matCellDef="let element"> {{element?.category.value}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="version">
-        <th mat-header-cell *matHeaderCellDef> Version </th>
-        <td mat-cell *matCellDef="let element"> {{element?.version.value}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="dateReceived">
-        <th mat-header-cell *matHeaderCellDef> Date received </th>
-        <td mat-cell *matCellDef="let element"> {{element?.dateReceived.value | date:'medium'}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef> State </th>
-        <td mat-cell *matCellDef="let element"> {{element?.state.value}} </td>
-      </ng-container>
 
-      <ng-container matColumnDef="reviews">
-        <th mat-header-cell *matHeaderCellDef> Reviews </th>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.title.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.category.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="version">
+      <th mat-header-cell *matHeaderCellDef> Version </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.version.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateReceived">
+      <th mat-header-cell *matHeaderCellDef> Date received </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.dateReceived.value | date:'medium'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> State </th>
+      <td mat-cell *matCellDef="let element"> {{element?.paper.state.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reviews">
+      <th mat-header-cell *matHeaderCellDef> Reviews </th>
+      <td mat-cell *matCellDef="let element">
+        <a   mat-menu-item  routerLink="/review/author-review/{{element.paper.id}}" style="text-align: left;">Get Reviews</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <span>
         <td mat-cell *matCellDef="let element">
-          <a   mat-menu-item  routerLink="/review/author-review/{{element.id}}" style="text-align: left;">Get Reviews</a>
+          <button mat-raised-button color="warn" (click)="revoke(element)"
+            *ngIf="element.paper.state.value == 'IN_PROCEDURE'">Revoke</button>
+          <button mat-raised-button color="primary" (click)="revise(element)"
+            *ngIf="element.status == 'ON_REVISE'">Revise</button>
         </td>
-      </ng-container>
+      </span>
+    </ng-container>
 
-      <ng-container matColumnDef="button">
-        <th mat-header-cell *matHeaderCellDef>  </th>
-        <span>
-            <td mat-cell *matCellDef="let element" >
-                <button mat-raised-button color="warn" (click) = "revoke(element)" *ngIf="element.state.value == 'IN_PROCEDURE'">Revoke</button>
-            </td>
-        </span>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

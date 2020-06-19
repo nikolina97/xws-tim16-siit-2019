@@ -6,21 +6,13 @@ import com.xws.application.service.ReviewService;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.xws.application.dto.ReviewDTO;
-import com.xws.application.model.Review;
-import com.xws.application.service.ReviewService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/review")
@@ -93,7 +85,7 @@ public class ReviewController {
 		}
 		
 	}
-	
+	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	@GetMapping(value = "/getHtmlById/{id}", produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> getHtmlById(@PathVariable("id") String id) {
 		try {
@@ -105,6 +97,7 @@ public class ReviewController {
 		
 	}
 	
+	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	@GetMapping(value = "/getPDFById/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> getPDFById(@PathVariable("id") String id) {
 		try {

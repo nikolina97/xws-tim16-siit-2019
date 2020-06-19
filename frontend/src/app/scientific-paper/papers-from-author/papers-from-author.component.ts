@@ -27,12 +27,16 @@ export class PapersFromAuthorComponent implements OnInit {
       }
     )
   }
-  revoke(element) { 
-    this.paperService.revokePaper(element.id).subscribe(
+  revoke(element) {
+    this.paperService.revokePaper(element.paper.id).subscribe(
       (result) => {
         this.getPapers();
       }
     )
     console.log(element)
+  }
+
+  revise(element) {
+    this.router.navigate(['/paper/write-revision', element.paper.id]);
   }
 }
