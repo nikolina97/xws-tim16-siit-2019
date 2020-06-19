@@ -35,4 +35,8 @@ export class ScientificPaperService {
     return this.http.get(this.baseUrl + "/revoke/" + id);
   }
 
+  public submittedPapers() {
+    return this.http.get<any[]>(this.baseUrl + "/getSubmittedPapers" );
+  }
+
 }

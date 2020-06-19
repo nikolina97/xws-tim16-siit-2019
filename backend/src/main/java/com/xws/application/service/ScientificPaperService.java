@@ -4,10 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
-import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -19,15 +20,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import com.xws.application.model.BusinessProcess;
-import com.xws.application.model.ScientificPaper;
-import com.xws.application.model.TReviewAssignementState;
-import com.xws.application.model.TState;
-import com.xws.application.exception.BadRequestException;
-import com.xws.application.exception.InternalServerErrorException;
-import com.xws.application.exception.NotFoundException;
-import com.xws.application.model.*;
-import com.xws.application.parser.JAXB;
+import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,17 +28,32 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
 
 import com.xws.application.dto.PaperLetterDTO;
 import com.xws.application.dto.ScientificPaperMetadataSearchDTO;
+import com.xws.application.exception.BadRequestException;
+import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
+import com.xws.application.model.BusinessProcess;
+import com.xws.application.model.DocType;
+import com.xws.application.model.ScientificPaper;
+import com.xws.application.model.TSPState;
+import com.xws.application.model.TState;
+import com.xws.application.model.Users;
 import com.xws.application.parser.DOMParser;
+import com.xws.application.parser.JAXB;
 import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.repository.XMLDBManager;
 import com.xws.application.util.XPathExpressionHandlerNS;
 import com.xws.application.util.XSLFOTransformer;
 import com.xws.application.util.rdf.DOMToXMLFile;
 import com.xws.application.util.rdf.MetadataExtractor;
 import com.xws.application.util.rdf.RDFFileToString;
-import org.xml.sax.SAXException;
 
 @Service
 public class ScientificPaperService {
@@ -145,7 +153,7 @@ public class ScientificPaperService {
 			process.setScientificPaperId(paperId);
 			process.setScientificPaperTitle(title);
 			process.setId(paperId);
-			process.setState(TState.PUBLISHED);
+			process.setState(TState.SUBMITTED);
 			process.setVersion(BigInteger.valueOf(1));
 			process.setReviewAssignments(new BusinessProcess.ReviewAssignments());
 
@@ -328,14 +336,15 @@ public class ScientificPaperService {
 	}
 	
 	public List<ScientificPaper> getPapersFromUser() throws Exception {
-		String email = "/person/john.doe@uns.ac.rs";
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println(email);
 		String graphName = "scientific_paper";
-		List<ScientificPaper> papers = repository.getQuerySP(graphName, email);
+		List<ScientificPaper> papers = repository.getQuerySP(graphName, "/person/" + email);
 		return papers;
 	}
 	
 	public List<ScientificPaper> getAllPapersByUser(ScientificPaperMetadataSearchDTO metadataSearch) throws Exception {
-		String email = SecurityContextHolder.getContext().getAuthentication().getName(); //hard coded
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println(email);
 		String graphName = "scientific_paper";
 		String advancedQuery = "";
@@ -449,6 +458,30 @@ public class ScientificPaperService {
 			return false;
 		}
 		return true;
+	}
+
+	public List<ScientificPaper> getSubmittedPapers() throws Exception {
+		String xpathExp = "/sp:businessProcess[sp:state = 'submitted']//sp:scientificPaperId//text()";
+		System.out.println("xpath: "  + xpathExp);
+		ResourceSet result = XMLDBManager.retrieveWithXPath("/db/processes/", xpathExp, "https://github.com/nikolina97/xws-tim16-siit-2019");
+		List<String> ids = new ArrayList<>();
+		ResourceIterator i = result.getIterator();
+		XMLResource res = null;
+		while (i.hasMoreResources()) {
+			try {
+				res = (XMLResource) i.nextResource();
+				ids.add(res.getContent().toString());
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		List<ScientificPaper> papers = repository.getPapersByIds(ids);
+		return papers;
 	}
 
 }

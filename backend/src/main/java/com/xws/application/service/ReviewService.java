@@ -1,14 +1,20 @@
 package com.xws.application.service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
 import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
+import com.xws.application.model.BusinessProcess.ReviewAssignments;
 import com.xws.application.repository.ScientificPaperRepository;
+import com.xws.application.repository.UserRepository;
 import com.xws.application.util.XPathExpressionHandlerNS;
+
+import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -43,6 +49,9 @@ public class ReviewService {
 	
 	@Autowired
 	private MetadataExtractor metadataExtractor;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private DOMParser domParser;
@@ -206,6 +215,34 @@ public class ReviewService {
 
 			return null;
 		}
+	}
+
+	public List<Users.User> getRecommendedReviewers(String paperId) throws Exception {
+		String graphName = "users";
+		
+		List<String> keywords = paperRepository.getKeywords(paperId);
+		List<Users.User> users = reviewRepository.getUsersByExpertise(keywords);
+		
+		return users;
+	}
+
+	public Boolean assigneReviewer(String email, String paperId) throws Exception {
+		
+		Users.User reviewer = userRepository.findByEmail(email);
+		BusinessProcess process;
+		process = processService.get(paperId + ".xml");
+		
+		if (process.getState() != TState.SUBMITTED) {
+			throw new BadRequestException("Paper is not submitted");
+		}
+
+		TReviewAssignment ra = new TReviewAssignment();
+		ra.setReviewer(reviewer.getUserInfo());
+		ra.setStatus(TReviewAssignementState.ASSIGNED);
+		
+		process.getReviewAssignments().getReviewAssignment().add(ra);
+		processService.save(process, paperId + ".xml");
+		return true;
 	}
 
 }
