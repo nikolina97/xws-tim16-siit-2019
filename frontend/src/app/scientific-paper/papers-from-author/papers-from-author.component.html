@@ -41,7 +41,7 @@
           <button mat-raised-button color="warn" (click)="revoke(element)"
             *ngIf="element.paper.state.value == 'IN_PROCEDURE'">Revoke</button>
           <button mat-raised-button color="primary" (click)="revise(element)"
-            *ngIf="element.status == 'ON_REVISE'">Revise</button>
+            *ngIf="element.status == 'onRevise'">Revise</button>
         </td>
       </span>
     </ng-container>

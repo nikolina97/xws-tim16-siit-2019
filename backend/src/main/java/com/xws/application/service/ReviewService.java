@@ -3,6 +3,7 @@ package com.xws.application.service;
 import com.xws.application.dto.ReviewDTO;
 import com.xws.application.exception.BadRequestException;
 import com.xws.application.exception.InternalServerErrorException;
+import com.xws.application.exception.NotFoundException;
 import com.xws.application.model.*;
 import com.xws.application.parser.DOMParser;
 import com.xws.application.repository.ReviewRepository;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -57,17 +59,20 @@ public class ReviewService {
 		dto.setReview("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + dto.getReview());
 		try {
 			ScientificPaper original = paperRepository.retrieveJAXB(dto.getPaperId() + ".xml");
-			/*if(original == null)
-				throw new NotFoundException("Paper not found.");*/
+			if(original == null)
+				throw new NotFoundException("Paper not found.");
 
 			BusinessProcess process = processService.get(dto.getPaperId() + ".xml");
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			/*if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
+			if(process.getReviewAssignments().getReviewAssignment().stream().noneMatch(assignment -> assignment.getReviewer().getEmail().equals(email)))
 				throw new BadRequestException("Your don't have permission to write review of this paper.");
 
 			if(original.getState().getValue().equals(TSPState.REJECTED) || original.getState().getValue().equals(TSPState.REVOKED) || process.getState().equals(TState.REVOKED) || process.getState().equals(TState.REJECTED) || process.getState().equals(TState.ON_REVISE) || process.getState().equals(TState.PUBLISHED))
-				throw new BadRequestException("Your don't have permission to write review of this paper.");*/
+				throw new BadRequestException("Your don't have permission to write review of this paper.");
+
+			if(process.getReviewAssignments().getReviewAssignment().stream().filter(assignment -> assignment.getReviewer().getEmail().equals(email)).collect(Collectors.toList()).get(0).getStatus().equals(TReviewAssignementState.REVIEWED))
+				throw new BadRequestException("You have already reviewed this paper.");
 
 			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = schemaFactory.newSchema(new File("src/main/resources/schemas/review.xsd"));
